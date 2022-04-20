@@ -1,0 +1,36 @@
+- crawltime: "2021-09-08T10:11:54Z"
+  id: 2d6fb6de9e63bdfe3f28da81b55ac7b5cd6f783c
+  publiccode:
+    it:
+      riuso:
+        codiceIPA: pcm
+    logo: ""
+    name: Form PA
+    url: https://github.com/italia/form-pa
+- crawltime: "2021-09-08T10:02:23Z"
+  id: 717d52059a3592611ae1954fb106409316da0e65
+  publiccode:
+    it:
+      riuso:
+        codiceIPA: c_a116
+    logo: https://gitlab.com/comune-di-ala/comunweb/raw/master/images/opencontent.png
+    name: Comunweb
+    url: https://gitlab.com/comune-di-ala/comunweb
+- crawltime: "2021-09-08T10:03:46Z"
+  id: fd89ed1e57678af09afb27ea56d4c1d02a1a3cb9
+  publiccode:
+    it:
+      riuso:
+        codiceIPA: sissa
+    logo: ""
+    name: elementpath
+    url: https://github.com/sissaschool/elementpath
+- crawltime: "2021-09-08T10:05:35Z"
+  id: 775f198a008f9ccddda13922e6e64094288bf929
+  publiccode:
+    it:
+      riuso:
+        codiceIPA: cnr
+    logo: https://raw.githubusercontent.com/consiglionazionaledellericerche/cool-jconon/master/cool-jconon-webapp-resources/src/main/resources/META-INF/img/logo-quadrato-en.png
+    name: cool-jconon
+    url: https://github.com/consiglionazionaledellericerche/cool-jconon
