@@ -61,7 +61,7 @@ export const CatalogueFilters = React.memo(({ title, filters, defaultValues = {}
           onToogleExpandCollapse={toogleShowAll}
         />
         {filters.map(([key, value]) => (
-          <label role="button" key={key} className={classes.label}>
+          <label key={key} className={classes.label}>
             <input
               alt={value}
               role="button"
@@ -69,7 +69,7 @@ export const CatalogueFilters = React.memo(({ title, filters, defaultValues = {}
               type={radio ? 'radio' : 'checkbox'}
               name={name}
               value={key}
-              ref={register}
+              {...register("filters")}
               onChange={handleOnChangeFilter}
             />
             {value}

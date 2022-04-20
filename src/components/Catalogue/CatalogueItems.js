@@ -8,7 +8,7 @@ import { CatalogueNoResults } from './CatalogueNoResults.js';
 export const CatalogueItems = React.memo(({ items }) => {
   useScrollIntoView({
     observableSelector: "[data-class='catalogue-item']",
-    focusElementId: location.hash?.substring(1),
+    focusElementId: window.location.hash?.substring(1),
   });
 
   if (items.length === 0) {
