@@ -1,6 +1,6 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-// import { Icon } from 'design-react-kit';
+import { Icon } from 'design-react-kit';
 import { ImageWithPlaceholder } from '../ImageWithPlaceholder.js';
 import { searchItemProptypes } from '../proptypes.js';
 
@@ -65,7 +65,7 @@ export const CatalogueItem = ({ id, name, description, url, icon, category, logo
       data-class="catalogue-item"
     >
       <div>
-        { /* <Icon icon={icon} size="sm" className="mr-1" /> */ }
+        <Icon icon={icon} size="sm" className="mr-1" />
         <span className={classes.category}>t category</span>
       </div>
       <div className="my-2 my-md-0 w-100">
