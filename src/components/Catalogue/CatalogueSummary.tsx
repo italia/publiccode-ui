@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-import { l10NLabels } from '../../utils/l10n.js';
-import { CatalogueSort } from './CatalogueSort.js';
-import { CatalogueFiltersContainer } from './CatalogueFiltersContainer.js';
-import { CatalogueFiltersTitle } from './CatalogueFiltersTitle.js';
-import { CatalogueHeader } from './CatalogueHeader.js';
+import { l10NLabels } from '../../utils/l10n';
+import { CatalogueSort } from './CatalogueSort';
+import { CatalogueFiltersContainer } from './CatalogueFiltersContainer';
+import { CatalogueFiltersTitle } from './CatalogueFiltersTitle';
+import { CatalogueHeader } from './CatalogueHeader';
 
 const useStyle = createUseStyles({
   filters: {

@@ -1,7 +1,7 @@
 import elasticsearch from 'elasticsearch';
-import { SOFTWARE_OPEN, SOFTWARE_REUSE } from '../utils/constants.js';
-import { lang } from '../utils/l10n.js';
-import { buildFilter, buildSort } from './elasticSearchUtils.js';
+import { SOFTWARE_OPEN, SOFTWARE_REUSE } from '../utils/constants';
+import { lang } from '../utils/l10n';
+import { buildFilter, buildSort } from './elasticSearchUtils';
 
 const client = new elasticsearch.Client({
   // eslint-disable-next-line no-undef

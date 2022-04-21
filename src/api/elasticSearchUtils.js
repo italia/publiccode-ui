@@ -1,5 +1,5 @@
-import { ALPHABETICAL, RELEASE_DATE, VITALITY } from '../utils/constants.js';
-import { lang } from '../utils/l10n.js';
+import { ALPHABETICAL, RELEASE_DATE, VITALITY } from '../utils/constants';
+import { lang } from '../utils/l10n';
 
 export const buildFilter = (filters) => {
   let { intendedAudiences, categories, developmentStatuses } = filters;

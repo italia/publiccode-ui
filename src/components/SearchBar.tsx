@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { Icon } from 'design-react-kit';
-import { DEBOUNCE_SEARCH_MS } from '../utils/constants.js';
+import { DEBOUNCE_SEARCH_MS } from '../utils/constants';
 
 const useStyle = createUseStyles({
   icon: {

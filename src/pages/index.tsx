@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { CatalogueItem } from "../components/Catalogue/CatalogueItem.js";
-import { CatalogueContainer } from "../components/Catalogue/CatalogueContainer.js";
-import { SearchContainer } from "../components/Search/SearchContainer.js";
+import { CatalogueItem } from "../components/Catalogue/CatalogueItem";
+import { CatalogueContainer } from "../components/Catalogue/CatalogueContainer";
+import { SearchContainer } from "../components/Search/SearchContainer";
 import { Container, Header, HeaderBrand, HeaderContent, HeaderRightZone, HeaderSearch, HeaderSocialsZone, Icon } from "design-react-kit";
 import "bootstrap-italia/dist/css/bootstrap-italia.min.css";
 import "typeface-titillium-web";

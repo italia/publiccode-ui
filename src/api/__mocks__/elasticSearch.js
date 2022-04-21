@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { SOFTWARE_OPEN } from '../../utils/constants.js';
+import { SOFTWARE_OPEN } from '../../utils/constants';
 
 // eslint-disable-next-line max-lines-per-function
 export const querySoftware = jest.fn(({ type }) => {
@@ -471,7 +471,7 @@ export const queryPlatform = jest.fn(() => [
                 desc: "Libreria nativa per l'integrazione di SPID in applicazioni Django (Python)",
               },
               {
-                title: 'SDK per Express.js',
+                title: 'SDK per Express',
                 icon: 'github',
                 url: 'https://github.com/italia/spid-express',
                 desc: "Libreria nativa per l'integrazione di SPID in applicazioni Node/Passport (Javascript)",

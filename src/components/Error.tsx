@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-import { l10NLabels } from '../utils/l10n.js';
+import { l10NLabels } from '../utils/l10n';
 
 const useStyle = createUseStyles({
   description: {

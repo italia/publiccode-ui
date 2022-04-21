@@ -1,6 +1,6 @@
 import { useContext, useEffect, useReducer, useRef } from 'react';
-import { search } from '../services/searchEngine.js';
-import { searchContextDispatch, searchContextState, incrementPage } from '../contexts/searchContext.js';
+import { search } from '../services/searchEngine';
+import { searchContextDispatch, searchContextState, incrementPage } from '../contexts/searchContext';
 
 const ADD_ITEMS = 'ADD_ITEMS';
 const SET_ITEMS = 'SET_ITEMS';

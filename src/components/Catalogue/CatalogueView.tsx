@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Button } from 'design-react-kit';
-import { Error } from '../Error.js';
-import { useSearchEngine } from '../../hooks/useSearchEngine.js';
-import { searchContextState } from '../../contexts/searchContext.js';
-import { l10NLabels } from '../../utils/l10n.js';
-import { CatalogueItems } from './CatalogueItems.js';
-import { CatalogueSummary } from './CatalogueSummary.js';
+import { Error } from '../Error';
+import { useSearchEngine } from '../../hooks/useSearchEngine';
+import { searchContextState } from '../../contexts/searchContext';
+import { l10NLabels } from '../../utils/l10n';
+import { CatalogueItems } from './CatalogueItems';
+import { CatalogueSummary } from './CatalogueSummary';
 
 export const CatalogueView = React.memo(() => {
   const { filterCategories, filterDevelopmentStatuses, filterIntendedAudiences, type } = useContext(searchContextState);

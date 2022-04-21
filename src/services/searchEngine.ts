@@ -6,22 +6,29 @@ import {
   PLATFORM,
   SOFTWARE_OPEN,
   SOFTWARE_REUSE,
-} from "../utils/constants.js";
-import { lang } from "../utils/l10n.js";
+} from "../utils/constants";
+import { lang } from "../utils/l10n";
 import {
   queryAdministration,
   queryAllSite,
   queryApi,
   queryPlatform,
   querySoftware,
-} from "../api/query.ts";
+} from "../api/query";
+import { QueryProps } from "../utils/proptypes";
 
 const LOGO_IT = "/assets/icons/logo-it.png";
 
-export const search = async (
-  type,
-  { searchValue, filters = {}, sortBy = "relevance", from = 0, size = 12 } = {}
-) => {
+export const search = async (props: QueryProps) => {
+  const { type } = props;
+  const {
+    searchValue = "",
+    filters = {},
+    sortBy = "relevance",
+    from = 0,
+    size = 12,
+  } = props;
+
   const params = {
     searchValue,
     filters,

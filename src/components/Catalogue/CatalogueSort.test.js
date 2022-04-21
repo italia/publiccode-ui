@@ -5,7 +5,7 @@ import { SearchProvider } from '../../contexts/searchContext';
 import { RELEASE_DATE } from '../../utils/constants';
 import { CatalogueSort } from './CatalogueSort';
 
-jest.mock('../../utils/l10n.js');
+jest.mock('../../utils/l10n');
 
 describe('CatalogueSort', () => {
   describe('when the search value is not available', () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { HeaderSearch } from 'design-react-kit';
-import { SearchProvider } from '../../contexts/searchContext.js';
-import { ALL_SITE } from '../../utils/constants.js';
-import { useModal } from '../../hooks/useModal.js';
-import { SearchModal } from './SearchModal.js';
+import { SearchProvider } from '../../contexts/searchContext';
+import { ALL_SITE } from '../../utils/constants';
+import { useModal } from '../../hooks/useModal';
+import { SearchModal } from './SearchModal';
 
 export const SearchContainer = () => {
   const [isModalOpen, closeModal, openModal] = useModal();

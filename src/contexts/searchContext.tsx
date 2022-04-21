@@ -1,17 +1,25 @@
-import React, { useReducer } from 'react';
-import PropTypes from 'prop-types';
-import { ALL_SITE, RELEVANCE } from '../utils/constants.js';
-import { serializeStateToQueryString } from '../utils/urlSearchParams.js';
+import React, { useReducer } from "react";
+import { ALL_SITE, RELEVANCE } from "../utils/constants";
+import { serializeStateToQueryString } from "../utils/urlSearchParams";
+import { SearchProviderContext, StateToQueryString } from "../utils/proptypes";
 
-const INCREMENT_PAGE = 'INCREMENT_PAGE';
-const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE';
-const SET_FILTERS_CATEGORIES = 'SET_FILTERS_CATEGORIES';
-const SET_FILTERS_INTENDED_AUDIENCES = 'SET_FILTERS_INTENDED_AUDIENCES';
-const SET_FILTERS_DEVELOPMENT_STATUSES = 'SET_FILTERS_DEVELOPMENT_STATUSES';
-const SET_SORT_BY = 'SET_SORT_BY';
-const SET_TYPE = 'SET_TYPE';
+const INCREMENT_PAGE = "INCREMENT_PAGE";
+const SET_SEARCH_VALUE = "SET_SEARCH_VALUE";
+const SET_FILTERS_CATEGORIES = "SET_FILTERS_CATEGORIES";
+const SET_FILTERS_INTENDED_AUDIENCES = "SET_FILTERS_INTENDED_AUDIENCES";
+const SET_FILTERS_DEVELOPMENT_STATUSES = "SET_FILTERS_DEVELOPMENT_STATUSES";
+const SET_SORT_BY = "SET_SORT_BY";
+const SET_TYPE = "SET_TYPE";
 
-export const searchContextState = React.createContext(null);
+export const searchContextState = React.createContext<StateToQueryString>({
+  filterCategories: [],
+  filterDevelopmentStatuses: [],
+  filterIntendedAudiences: [],
+  page: 0,
+  type: "",
+  sortBy: "",
+  searchValue: "",
+});
 export const searchContextDispatch = React.createContext(null);
 
 export const searchReducer = (state, action) => {
@@ -62,12 +70,12 @@ export const searchReducer = (state, action) => {
   }
 };
 
-export const SearchProvider = ({
+export const SearchProvider: React.FC<SearchProviderContext> = ({
   initialCategories = [],
   initialDevelopmentStatuses = [],
   initialPage = 0,
   initialIntendedAudiences = [],
-  initialSearchValue = '',
+  initialSearchValue = "",
   initialSortBy = RELEVANCE,
   initialType = ALL_SITE,
   syncStateWithQueryString = false,
@@ -87,45 +95,41 @@ export const SearchProvider = ({
 
   return (
     <searchContextState.Provider value={state}>
-      <searchContextDispatch.Provider value={dispatch}>{children}</searchContextDispatch.Provider>
+      <searchContextDispatch.Provider value={dispatch}>
+        {children}
+      </searchContextDispatch.Provider>
     </searchContextState.Provider>
   );
-};
-
-SearchProvider.propTypes = {
-  initialCategories: PropTypes.arrayOf(PropTypes.string),
-  initialDevelopmentStatuses: PropTypes.arrayOf(PropTypes.string),
-  initialPage: PropTypes.number,
-  initialIntendedAudiences: PropTypes.arrayOf(PropTypes.string),
-  initialSearchValue: PropTypes.string,
-  initialSortBy: PropTypes.string,
-  initialType: PropTypes.string,
-  syncStateWithQueryString: PropTypes.bool,
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 export const incrementPage = () => ({
   type: INCREMENT_PAGE,
 });
 
-export const setFilterCategories = (categories) => ({ type: SET_FILTERS_CATEGORIES, value: categories });
-export const setFilterDevelopmentStatuses = (statuses) => ({ type: SET_FILTERS_DEVELOPMENT_STATUSES, value: statuses });
-export const setFilterIntendedAudience = (intendedAudience) => ({
+export const setFilterCategories = (categories: string[]) => ({
+  type: SET_FILTERS_CATEGORIES,
+  value: categories,
+});
+export const setFilterDevelopmentStatuses = (statuses: string[]) => ({
+  type: SET_FILTERS_DEVELOPMENT_STATUSES,
+  value: statuses,
+});
+export const setFilterIntendedAudience = (intendedAudience: string[]) => ({
   type: SET_FILTERS_INTENDED_AUDIENCES,
   value: intendedAudience,
 });
 
-export const setType = (type) => ({
+export const setType = (type: string) => ({
   type: SET_TYPE,
   value: type,
 });
 
-export const setSortBy = (sortBy) => ({
+export const setSortBy = (sortBy: string) => ({
   type: SET_SORT_BY,
   value: sortBy,
 });
 
-export const setSearchValue = (value) => ({
+export const setSearchValue = (value: string) => ({
   type: SET_SEARCH_VALUE,
   value,
 });

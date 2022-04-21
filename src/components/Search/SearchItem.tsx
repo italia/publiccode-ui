@@ -1,8 +1,8 @@
 import React from 'react';
 import { Icon } from 'design-react-kit';
 import { createUseStyles } from 'react-jss';
-import { l10NLabels } from '../../utils/l10n.js';
-import { searchItemProptypes } from '../../utils/proptypes.js';
+import { l10NLabels } from '../../utils/l10n';
+import { SearchTypeItem } from '../../utils/proptypes';
 
 const useStyles = createUseStyles({
   category: {
@@ -25,7 +25,7 @@ const useStyles = createUseStyles({
   },
 });
 
-export const SearchItem = ({ item }) => {
+export const SearchItem: React.FC<SearchTypeItem> = ({ item }) => {
   const classes = useStyles();
   return (
     <a className={classes.item} href={item.url} data-testid={item.id}>
@@ -34,8 +34,4 @@ export const SearchItem = ({ item }) => {
       <div className={classes.category}>{l10NLabels.software[item.category] ?? item.category}</div>
     </a>
   );
-};
-
-SearchItem.propTypes = {
-  item: searchItemProptypes,
 };

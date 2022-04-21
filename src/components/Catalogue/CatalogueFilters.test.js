@@ -3,7 +3,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
-import { CatalogueFilters } from './CatalogueFilters.js';
+import { CatalogueFilters } from './CatalogueFilters';
 
 describe('CatalogueFilters', () => {
   it('renders CatalogueFilters', () => {

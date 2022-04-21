@@ -1,8 +1,8 @@
 import React, { useCallback, useContext } from 'react';
 import { createUseStyles } from 'react-jss';
-import { l10NLabels } from '../../utils/l10n.js';
-import { SearchBar } from '../SearchBar.js';
-import { searchContextDispatch, searchContextState, setSearchValue } from '../../contexts/searchContext.js';
+import { l10NLabels } from '../../utils/l10n';
+import { SearchBar } from '../SearchBar';
+import { searchContextDispatch, searchContextState, setSearchValue } from '../../contexts/searchContext';
 
 const useStyles = createUseStyles({
   header: {

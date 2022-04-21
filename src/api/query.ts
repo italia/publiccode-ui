@@ -1,11 +1,5 @@
-interface QueryProps {
-  type?: string;
-  searchValue: string;
-  filters: string[];
-  sortBy: string;
-  from: number;
-  size: number;
-}
+import { QueryProps } from "../utils/proptypes";
+
 export const querySoftware = async ({
   type,
   searchValue,

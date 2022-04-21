@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { ALL_CATALOGUE } from '../../utils/constants.js';
+import { ALL_CATALOGUE } from '../../utils/constants';
 
 export const search = jest.fn(async (type) => {
   if (type === ALL_CATALOGUE) {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { search } from '../../services/searchEngine.js';
-import { ALL_SITE } from '../../utils/constants.js';
-import { SearchItem } from './SearchItem.js';
+import { search } from '../../services/searchEngine';
+import { ALL_SITE } from '../../utils/constants';
+import { SearchItem } from './SearchItem';
 
-jest.mock('../../utils/l10n.js');
-jest.mock('../../services/searchEngine.js');
+jest.mock('../../utils/l10n');
+jest.mock('../../services/searchEngine');
 
 describe('SearchItem', () => {
   it('renders a searched item', async () => {

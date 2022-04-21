@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { l10NLabels } from '../../utils/l10n.js';
-import { initialSortBy } from '../../utils/urlSearchParams.js';
-import { searchContextState, searchContextDispatch, setSortBy } from '../../contexts/searchContext.js';
-import { RELEVANCE } from '../../utils/constants.js';
+import { l10NLabels } from '../../utils/l10n';
+import { initialSortBy } from '../../utils/urlSearchParams';
+import { searchContextState, searchContextDispatch, setSortBy } from '../../contexts/searchContext';
+import { RELEVANCE } from '../../utils/constants';
 
 export const CatalogueSort = React.memo(() => {
   const { searchValue, sortBy } = useContext(searchContextState);

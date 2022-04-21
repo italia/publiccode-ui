@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { ALL_CATALOGUE, ADMINISTRATION, ALL_SITE } from '../utils/constants.js';
+import { ALL_CATALOGUE, ADMINISTRATION, ALL_SITE } from '../utils/constants';
 import {
   searchContextState,
   SearchProvider,
@@ -13,7 +13,7 @@ import {
   setFilterCategories,
   setSortBy,
   searchReducer,
-} from './searchContext.js';
+} from './searchContext';
 
 const DummyUseContext = () => {
   const { page, type, searchValue, filterCategories, filterDevelopmentStatuses, filterIntendedAudiences, sortBy } =

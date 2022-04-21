@@ -3,11 +3,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
-import { SearchProvider } from '../../contexts/searchContext.js';
-import { ALL_SITE } from '../../utils/constants.js';
-import { SearchType } from './SearchType.js';
+import { SearchProvider } from '../../contexts/searchContext';
+import { ALL_SITE } from '../../utils/constants';
+import { SearchType } from './SearchType';
 
-jest.mock('../../utils/l10n.js');
+jest.mock('../../utils/l10n');
 
 describe('SearchType', () => {
   it('renders search type buttons', async () => {

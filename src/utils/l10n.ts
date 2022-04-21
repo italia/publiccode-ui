@@ -2,7 +2,7 @@
  * This is a collection of utils for the localization used on client side code.
  * They work on the string catalogue used by jekyll
  */
-import { SOFTWARE_OPEN, SOFTWARE_REUSE } from './constants.js';
+import { SOFTWARE_OPEN, SOFTWARE_REUSE } from './constants';
 import softwareCategoriesYml from '../_data/crawler/software_categories.yml';
 import softwareDevelopmentStatusYml from '../_data/development_status.yml';
 import softwareIntendedAudiencesYml from '../_data/crawler/software_scopes.yml';
