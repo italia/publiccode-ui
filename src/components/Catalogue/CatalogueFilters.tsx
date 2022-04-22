@@ -3,10 +3,19 @@ import { useForm } from "react-hook-form";
 import { createUseStyles } from "react-jss";
 import { CatalogueFiltersTitle } from "./CatalogueFiltersTitle";
 
-const useStyles = createUseStyles({
+type RuleNames = "groupContainer" | "checkbox" | "label";
+interface StyleProps {
+  showAll: boolean;
+}
+
+type FormData = {
+  [a: string]: string | string[];
+};
+
+const useStyles = createUseStyles<RuleNames, StyleProps>({
   groupContainer: {
     composes: "mt-2",
-    maxHeight: (showAll) => (showAll ? "100%" : "200px"),
+    maxHeight: ({ showAll }) => (showAll ? "100%" : "200px"),
     overflowY: "hidden",
     paddingLeft: "2px",
     transition: "max-height 0.5s",
@@ -27,35 +36,54 @@ const useStyles = createUseStyles({
   },
 });
 
-const getCount = (filterValues: {}) => Object.values(filterValues).flat().length;
+const getCount = (filterValues: FormData) =>
+  Object.values(filterValues).flat().length;
+
 export const CatalogueFilters: React.FC<CatalogueFiltersProps> = React.memo(
   ({ title, filters, defaultValues = {}, onChange, radio = false, name }) => {
     const [selectedFiltersCount, setSelectedFiltersCount] = useState(
       getCount(defaultValues)
     );
     const [showAll, setShowAll] = useState(false);
-
-    const classes = useStyles(showAll);
-    const { register, getValues } = useForm({
+    
+    const classes = useStyles({ showAll });
+    const { register, watch } = useForm<FormData>({
       defaultValues,
     });
-
-    const updateCounter = () => setSelectedFiltersCount(getCount(getValues()));
-
-    const handleOnChangeFilter = () => {
-      updateCounter();
-      const values = getValues();
-      onChange(values[name]);
-      console.log(values);
-      
-    };
+    const watchFields = watch(name);
+    
+    React.useEffect(() => {
+      updateCounter({ [name]: watchFields });
+      onChange(watchFields);
+    }, [watchFields]);
+    
+    const updateCounter = (data: FormData) =>
+    setSelectedFiltersCount(getCount(data));
+    
+    // TODO avoiding react-hook-form that could be overkill
+    // const [filter, setFilter] = useState<FormData>(defaultValues);
+    // const handleOnChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
+    //   setFilter((s) => {
+    //     let out: FormData = {};
+    //     if (e.target.checked) {
+    //       out = { [name]: [e.target.value, ...s[name]] };
+    //     } else {
+    //       const rest = s[name].filter((v) => v !== e.target.value);
+    //       out = { [name]: rest };
+    //     }
+    //     onChange(out[name]);
+    //     updateCounter(out);
+    //     console.log(out, e.target.value);
+    //     return out;
+    //   });
+    // };
 
     const toogleShowAll = () => {
       setShowAll(!showAll);
     };
 
     return (
-      <>
+      <form>
         <div className={classes.groupContainer}>
           <CatalogueFiltersTitle
             title={title}
@@ -71,22 +99,22 @@ export const CatalogueFilters: React.FC<CatalogueFiltersProps> = React.memo(
                 className={classes.checkbox}
                 type={radio ? "radio" : "checkbox"}
                 value={key}
-                {...register(name)}
-                onChange={handleOnChangeFilter}
+                // name={name}
+                {...register(`${name}`)}
               />
               {value}
             </label>
           ))}
         </div>
-      </>
+      </form>
     );
   }
 );
 interface CatalogueFiltersProps {
-  defaultValues: {};
+  defaultValues: FormData;
   filters: Array<string[]>;
   name: string;
-  onChange: (a: string) => void;
+  onChange: (a: string | string[]) => void;
   radio?: boolean;
   title: string;
 }
