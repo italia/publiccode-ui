@@ -59,9 +59,9 @@ type SearchProviderContextFilters = {
 enum initialSortBy {"relevance", "release_date", null}
 enum initialType {"all_site", null}
 export interface SearchProviderContext extends SearchProviderContextFilters {
-  initialPage: number;
-  initialSearchValue: string | null;
-  initialSortBy: string;
+  initialPage?: number;
+  initialSearchValue?: string | null;
+  initialSortBy?: string;
   initialType: string | null;
-  syncStateWithQueryString: boolean;
+  syncStateWithQueryString?: boolean;
 }
