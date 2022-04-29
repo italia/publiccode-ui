@@ -1,4 +1,5 @@
 import * as React from "react";
+import '../i18n';
 
 import { CatalogueItem } from "../components/Catalogue/CatalogueItem";
 import { CatalogueContainer } from "../components/Catalogue/CatalogueContainer";

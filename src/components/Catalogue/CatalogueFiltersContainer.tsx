@@ -1,11 +1,6 @@
 import React, { useContext, useMemo } from "react";
-import {
-  l10NLabels,
-  getSoftwareCategories,
-  getSoftwareDevelopmentStatuses,
-  getSoftwareIntendedAudiences,
-  softwareTypes,
-} from "../../utils/l10n";
+import { useTranslation } from 'react-i18next';
+
 import {
   searchContextDispatch,
   searchContextState,
@@ -14,13 +9,13 @@ import {
   setFilterIntendedAudience,
   setType,
 } from "../../contexts/searchContext";
-import { ALL_CATALOGUE } from "../../utils/constants";
+import {
+  categories as softwareCategories,
+  scopes as softwareScopes,
+  developmentStatuses as softwareDevelopmentStatuses,
+} from '../../types/publiccode';
+import { ALL_CATALOGUE, SOFTWARE_OPEN, SOFTWARE_REUSE } from "../../utils/constants";
 import { CatalogueFilters } from "./CatalogueFilters";
-
-const softwareCategories = getSoftwareCategories();
-const softwareIntendedAudiences = getSoftwareIntendedAudiences();
-const softwareDevelopmentStatuses = getSoftwareDevelopmentStatuses();
-const softwareTypesFilter = [[ALL_CATALOGUE, l10NLabels.all], ...softwareTypes];
 
 export const CatalogueFiltersContainer: React.FC<CatalogueFiltersContainerProps> =
   React.memo(({ prefixName }) => {
@@ -31,10 +26,18 @@ export const CatalogueFiltersContainer: React.FC<CatalogueFiltersContainerProps>
       filterIntendedAudiences,
       type,
     } = useContext(searchContextState);
+    const { t } = useTranslation();
+
     const typesFilterName = `${prefixName}_type`;
     const categoriesFilterName = `${prefixName}_categories`;
     const intendedAudiencesFilterName = `${prefixName}_intended_audiences`;
     const developmentStatusesFilterName = `${prefixName}_development_statuses`;
+
+    const softwareTypesFilter = [
+      [ALL_CATALOGUE, t('all')],
+      [SOFTWARE_OPEN, t('software.software_open')],
+      [SOFTWARE_REUSE, t('software.software_reuse')],
+    ];
 
     /* eslint-disable react-hooks/exhaustive-deps */
     const defaultTypes = useMemo(
@@ -77,7 +80,7 @@ export const CatalogueFiltersContainer: React.FC<CatalogueFiltersContainerProps>
     return (
       <>
         <CatalogueFilters
-          title={l10NLabels.software.type}
+          title={t('software.type')}
           name={typesFilterName}
           filters={softwareTypesFilter}
           defaultValues={defaultTypes}
@@ -85,23 +88,26 @@ export const CatalogueFiltersContainer: React.FC<CatalogueFiltersContainerProps>
           radio={true}
         />
         <CatalogueFilters
-          title={l10NLabels.software.categories}
+          title={t('software.categories')}
           name={categoriesFilterName}
-          filters={softwareCategories}
+          filters={softwareCategories.map((category) => [category, t(`publiccode_yml.categories.${category}`)])}
           defaultValues={defaultCategories}
           onChange={handleChangeOnCategories}
         />
         <CatalogueFilters
-          title={l10NLabels.software.intended_audience}
+          title={t('software.intended_audience')}
           name={intendedAudiencesFilterName}
-          filters={softwareIntendedAudiences}
+          filters={softwareScopes.map((scope) => [scope, t(`publiccode_yml.scopes.${scope}`)])}
           defaultValues={defaultIntendedAudiences}
           onChange={handleChangeOnIntendedAudiences}
         />
         <CatalogueFilters
-          title={l10NLabels.software.development_status}
+          title={t('software.development_status')}
           name={developmentStatusesFilterName}
-          filters={softwareDevelopmentStatuses}
+          filters={softwareDevelopmentStatuses.map((status) => [
+            status,
+            t(`publiccode_yml.development_statuses.${status}`),
+          ])}
           defaultValues={defaultDevelopmentStatuses}
           onChange={handleChangeOnDevelopmentStatuses}
         />

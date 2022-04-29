@@ -7,7 +7,6 @@ import {
   SOFTWARE_OPEN,
   SOFTWARE_REUSE,
 } from "../utils/constants";
-import { lang } from "../utils/l10n";
 import {
   queryAdministration,
   queryAllSite,
@@ -88,12 +87,12 @@ const administrationItem = (source) => ({
   logo: "/assets/images/cover_amministrazioni.png",
   fallback: "/assets/images/cover_amministrazioni.png",
   name: source["it-riuso-codiceIPA-label"],
-  url: `/${lang}/pa/${source["it-riuso-codiceIPA"]}`,
+  url: `/TODO/pa/${source["it-riuso-codiceIPA"]}`,
 });
 
 const softwareItem = (source) => {
   const descriptionField =
-    source.publiccode.description?.[lang] ??
+    source.publiccode.description?.['TODO'] ??
     source.publiccode.description["en"] ??
     source.publiccode.description["it"];
   const description = cropString(descriptionField.shortDescription);

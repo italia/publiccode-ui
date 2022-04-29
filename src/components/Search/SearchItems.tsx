@@ -1,6 +1,6 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import { createUseStyles } from "react-jss";
-import { l10NLabels } from "../../utils/l10n";
 import { SearchItem } from "./SearchItem";
 import { SearchTypeItems } from "../../utils/proptypes";
 
@@ -13,12 +13,12 @@ const useStyles = createUseStyles({
 export const SearchItems: React.FC<SearchTypeItems> = React.memo(
   ({ items }) => {
     const classes = useStyles();
+    const { t } = useTranslation();
+
     if (items.length === 0) {
       return (
         <div className="form-group" data-testid="search-modal-no-results">
-          <h5 className={classes.noResults}>
-            {l10NLabels.software.no_results}
-          </h5>
+          <h5 className={classes.noResults}>{t('software.no_results')}</h5>
         </div>
       );
     }

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createUseStyles } from 'react-jss';
-import { l10NLabels } from '../../utils/l10n';
 import { SearchBar } from '../SearchBar';
 import { searchContextDispatch, searchContextState, setSearchValue } from '../../contexts/searchContext';
 
@@ -17,15 +17,16 @@ export const CatalogueHeader = React.memo(() => {
   const classes = useStyles();
   const { searchValue } = useContext(searchContextState);
   const dispatch = useContext(searchContextDispatch);
+  const { t } = useTranslation();
 
   const handleSearch = useCallback((value) => dispatch(setSearchValue(value)), [dispatch]);
 
   return (
     <div className="text-center">
-      <h1 className={classes.header}>{l10NLabels.software.catalogue}</h1>
+      <h1 className={classes.header}>{t('software.catalogue')}</h1>
       <div className="row"></div>
       <div className="col-10 mx-auto text-center mb-3">
-        <SearchBar onChange={handleSearch} defaultValue={searchValue} placeholder={l10NLabels.search_form_label} />
+        <SearchBar onChange={handleSearch} defaultValue={searchValue} placeholder={t('search_form_label')} />
       </div>
     </div>
   );
