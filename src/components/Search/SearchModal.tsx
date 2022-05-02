@@ -1,8 +1,9 @@
 import React, { useContext, useCallback } from "react";
 import { Modal, ModalBody } from "design-react-kit";
 import { createUseStyles } from "react-jss";
+import { useTranslation } from 'react-i18next';
+
 import { useSearchEngine } from "../../hooks/useSearchEngine";
-import { l10NLabels, lang } from "../../utils/l10n";
 import {
   searchContextDispatch,
   searchContextState,
@@ -30,6 +31,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
   const classes = useStyles();
   const { searchValue } = useContext(searchContextState);
   const dispatch = useContext(searchContextDispatch);
+  const { t, i18n } = useTranslation();
 
   const handleSearch = useCallback(
     (value) => dispatch(setSearchValue(value)),
@@ -48,7 +50,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
       <ModalBody className="mt-3" tag="div">
         <div className="container">
           <div className="row px-1 px-md-2">
-            <h1>{l10NLabels["search_form_label"]}</h1>
+            <h1>{t('search_form_label')}</h1>
             <button
               className={classes.closeButton}
               onClick={onClose}
@@ -60,7 +62,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
           <div className="mb-5">
             <SearchBar
               onChange={handleSearch}
-              placeholder={l10NLabels.search_form_placeholder}
+              placeholder={t('search_form_placeholder')}
             />
           </div>
           <SearchType />
@@ -71,9 +73,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
           ) : (
             <>
               <h5 className="form-group text-uppercase">
-                <a href={`/${lang}/search?search_value=${searchValue}`}>
-                  {l10NLabels.search_form_catalogue}
-                </a>
+                <a href={`/${i18n.language}/search?search_value=${searchValue}`}>{t('search_form_catalogue')}</a>
               </h5>
               {items !== null && <SearchItems items={items} />}
             </>

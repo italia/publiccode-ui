@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Icon } from 'design-react-kit';
 import { createUseStyles } from 'react-jss';
 import { ALL_SITE, SOFTWARE_REUSE, SOFTWARE_OPEN, PLATFORM, ADMINISTRATION, API } from '../../utils/constants';
 import { searchContextDispatch, searchContextState, setType } from '../../contexts/searchContext';
-import { l10NLabels } from '../../utils/l10n';
 
 const useStyles = createUseStyles({
   icon: {
@@ -45,49 +45,50 @@ const useStyles = createUseStyles({
   },
 });
 
-const buttons = [
-  {
-    dataTestid: 'search-type-all',
-    icon: 'it-search',
-    label: l10NLabels.all,
-    type: ALL_SITE,
-  },
-  {
-    dataTestid: 'search-type-administration',
-    icon: 'it-pa',
-    label: l10NLabels.software.administrations,
-    type: ADMINISTRATION,
-  },
-  {
-    dataTestid: 'search-type-api',
-    icon: 'it-settings',
-    label: 'Api',
-    type: API,
-  },
-  {
-    dataTestid: 'search-type-platform',
-    icon: 'it-piattaforme',
-    label: l10NLabels.software.platforms,
-    type: PLATFORM,
-  },
-  {
-    dataTestid: 'search-type-software_open',
-    icon: 'it-open-source',
-    label: l10NLabels.software.software_open,
-    type: SOFTWARE_OPEN,
-  },
-  {
-    dataTestid: 'search-type-software_reuse',
-    icon: 'it-software',
-    label: l10NLabels.software.software_reuse,
-    type: SOFTWARE_REUSE,
-  },
-];
-
 export const SearchType = React.memo(() => {
   const classes = useStyles();
   const { type } = useContext(searchContextState);
   const dispatch = useContext(searchContextDispatch);
+  const { t } = useTranslation();
+
+  const buttons = [
+    {
+      dataTestid: 'search-type-all',
+      icon: 'it-search',
+      label: t('all'),
+      type: ALL_SITE,
+    },
+    {
+      dataTestid: 'search-type-administration',
+      icon: 'it-pa',
+      label: t('software.administrations'),
+      type: ADMINISTRATION,
+    },
+    {
+      dataTestid: 'search-type-api',
+      icon: 'it-settings',
+      label: 'Api',
+      type: API,
+    },
+    {
+      dataTestid: 'search-type-platform',
+      icon: 'it-piattaforme',
+      label: t('software.platforms'),
+      type: PLATFORM,
+    },
+    {
+      dataTestid: 'search-type-software_open',
+      icon: 'it-open-source',
+      label: t('software.software_open'),
+      type: SOFTWARE_OPEN,
+    },
+    {
+      dataTestid: 'search-type-software_reuse',
+      icon: 'it-software',
+      label: t('software.software_reuse'),
+      type: SOFTWARE_REUSE,
+    },
+  ];
 
   return (
     <div className="form-group" data-testid="search-type-buttons">

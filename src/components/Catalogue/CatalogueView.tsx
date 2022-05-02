@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'design-react-kit';
 import { Error } from '../Error';
 import { useSearchEngine } from '../../hooks/useSearchEngine';
 import { searchContextState } from '../../contexts/searchContext';
-import { l10NLabels } from '../../utils/l10n';
 import { CatalogueItems } from './CatalogueItems';
 import { CatalogueSummary } from './CatalogueSummary';
 
 export const CatalogueView = React.memo(() => {
   const { filterCategories, filterDevelopmentStatuses, filterIntendedAudiences, type } = useContext(searchContextState);
+  const { t } = useTranslation();
+
   let totalAppliedFilters = filterCategories.length + filterIntendedAudiences.length + filterDevelopmentStatuses.length;
   if (type) {
     totalAppliedFilters++;
@@ -29,7 +31,7 @@ export const CatalogueView = React.memo(() => {
       {partialItems !== null && partialItems.length !== itemsCount && (
         <div className="d-flex w-100 justify-content-center mt-4">
           <Button color="primary" onClick={fetchMore}>
-            {l10NLabels.software.load_more}
+            {t('software.load_more')}
           </Button>
         </div>
       )}

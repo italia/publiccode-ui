@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { createUseStyles } from "react-jss";
-import { l10NLabels } from "../../utils/l10n";
 import { CatalogueSort } from "./CatalogueSort";
 import { CatalogueFiltersContainer } from "./CatalogueFiltersContainer";
 import { CatalogueFiltersTitle } from "./CatalogueFiltersTitle";
@@ -17,6 +17,7 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
   ({ itemsCount, totalAppliedFilters }) => {
     const [expandFilter, setExpandFilter] = useState(false);
     const classes = useStyle(expandFilter);
+    const { t } = useTranslation();
 
     const handleExpandFilter = () => setExpandFilter(!expandFilter);
 
@@ -28,10 +29,10 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
             <div
               className="col-3 font-weight-bold text-left"
               data-testid="counter-summary"
-            >{`${itemsCount} ${l10NLabels.software.results}`}</div>
+            >{`${itemsCount} ${t('software.results')}`}</div>
             <div className="col-3 col-md-2 d-lg-none">
               <CatalogueFiltersTitle
-                title={l10NLabels.software.filters}
+                title={t('software.filters')}
                 counter={totalAppliedFilters}
                 showCollapsableIcon={true}
                 onToogleExpandCollapse={handleExpandFilter}
