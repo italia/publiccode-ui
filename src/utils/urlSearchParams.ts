@@ -1,6 +1,7 @@
 import { StateToQueryString } from "./proptypes";
 
-const urlSearchParams = new URLSearchParams(window.location.search);
+const {location, history} = typeof window !== "undefined" ? window : {location: {}, history: {replaceState: () => {}}};
+const urlSearchParams = new URLSearchParams(location.search);
 export const initialCategories = urlSearchParams.getAll("categories");
 export const initialDevelopmentStatuses = urlSearchParams.getAll(
   "development_statuses"
@@ -21,7 +22,7 @@ export const serializeStateToQueryString = ({
   searchValue,
   sortBy,
 }: StateToQueryString) => {
-  const hash = window.location.hash; // preserve hash if it is present
+  const hash = location.hash; // preserve hash if it is present
   const urlSearchParams = new URLSearchParams();
   filterCategories.forEach((f) => urlSearchParams.append("categories", f));
   filterDevelopmentStatuses.forEach((f) =>
@@ -34,7 +35,7 @@ export const serializeStateToQueryString = ({
   urlSearchParams.set("sort_by", sortBy);
   searchValue && urlSearchParams.set("search_value", searchValue);
   urlSearchParams.set("page", page.toString());
-  window.history.replaceState(
+  history.replaceState(
     null,
     "",
     `?${urlSearchParams.toString()}${hash}`
