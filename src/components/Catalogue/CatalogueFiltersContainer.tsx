@@ -1,7 +1,8 @@
-import React, { useContext, useMemo } from "react";
+import React, { Dispatch, useContext, useMemo } from "react";
 import { useTranslation } from 'react-i18next';
 
 import {
+  Actions,
   searchContextDispatch,
   searchContextState,
   setFilterCategories,
@@ -19,7 +20,7 @@ import { CatalogueFilters } from "./CatalogueFilters";
 
 export const CatalogueFiltersContainer: React.FC<CatalogueFiltersContainerProps> =
   React.memo(({ prefixName }) => {
-    const dispatch = useContext(searchContextDispatch);
+    const dispatch = useContext<Dispatch<Actions>>(searchContextDispatch);
     const {
       filterCategories,
       filterDevelopmentStatuses,
@@ -64,28 +65,27 @@ export const CatalogueFiltersContainer: React.FC<CatalogueFiltersContainerProps>
       }),
       []
     );
-    /* eslint-enable react-hooks/exhaustive-deps */
+    const handleChangeOnTypes = (value: string) => dispatch(setType(value));
 
-    const handleChangeOnTypes = (value) => dispatch(setType(value));
-
-    const handleChangeOnCategories = (values) =>
+    const handleChangeOnCategories = (values: string[]) =>
       dispatch(setFilterCategories(values));
 
-    const handleChangeOnIntendedAudiences = (values) =>
+    const handleChangeOnIntendedAudiences = (values: string[]) =>
       dispatch(setFilterIntendedAudience(values));
 
-    const handleChangeOnDevelopmentStatuses = (values) =>
+    const handleChangeOnDevelopmentStatuses = (values: string[]) =>
       dispatch(setFilterDevelopmentStatuses(values));
 
     return (
       <>
+      <button onClick={() => window.location.assign("/")}>reset</button>
         <CatalogueFilters
           title={t('software.type')}
           name={typesFilterName}
           filters={softwareTypesFilter}
           defaultValues={defaultTypes}
           onChange={handleChangeOnTypes}
-          radio={true}
+          radio
         />
         <CatalogueFilters
           title={t('software.categories')}

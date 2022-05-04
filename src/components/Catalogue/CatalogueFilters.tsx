@@ -39,7 +39,7 @@ const useStyles = createUseStyles<RuleNames, StyleProps>({
 const getCount = (filterValues: FormData) =>
   Object.values(filterValues).flat().length;
 
-export const CatalogueFilters: React.FC<CatalogueFiltersProps> = React.memo(
+export const CatalogueFilters: React.FC<CatalogueFiltersArrayProps | CatalogueFiltersStringProps> = React.memo(
   ({ title, filters, defaultValues = {}, onChange, radio = false, name }) => {
     const [selectedFiltersCount, setSelectedFiltersCount] = useState(
       getCount(defaultValues)
@@ -110,13 +110,20 @@ export const CatalogueFilters: React.FC<CatalogueFiltersProps> = React.memo(
     );
   }
 );
-interface CatalogueFiltersProps {
-  defaultValues: FormData;
+type CatalogueFiltersProps = {
   filters: Array<string[]>;
   name: string;
-  onChange: (a: string | string[]) => void;
-  radio?: boolean;
   title: string;
-}
+};
+type CatalogueFiltersArrayProps = CatalogueFiltersProps & {
+  radio?: false;
+  defaultValues: {[a: string]: string[]};
+  onChange: (a: string[]) => void;
+};
+type CatalogueFiltersStringProps = CatalogueFiltersProps & {
+  radio: true;
+  defaultValues: {[a: string]: string};
+  onChange: (a: string) => void;
+};
 
 CatalogueFilters.displayName = "CatalogueFilters";
