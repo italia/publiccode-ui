@@ -5,7 +5,7 @@ const config: GatsbyConfig = {
     title: `Publiccode UI`,
     siteUrl: `https://www.yourdomain.tld`
   },
-  plugins: ["gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-mdx", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
+  plugins: ["gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-mdx", "gatsby-plugin-sharp", "gatsby-transformer-sharp", "gatsby-transformer-yaml", {
     resolve: 'gatsby-source-filesystem',
     options: {
       "name": "images",
@@ -19,6 +19,13 @@ const config: GatsbyConfig = {
       "path": "./src/pages/"
     },
     __key: "pages"
+  },{
+    resolve: "gatsby-source-remote-file",
+    options: {
+      url: "https://crawler.developers.italia.it/softwares.yml",
+      name: "software",
+      ext: ".yml",
+    },
   }]
 };
 
