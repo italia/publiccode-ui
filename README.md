@@ -47,7 +47,7 @@ Here's the people who contributed
 
 Every contribution is welcome!
 
-# License
+## License
 
 Copyright (c) 2022 - Presidenza del Consiglio dei Ministri
 
