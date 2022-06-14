@@ -5,7 +5,7 @@
   publiccode-unnamed-ui
 </h1>
 <p align="center">
-  A web frontend to search and view software having a <code>publiccode.yml</code> in its repo.
+  A web frontend to search and view software having a <code>publiccode.yml</code> in their repo.
 </p>
 <p align="center">
   As of now it gets data from <a href="https://github.com/italia/developers-italia-backend">Developers Italia's publiccode crawler</a>.
