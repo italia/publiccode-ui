@@ -23,7 +23,6 @@ export const CatalogueHeader = React.memo(() => {
 
   return (
     <div className="text-center">
-      <h1 className={classes.header}>{t('software.catalogue')}</h1>
       <div className="row"></div>
       <div className="col-10 mx-auto text-center mb-3">
         <SearchBar onChange={handleSearch} defaultValue={searchValue} placeholder={t('search_form_label')} />

@@ -1,51 +1,52 @@
 import React from "react";
-import debounce from "lodash.debounce";
 import { createUseStyles } from "react-jss";
+import { Button } from "design-react-kit";
+import debounce from "lodash.debounce";
 import { useForm } from "react-hook-form";
 import { Icon } from "design-react-kit";
 import { DEBOUNCE_SEARCH_MS } from "../utils/constants";
 
-const useStyle = createUseStyles({
-  icon: {
-    minWidth: "40px",
-    minHeight: "40px",
-  },
-  searchBar: {
-    color: "var(--primary) !important",
-    fontSize: "3rem",
-    height: "auto !important",
-    width: "100%",
-    padding: ".375rem .75rem !important",
-    marginBottom: 0,
-  },
-});
-
 export const SearchBar: React.FC<SearchBarProps> = React.memo(
   ({ defaultValue = "", placeholder = "", onChange }) => {
+
+    const useStyle = createUseStyles({
+      searchBar: {
+        width: "80% !important",
+      },
+    });
+    const classes = useStyle();
+
     const { register } = useForm({
       defaultValues: {
         search: defaultValue,
       },
     });
-    const classes = useStyle();
 
     const handleOnChangeSearchValue = debounce((e) => {
       onChange(e.target.value);
     }, DEBOUNCE_SEARCH_MS);
 
     return (
-      <h2 className="d-flex align-items-center mb-0">
-        <Icon color="primary" icon="it-search" className="icon-lg mb-0" />
-        <input
-          data-testid="search-bar"
-          autoFocus={true}
-          placeholder={placeholder}
-          type="text"
-          className={classes.searchBar}
-          {...register("search")}
-          onChange={handleOnChangeSearchValue}
-        />
-      </h2>
+      <div className='form-group'>
+        <div className='input-group'>
+          <input
+            className={classes.searchBar}
+            data-testid="search-bar"
+            autoFocus={true}
+            placeholder={placeholder}
+            type="text"
+            onChange={handleOnChangeSearchValue}
+          />
+
+          <div className='input-group-append'>
+            <Button color="primary" icon>
+              <span className="rounded-icon">
+                <Icon color="primary" icon="it-search" />
+              </span>
+            </Button>
+          </div>
+       </div>
+     </div>
     );
   }
 );
