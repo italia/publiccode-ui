@@ -1,7 +1,7 @@
 import { useContext, useEffect, useReducer, useRef } from 'react';
-import { search } from '../services/searchEngine';
+import { useStaticQuery, graphql } from 'gatsby';
+import { useFlexSearch } from 'react-use-flexsearch';
 import { searchContextDispatch, searchContextState, incrementPage } from '../contexts/searchContext';
-
 const ADD_ITEMS = 'ADD_ITEMS';
 const SET_ITEMS = 'SET_ITEMS';
 const SET_IS_LOADING = 'SET_IS_LOADING';
@@ -61,59 +61,34 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
   // If we aren't in the "resume mode" use the default page size
   const size = reloadItemsUntilPage.current ? (reloadItemsUntilPage.current + 1) * pageSize : pageSize;
 
+  const {
+    localSearchPages: { index, store },
+  } = useStaticQuery(graphql`
+    query {
+      localSearchPages {
+        index
+        store
+      }
+    }
+  `);
+
   const fetchMore = () => {
     if (!isLoading && areMoreItemsAvailable(from, size, total)) {
       dispatchGlobal(incrementPage());
     }
   };
 
+  const results = useFlexSearch(searchValue, index, store);
+
   useEffect(() => {
-    const query = async () => {
-      dispatch({ type: SET_IS_LOADING });
-
-      try {
-        const [results, total] = await search(type, {
-          from,
-          filters: {
-            categories: filterCategories,
-            developmentStatuses: filterDevelopmentStatuses,
-            intendedAudiences: filterIntendedAudiences,
-          },
-          searchValue,
-          sortBy,
-          size,
-        });
-
-        dispatch({
-          type: from === 0 ? SET_ITEMS : ADD_ITEMS,
-          value: {
-            items: results,
-            total,
-          },
-        });
-      } catch (e) {
-        dispatch({
-          type: SET_ERROR,
-          value: {
-            errorMessage: `(Elasticsearch) ${e?.message}`,
-          },
-        });
-      }
-
-      reloadItemsUntilPage.current = false; // The "resume mode" is valid only for one iteration. Starting from the next iteration the items fetching will return to act normally
-    };
-    query();
-  }, [
-    type,
-    searchValue,
-    filterCategories,
-    filterDevelopmentStatuses,
-    filterIntendedAudiences,
-    sortBy,
-    page,
-    from,
-    size,
-  ]);
+    dispatch({
+      type: from === 0 ? SET_ITEMS : ADD_ITEMS,
+      value: {
+        items: results,
+        total: results.length,
+      },
+    });
+  }, [from, results]);
 
   return [errorMessage, items, total, fetchMore];
 };
