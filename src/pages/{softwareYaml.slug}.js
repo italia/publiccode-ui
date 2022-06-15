@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable react/prop-types */
 
 import React, { useState } from 'react';
@@ -17,7 +18,7 @@ import { TagList } from '../components/TagList';
 // TODO: remove eslint-disable
 // eslint-disable-next-line max-lines-per-function,arrow-body-style
 const Software = ({ data: { softwareYaml: software } }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const useStyles = createUseStyles({
     imageGallery: {
@@ -33,6 +34,13 @@ const Software = ({ data: { softwareYaml: software } }) => {
   const toggle = () => {
     setCollapse(!collapse);
   };
+
+  const localizedDescription =
+    software.publiccode.description[i18n.language] ||
+    software.publiccode.description.en ||
+    software.publiccode.description[
+      Object.keys(software.publiccode.description).find((k) => software.publiccode.description[k])
+    ];
 
   return (
     <>
@@ -54,7 +62,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                     </>
                   )}
                 </h2>
-                <h3 className="my-2 my-md-4">{software.publiccode.description.it.shortDescription}</h3>
+                <h3 className="my-2 my-md-4">{localizedDescription.shortDescription}</h3>
                 <div className="my-3 d-flex justify-content-center">
                   <ul className="list-inline">
                     <TagList tags={software.publiccode.categories} visibleCount={3} />
@@ -244,10 +252,10 @@ const Software = ({ data: { softwareYaml: software } }) => {
                 </div>
               )}
 
-              {software.publiccode.description.it?.documentation && (
+              {localizedDescription.documentation && (
                 <div>
                   <p>
-                    <a href={software.publiccode.description.it?.documentation}>
+                    <a href={localizedDescription.documentation}>
                       <Icon icon="it-files" className="mr-2" />
                       <span className="font-weight-bold">{t('software.goToDocumentation')} &rarr;</span>
                     </a>
@@ -279,10 +287,10 @@ const Software = ({ data: { softwareYaml: software } }) => {
         </div>
       </div>
 
-      {software.publiccode.description?.it.screenshots && (
+      {localizedDescription.screenshots && (
         <div className={`my-5 col-5 offset-3 ${classes.imageGallery}`}>
           <ImageGallery
-            items={software.publiccode.description?.it.screenshots.map((s) => ({ original: s, thumbnail: s }))}
+            items={localizedDescription.screenshots.map((s) => ({ original: s, thumbnail: s }))}
             showPlayButton={false}
             showBullets={true}
             showFullscreenButton={false}
@@ -369,23 +377,23 @@ const Software = ({ data: { softwareYaml: software } }) => {
                   </div>
                   {/* {% endif %} */}
 
-                  {software.publiccode.description.it?.awards?.length > 0 && (
+                  {localizedDescription.awards?.length > 0 && (
                     <div className="other-detail">
                       <p>
                         <span className="label">{t('software.awards')}</span>
 
-                        {software.publiccode.description.it?.awards.map((award, i) => (
+                        {localizedDescription.awards.map((award, i) => (
                           <p key={i}>{award}</p>
                         ))}
                       </p>
                     </div>
                   )}
 
-                  {software.publiccode.description.it?.apiDocumentation && (
+                  {localizedDescription.apiDocumentation && (
                     <div>
                       <p>
                         <span className="label">{t('software.api_documentation')}</span>
-                        <a href={software.publiccode.description.it.apiDocumentation}> API</a>
+                        <a href={localizedDescription.apiDocumentation}> API</a>
                       </p>
                     </div>
                   )}
@@ -399,7 +407,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                   * TODO: find a better solution
                 */}
                 <div className="mt-5" data-proofer-ignore>
-                  <ReactMarkdown>{software.publiccode.description.it?.longDescription}</ReactMarkdown>
+                  <ReactMarkdown>{localizedDescription.longDescription}</ReactMarkdown>
                 </div>
               </div>
             </div>
@@ -411,8 +419,8 @@ const Software = ({ data: { softwareYaml: software } }) => {
                 <div className="mx-md-4 px-md-4 my-2 my-md-4">
                   <h2>{t('software.functionality')}</h2>
                   <div className="function-list">
-                    {software.publiccode.description.it?.features && (
-                      <CollapsableList items={software.publiccode.description.it?.features} visibleCount={10} />
+                    {localizedDescription.features && (
+                      <CollapsableList items={localizedDescription.features} visibleCount={10} />
                     )}
                   </div>
                   {software.publiccode.usedBy?.size > 0 && (
@@ -449,7 +457,17 @@ export const query = graphql`
           repoOwner
           license
         }
+        # TODO: GraphQL doesn't have wildcards, we should find a better solution here
         description {
+          en {
+            localisedName
+            shortDescription
+            longDescription
+            apiDocumentation
+            documentation
+            features
+            screenshots
+          }
           it {
             localisedName
             shortDescription
