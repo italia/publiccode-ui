@@ -1,760 +1,507 @@
-import * as React from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+/* eslint-disable complexity */
+/* eslint-disable react/prop-types */
 
+import React, { useState } from 'react';
+import { createUseStyles } from 'react-jss';
+import ReactMarkdown from 'react-markdown';
+import { useTranslation } from 'react-i18next';
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import { graphql } from 'gatsby';
+
+import { Badge, Collapse, Icon } from 'design-react-kit';
+
+import '../i18n';
+import { CollapsableList } from '../components/CollapsableList';
+import { TagList } from '../components/TagList';
+
+// TODO: remove eslint-disable
+// eslint-disable-next-line max-lines-per-function,arrow-body-style
 const Software = ({ data: { softwareYaml: software } }) => {
+  const { t, i18n } = useTranslation();
+
+  const useStyles = createUseStyles({
+    imageGallery: {
+      '& img.image-gallery-image': {
+        height: '400px',
+      },
+    },
+  });
+
+  const classes = useStyles();
+
+  const [collapse, setCollapse] = useState(false);
+  const toggle = () => {
+    setCollapse(!collapse);
+  };
+
+  const localizedDescription =
+    software.publiccode.description[i18n.language] ||
+    software.publiccode.description.en ||
+    software.publiccode.description[
+      Object.keys(software.publiccode.description).find((k) => software.publiccode.description[k])
+    ];
+
   return (
-<>
-<div class="container page-software-detail">
-  <div class="row intro">
-    <div class="col-md-7">
-      <div class="intro-name">
-        {/* {% if page.publiccode.logo %} */}
-        {/* {% if page.publiccode.logo contains 'github' and page.publiccode.logo contains '.svg' %} */}
-        {/* {% assign logo = page.publiccode.logo | append: '?sanitize=true' %} */}
-        {/* {% else %} */}
-        {/* {% assign logo = page.publiccode.logo %} */}
-        {/* {% endif %} */}
-        <img alt="" src={software.publiccode.logo} class="d-inline-block" />
-        {/* {% endif %} */}
-        <h1 class="d-inline-block">
-	  {software.publiccode.name}
-          <span class="badge badge-pill badge-pill--sup badge-primary">{software.publiccode.softwareVersion}</span>
-        </h1>
-        <div class="abstract-software">
-          <h2>
-            {/* {% if page.publiccode.isBasedOn.size > 0 %} */}
-            <br/>
-            <span class="abstract-software__variant">{/* {{ t.software.variant_by }} */}
-              {software.publiccode.legal.repoOwner}
-	    </span>
-            {/* {% endif %} */}
-          </h2>
-          <h3 class="color-content font-serif my-2 my-md-4">
-	    {software.publiccode.description.it.shortDescription}
-          </h3>
-          <div class="my-3">
-            <ul class="home-software-tags__list list-inline">
-              {/* {% for tag in page.popularCategories limit: 3 %} */}
-              {/* {% include set-tag.html tag=tag %} */}
-              {/* {% endfor %} */}
-            </ul>
-          </div>
-          <div class="row legal-main-info">
-            <div class="col-sm">
-              <p><span class="label">{/* {{ t.software.published_by }} */} </span>
-                {/* {% if page.publiccode.it.riuso.codiceIPA %} */}
-                <a href="/{/* {{ active_lang }}/pa/{{ page.publiccode.it.riuso.codiceIPA | downcase }} */}">
-                {/* {{ page.publiccode.legal.repoOwner | default: page['it-riuso-codiceIPA-label'] }} */}
-                </a>
-                {/* {% else %} */}
-                {/* {{ page.publiccode.legal.repoOwner | default: page['it-riuso-codiceIPA-label'] }} */}
-                {/* {% endif %} */}
-              </p>
-            </div>
-            {/* {% if page.publiccode.maintenance.type == "contract" %} */}
-            {/* {% if page.publiccode.maintenance.contractors.size > 0 %} */}
-            <div class="col-sm">
-              <p><span class="label">{/* {{ t.software.software_maintained_by }} */} </span>
-                {/* {% for contractor in page.publiccode.maintenance.contractors %} */}
-                    {/* {% if contractor.website != nil and contractor.website != "" %} */}
-                        <a href="{/* {{ contractor.website }} */}">{/*{ contractor.name }*/}</a>
-                    {/* {% else %} */}
-                        {/* {{ contractor.name}} */}
-                    {/* {% endif %} */}
-                {/* {% endfor %} */}
-              </p>
-            </div>
-            {/* {% endif %} */}
-            {/* {% endif %} */}
+    <>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-7">
+            <div>
+              <img alt="" width={100} src={software.publiccode.logo} className="d-inline-block" />
+              <h1 className="d-inline-block">{software.publiccode.name}</h1>
+              <div>
+                <h2>
+                  {software.publiccode.isBasedOn && (
+                    <>
+                      <br />
+                      <span>
+                        {t('software.variant_by')}
+                        {software.publiccode.legal.repoOwner}
+                      </span>
+                    </>
+                  )}
+                </h2>
+                <h3 className="my-2 my-md-4">{localizedDescription.shortDescription}</h3>
+                <div className="my-3 d-flex justify-content-center">
+                  <ul className="list-inline">
+                    <TagList tags={software.publiccode.categories} visibleCount={3} />
+                  </ul>
+                </div>
+                <div className="row">
+                  {software.publiccode.legal.repoOwner && (
+                    <div className="col-3">
+                      <div className="row">
+                        <span className="label text-muted">{t('software.published_by')}</span>{' '}
+                      </div>
+                      <p className="row">{software.publiccode.legal.repoOwner}</p>
+                    </div>
+                  )}
 
-            {/* {% if page.publiccode.maintenance.contacts.size > 0 %} */}
-            <div class="col-sm">
-              <p><span class="label">{/* {{ t.software.technical_contact }} */} </span>
-                {/* {% for contact in page.publiccode.maintenance.contacts limit: 1 %} */}
-                    {/* {% if contact.email != nil and contact.email != "" %} */}
-                    <a href="mailto:{/* {{ contact.email }} */}">{/* { contact.name }} */}</a>
-                    {/* {% else %} */}
-                    {/* {{ contact.name }} */}
-                    {/* {% endif %} */}
-                    {/* {{ contact.phone }} */}
-                {/* {% endfor %} */}
-              </p>
-            </div>
-            {/* {% endif %} */}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="offset-md-1 col-md-4 ">
-      <div class="drops-details">
-        <div class="vitality-score">
-          <p>{/* {{ t.software.vitality }} */}:</p>
-          <p class="score d-inline-block"> {/* {{ page.vitalityScore }} */}%</p>
-          {/* {% if page.vitalityDataChart != nil %} */}
-          <div id="softwareChart" data-vitality='{/* {{page.vitalityDataChart | reverse | jsonify}} */}'>
-            <canvas id="vitalityChart"></canvas>
-          </div>
-          {/* {% endif %} */}
-          <div class="info-block d-inline-block">
-            <span class="info-block__icon">i</span>
-            <div class="info-block__msg font-serif">
-              {/* {{t.software.tooltip | markdownify}} */}
-            </div>
-          </div>
-          <div class="status-developement">
-            <p>{/* {{ t.software.development_status }} */}:  include software_development_status.html
-              label=page.publiccode.developmentStatus </p>
-          </div>
-        </div>
-      </div>
+                  <div className="col-3">
+                    <div className="row text-muted">{t('software.last_release')}</div>
+                    <div className="row">
+                      {software.publiccode.releaseDate}
+                      {software.publiccode.softwareVersion && `(${software.publiccode.softwareVersion})`}
+                    </div>
+                  </div>
 
-      <div class="drops-details">
-        {/* {% if page.publiccode.landingURL != null and page.publiccode.landingURL != "" %} */}
-        <div class="goto">
-          <p>
-            <a
-              href="{/* {{ page.publiccode.landingURL }} */}"
-              aria-label="{/* {{ t.software.goToLandingUrlAriaLabel }} */}"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <img alt="" src="/assets/icons/software_icons/it-link.svg"/>{/* {{ t.software.goToLandingUrl }} */} &rarr;</a>
-          </p>
-        </div>
-        {/* {% endif %} */}
+                  {software.publiccode.maintenance.type === 'contract' &&
+                    software.publiccode.maintenance.contractors?.length > 0 && (
+                      <div className="col-3">
+                        <span className="label">{t('software.software_maintained_by')} </span>
+                        {software.publiccode.maintenance.contractors.map((c) => {
+                          c.website ? (
+                            <p>
+                              <a href={c.website}>{c.name}</a>
+                            </p>
+                          ) : (
+                            <p>{c.name}</p>
+                          );
+                        })}
+                      </div>
+                    )}
 
-        {/* {% if description.documentation != null and description.documentation != "" %} */}
-        <div class="goto doc">
-          <p><a href="{/* {{ description.documentation }} */}"><img alt="" src="/assets/icons/software_icons/it-documentazione.svg" />
-	{/*{ t.software.goToDocumentation }*/} &rarr;</a></p>
-        </div>
-        {/* {% endif %} */}
-        <div class="goto code">
-          <p><a href="{/* {{ page.publiccode.url }} */}"> <img alt="" src="/assets/icons/software_icons/it-codice.svg"/>
-	  {/*{ t.software.goToCode }*/} &rarr;</a></p>
-        </div>
-        {/* {% if page.publiccode.roadmap != null and page.publiccode.roadmap != "" %} */}
-        <div class="goto road">
-          <p><a href="{/* {{ page.publiccode.roadmap }} */}"><img alt="" src="/assets/icons/software_icons/it-roadmap.svg"/>
-	{/*{ t.software.goToRoadmap }*/} &rarr;</a></p>
-        </div>
-        {/* {% endif %} */}
+                  {software.publiccode.maintenance.contacts && (
+                    <div className="col-3">
+                      <div className="row label text-muted">
+                        {t('software.technical_contact', { count: software.publiccode.maintenance.contacts.length })}
+                      </div>{' '}
+                      {software.publiccode.maintenance.contacts.map((contact) => {
+                        if (contact.email) {
+                          return (
+                            <div className="row">
+                              <a href={`mailto:${contact.email}`}>{contact.name}</a> {contact.phone}{' '}
+                            </div>
+                          );
+                        }
+                        return (
+                          <>
+                            {contact.name} {contact.phone}{' '}
+                          </>
+                        );
+                      })}
+                    </div>
+                  )}
 
-        {/* {% if active_lang == 'it' %} */}
-        <div class="goto">
-          <p>
-            <a href="/it/riuso/dichiarazione" onclick="localStorage.setItem('reuse-repo', '{/* {{ page.publiccode.url }} */}'); return true">
-              <img alt="" src="/assets/icons/software_icons/it-check.svg"/>
-	{/*{ t.software.declare_reuse }*/} &rarr;
-            </a>
-          </p>
-        </div>
-        {/* {% endif %} */}
-      </div>
-    </div>
-  </div>
-</div>
+                  <div className="col-3">
+                    <a
+                      className="text-decoration-none font-weight-bold"
+                      href="#"
+                      onClick={() => toggle()}
+                      aria-expanded={collapse}
+                    >
+                      {t('show_more')} »
+                    </a>
+                  </div>
+                </div>
 
-{/* {% if description.screenshots.size > 0 or description.videos > 0 %} */}
-{/* {% include tiled-gallery.html screenshots=description.screenshots videos=description.videos oembed=page.oEmbedHTML %} */}
-{/* {% endif %} */}
-<hr class="divider mb-0"/>
+                <Collapse isOpen={collapse}>
+                  <div className="row mt-3">
+                    <div className="col-3">
+                      <div className="row text-muted">{t('software.maintainance_type')}</div>
+                      <div className="row">{software.publiccode.maintenance.type}</div>
+                    </div>
+                    {software.publiccode.maintenance.type === 'contract' &&
+                      software.publiccode.maintenance.contractors && (
+                        <div className="col-3">
+                          <div className="row text-muted">{t('software.contract_with')}</div>
+                          <div className="row">
+                            {software.publiccode.maintenance.contractors.map((contractor) => (
+                              // <title id="software-support-ended">{t('software.contract_warning')}</title>
+                              <>
+                                {Date.now() > contractor.until && (
+                                  <Icon className="" color="" icon="it-warning" size="" />
+                                )}
+                                <span className="align-middle">
+                                  {contractor.website && <a href={contractor.website}>{contractor.name}</a>}
+                                  {t('software.until')}
+                                </span>
+                              </>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
-<div class="{/* {% if page.oldVariant.size != nil %}container{% else %} container-fluid {% endif %} */}">
-  <div class="functionality">
-    {/* {% if page.oldVariant.size != nil %} */}
-    <h2 class="mt-2 mt-md-5"> {/* {{ t.software.functionality }} */} </h2>
-    <div class="sw-separator-arrows d-none d-md-block"></div>
-    {/* {% endif %} */}
-    <div class="row {/* {% if page.oldVariant.size == nil %} first {% endif %} */}">
-      {/* {% if page.oldVariant.size == nil %} */}
-      <div class="col-md-6 software-ill"></div>
-      {/* {% endif %} */}
-      {/* {% if page.publiccode.isBasedOn != nil %} */}
-      <div class="col-xs-5 col-md-5 col-lg-4 variant">
-        <div class="{/* {% if page.oldVariant.size == nil %}mx-md-4 px-md-4 my-2 my-md-4{%endif%} */}">
-          {/* {% if page.oldVariant.size == nil %} */}
-          <h2> {/* {{ t.software.functionality }} */} </h2>
-          {/* {% else %} */}
-          <h4> {/* {{ t.software.functionality_this_variant }} */} </h4>
-          {/* {% endif %} */}
-          {/* {% if description.features.size > 0 %} */}
-          <div class="function-list">
-            {/* {% if description.features.size > 10 %} */}
-            {/* {% for feature in description.features limit: 10 %} */}
-            <p> {/* {{ feature | escape}} */} </p>
-            {/* {% endfor %} */}
-            <p>
-              <a data-toggle="collapse" href="#otherFeature" role="button" aria-expanded="false"
-                aria-controls="otherFeature" class="count">{/* {{t.software.show_all }} */}
-                <span class="or it-expand"></span>
-                <span class="and it-collapse"></span>
-              </a>
-            </p>
-            <div class="collapse" id="otherFeature">
-              {/* {% for feature in description.features offset: 10 %} */}
-              <p> {/* {{ feature | escape}} */} </p>
-              {/* {% endfor %} */}
-            </div>
-            {/* {% else %} */}
-            {/* {% for feature in description.features %} */}
-            <p> {/* {{ feature | escape }} */} </p>
-            {/* {% endfor %} */}
-            {/* {% endif %} */}
-          </div>
-          {/* {% endif %} */}
-          {/* {% if page.publiccode.usedBy.size > 0 %} */}
-          <div id="usedBy">
-            <a data-toggle="collapse" href="#by-amministration" role="button" aria-expanded="false"
-              aria-controls="by-amministration" class="count">
-              {/* {{ t.software.used_by}} {{ page.publiccode.usedBy | size }} */}
-              {/* {% if page.publiccode.usedBy.size >= 1 %} */}
-              {/* {{ t.software.administrations }} */}
-              {/* {% else %} */}
-              {/* {{ t.software.administration }} */}
-              {/* {% endif %} */}
-              <span class="or it-expand"></span>
-              <span class="and it-collapse"></span>
-            </a>
-            <div class="collapse" id="by-amministration">
-              {/* {% for item in page.publiccode.usedBy %} */}
-              <p> {/* {{ item | escape}} */} </p>
-              {/* {% endfor %} */}
-            </div>
-          </div>
-          {/* {% endif %} */}
-        </div>
-      </div>
+                    <div className="col-3">
+                      <div className="row text-muted">{t('software.license')}</div>
+                      <div className="row">{software.publiccode.legal.license}</div>
+                    </div>
 
-      {/* {% if page.oldVariant.size != nil %} */}
-      <div class="col-xs-2 col-md-2 col-lg-4"></div>
-      <div class="col-xs-5 col-md-5 col-lg-4 variant">
-        <h4> {/* {{ t.software.functionality_other_variant }} */} </h4>
-        <div class="function-list">
-          {/* {% if oldFeatures %} */}
-          {/* {% if oldFeatures.size > 10 %} */}
-          {/* {% for feature in oldFeatures limit: 10 %} */}
-          <p> {/* {{ feature | escape}} */} </p>
-          {/* {% endfor %} */}
-          <a data-toggle="collapse" href="#otherFeature" role="button" aria-expanded="false"
-            aria-controls="otherFeature" class="count">
-	{/*{ t.software.show_all }*/}
-            <span class="or it-expand"></span>
-            <span class="and it-collapse"></span>
-          </a>
-          <div class="collapse" id="otherFeature">
-            {/* {% for feature in oldFeatures offset: 10 %} */}
-            <p> {/* {{ feature | escape }} */} </p>
-            {/* {% endfor %} */}
-          </div>
-          {/* {% else %} */}
-          {/* {% if oldFeatures.size <= 10 %} */}
-          {/* {% for feature in oldFeatures %} */}
-          <p> {/* {{ feature | escape }} */} </p>
-          {/* {% endfor %} */}
-          {/* {% endif %} */}
-          {/* {% endif %} */}
-          {/* {% endif %} */}
-        </div>
-        <div id="oldVariant">
-          <a data-toggle="collapse" href="#listVariant" role="button" aria-expanded="false" aria-controls="listVariant"
-            class="count">
-            {/* {{ page.oldVariant | size }} */}
-            {/* {% if page.oldVariant.size > 1 %} */}
-            {/* {{ t.software.variants_present }} */}
-            {/* {% else %} */}
-            {/* {{ t.software.variant_present }} */}
-            {/* {% endif %} */}
-            <span class="or it-expand"></span>
-            <span class="and it-collapse"></span>
-          </a>
-          <div class="collapse" id="listVariant">
-            {/* {% for variant in page.oldVariant %} */}
-            {/* {% assign variant_sw = site.data.crawler.softwares | where: "id", variant.id | first %} */}
-            {/*% assign variant_description = variant.publiccode.description[active_lang]
+                    {software.publiccode.platforms?.length > 0 && (
+                      <div className="col-3">
+                        <div className="row text-muted">{t('software.platforms')}</div>
+                        {software.publiccode.platforms.map((platform, i) => (
+                          <div className="row" key={i}>
+                            {platform}
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-            | default: variant.publiccode.description.en
-            | default: variant.publiccode.description.it %*/}
-            <div class="variantDetail">
-              <a href="/{/* {{active_lang}}/software/{{ variant.slug | downcase }} */}">
-              {/* {{ variant.publiccode.name }} */}
-              </a>
-              {/* {{ t.software.variant_by }} {{ variant.publiccode.legal.repoOwner }} */}
-              <p><span class="label">{/* {{ t.software.vitality }} */}:
-                  {/* {{ variant_sw.vitalityScore }} */}%</span>
-              </p>
-            </div>
-            {/* {% endfor %} */}
-          </div>
-        </div>
-      </div>
-      {/* {% endif %} */}
-      {/* {% else %} */}
-
-      {/*<!-- Funzionalità sw when single block with side img-->*/}
-      <div class="col-md-6 variant">
-        <div class="{/* {% if page.oldVariant.size == nil %}mx-md-4 px-md-4 my-2 my-md-4{%endif%} */}">
-          {/* {% if page.oldVariant.size != nil %} */}
-          <h2> {/* {{ t.software.functionality_this_variant }} */} </h2>
-          {/* {% else %} */}
-          <h2> {/* {{ t.software.functionality }} */} </h2>
-          {/* {% endif %} */}
-          <div class="function-list">
-            {/* {% if description.features.size > 10 %} */}
-            {/* {% for feature in description.features limit: 10 %} */}
-            <p> {/* {{ feature | escape }} */} </p>
-            {/* {% endfor %} */}
-            <p>
-              <a data-toggle="collapse" href="#otherFeature" role="button" aria-expanded="false"
-                aria-controls="otherFeature" class="count">{/*{
-                t.software.show_all }*/}
-                <span class="or it-expand"></span>
-                <span class="and it-collapse"></span>
-              </a>
-            </p>
-            <div class="collapse" id="otherFeature">
-              {/* {% for feature in description.features offset: 10 %} */}
-              <p> {/* {{ feature | escape }} */} </p>
-              {/* {% endfor %} */}
-            </div>
-            {/* {% else %} */}
-            {/* {% for feature in description.features %} */}
-            <p> {/* {{ feature | escape }} */} </p>
-            {/* {% endfor %} */}
-            {/* {% endif %} */}
-          </div>
-          {/* {% if page.publiccode.usedBy.size != nil %} */}
-          <div id="usedBy">
-            <a data-toggle="collapse" href="#by-amministration" role="button" aria-expanded="false"
-              aria-controls="by-amministration" class="count">
-              {/* {{ t.software.used_by}} {{ page.publiccode.usedBy | size }} */}
-              {/* {% if page.publiccode.usedBy.size >= 1 %} */}
-              {/* {{ t.software.administrations }} */}
-              {/* {% else %} */}
-              {/* {{ t.software.administration }} */}
-              {/* {% endif %} */}
-              <span class="or it-expand"></span>
-              <span class="and it-collapse"></span>
-            </a>
-            <div class="collapse" id="by-amministration">
-              {/* {% for item in page.publiccode.usedBy %} */}
-              <p> {/* {{ item | escape }} */} </p>
-              {/* {% endfor %} */}
-            </div>
-          </div>
-          {/* {% endif %} */}
-        </div>
-      </div>
-      {/* {% endif %} */}
-    </div>
-  </div>
-</div>
-
-{/* {% if page.publiccode.intendedAudience.scope %} */}
-<div class="container">
-  <div class="tags-relate text-center">
-    <strong>{/* {{ t.software.intended_audience | upcase }} */}</strong>
-    {/* {% for tag in page.publiccode.intendedAudience.scope limit: 10 %} */}
-    {/* {% include set-tag.html tag=tag field="intended_audiences" %} */}
-    {/* {% endfor %} */}
-  </div>
-</div>
-{/* {% elsif page.publiccode.categories %} */}
-<div class="container">
-  <div class="tags-relate text-center">
-    <strong>{/* {{ t.software.categories | upcase }} */}</strong>
-    {/* {% for tag in page.publiccode.categories limit: 3 %} */}
-    {/* {% include set-tag.html tag=tag field="categories" %} */}
-    {/* {% endfor %} */}
-  </div>
-</div>
-{/* {% endif %} */}
-
-<div class="detail-sheet">
-  <div class="container sheet">
-    <div class="top">
-    </div>
-    <div class="content-sheet">
-      <div class="row justify-content-center ">
-        <div class="col-10 col-sm-10">
-          <div class="heading-title">
-            <p>{/* {{ t.software.detailed_info }} */} </p>
-            <div class="title">
-              <h2 class="h1">
-                {/* {{ sw_name | escape }} */}
-                {/* {% if page.publiccode.softwareVersion %} */}
-                <span
-                  class="badge badge-pill badge-pill--sup badge-primary">{/* {{ page.publiccode.softwareVersion }} */}</span>
-                {/* {% endif %} */}
-              </h2>
-              <h2>
-                {/* {{ description.genericName | escape }} */}
-              </h2>
-            </div>
-          </div>
-          <div class="heading-maintenance">
-            <div class="row">
-              <div class="col-5 col-sm-5 col-md-2">
-                <p>
-                  <span class="label">{/* {{ t.software.last_release }} */}</span>
-                  {/* {{ page.publiccode.releaseDate }} */}
-                  {/* {% if page.publiccode.softwareVersion %} */}
-                  ({/* {{ page.publiccode.softwareVersion }} */})
-                  {/* {% endif %} */}
-                </p>
+                    <div className="col-3">
+                      <div className="row text-muted">{t('software.dependencies_list')}</div>
+                      <div className="row">
+                        {!software.publiccode.dependsOn && t('software.dependencies_none')}
+                        {software.publiccode.dependsOn?.open?.map((software, i) => (
+                          <div className="row p-1" key={i}>
+                            <Badge color="success">{t('software.dependencies_oss')}</Badge>{' '}
+                            <span className="pl-1">
+                              {software.name} {software.optional ? `(${t('software.dependencies_optional')})` : ''}
+                            </span>
+                          </div>
+                        ))}
+                        {software.publiccode.dependsOn?.hardware?.map((software, i) => (
+                          <div className="row p-1" key={i}>
+                            <Badge color="secondary">Hardware</Badge>{' '}
+                            <span className="pl-1">
+                              {software.name} {software.optional ? `(${t('software.dependencies_optional')})` : ''}
+                            </span>
+                          </div>
+                        ))}
+                        {software.publiccode.dependsOn?.proprietary?.map((software, i) => (
+                          <div className="row p-1" key={i}>
+                            <Badge color="danger">{t('software.dependencies_proprietary')}</Badge>{' '}
+                            <span className="pl-1">
+                              {software.name} {software.optional ? `(${t('software.dependencies_optional')})` : ''}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </Collapse>
               </div>
-              <div class="col-7 col-sm-7 col-md-3">
-                <p>
-                  <span class="label">{/* {{ t.software.maintainance_type }} */}</span>
-                  {/* {{ page.publiccode.maintenance.type }} */}
-                </p>
-              </div>
-              {/* {% if page.publiccode.maintenance.type == "contract" %} */}
-              {/* {% if page.publiccode.maintenance.contractors[0].name != nil %} */}
-              <div class="col-sm-12 col-md">
-                <p>
-                  <span class="label">{/* {{ t.software.contract_with }} */}</span>
-                  {/* {% for contractor in page.publiccode.maintenance.contractors %} */}
-                    {/* {% assign today_date = 'now' | date: '%s' %} */}
-                    {/* {% assign contractor_date = contractor.until | date: '%s' %} */}
-                    {/* {% if today_date > contractor_date %} */}
-                    <svg class="icon icon-sm icon-warning" role="img" aria-labelledby="software-support-ended">
-                      <title id="software-support-ended">{/* {{ t.software.contract_warning }} */}</title>
-			{/*<use xlink:href="/assets/svg/sprite.svg#it-warning-circle"></use>*/}
-                    </svg>
-                    {/* {% endif %} */}
-                    <span class="align-middle">
-                      {/* {% if contractor.website != nil and contractor.website != "" %} */}
-                      <a href="{{ contractor.website }}" class="until">{/*{ contractor.name }} */}</a>
-                      {/* {{ t.software.until }} {{contractor.until}} */}
-                      {/* {% else %} */}
-                      {/* {{ contractor.name }} {{ t.software.until }} {{contractor.until}} */}
-                      {/* {% endif %} */}
-                    </span>
-                  {/* {% endfor %} */}
-                </p>
-              </div>
-              {/* {% endif %} */}
-              {/* {% endif %} */}
             </div>
           </div>
 
-          {/* {% if page.publiccode.maintenance.contacts.size > 0 %} */}
-          <div class="heading-maintenance-contact">
-            <p class="d-none d-md-block">
-              <span class="label">
-                {/* {% if page.publiccode.maintenance.contacts.size == 1 %} */}
-                {/* {{ t.software.technical_contact }} */}
-                {/* {% else %} */}
-                {/* {{ t.software.technical_contacts }} */}
-                {/* {% endif %} */}
-              </span>
-            </p>
-            <a data-toggle="collapse" href="#maintenanceContact" role="button" aria-expanded="false"
-              aria-controls="maintenanceContact" class="d-block d-md-none controls">
-              {/* {% if page.publiccode.maintenance.contacts.size == 1 %} */}
-              {/* {{ t.software.technical_contact }} */}
-              {/* {% else %} */}
-              {/* {{ t.software.technical_contacts }} */}
-              {/* {% endif %} */}
-              <span class="or it-expand"></span>
-              <span class="and it-collapse"></span>
-            </a>
-            <div id="maintenanceContact" class="collapse dont-collapse-md">
-              <div class="row">
-                {/* {% for contact in page.publiccode.maintenance.contacts %} */}
-                <div class="col-md">
+          <div className="offset-md-1 col-md-4 ">
+            <div>
+              {/* TODO vitality
+              <div>
+                <p>{t('software.vitality')}:</p>
+                <p className="score d-inline-block"> {page.vitalityScore}%</p>
+                <div id="softwareChart" data-vitality={page.vitalityDataChart}>
+                  <canvas id="vitalityChart"></canvas>
+                </div>
+                <div className="info-block d-inline-block">
+                  <span className="info-block__icon">i</span>
+                  <div className="info-block__msg font-serif">{t.software.tooltip}</div>
+                </div>
+                <div className="status-developement">
+                  <p>{`${t('software.development_status')}: ${software.publiccode.developmentStatus}`}</p>
+                </div>
+              </div>
+              */}
+            </div>
+
+            <div className="pt-5 mt-5">
+              {software.publiccode.landingURL && (
+                <div>
                   <p>
-                    {/* {% if contact.email != nil and contact.email != "" %} */}
-                    <a href="mailto: {{ contact.email }}">{/*{ contact.name }} */}</a>
-                    {/* {% else %} */}
-                    {/* {{ contact.name | escape }} */}
-                    {/* {% endif %} */}
-                    {/* {{ contact.phone }} */}
+                    <a
+                      href={software.publiccode.landingURL}
+                      aria-label={t('software.goToLandingUrlAriaLabel')}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <Icon icon="it-link" className="mr-2" />
+                      <span className="font-weight-bold">{t('software.goToLandingUrl')} &rarr;</span>
+                    </a>
                   </p>
                 </div>
-                {/* {% endfor %} */}
+              )}
+
+              {localizedDescription.documentation && (
+                <div>
+                  <p>
+                    <a href={localizedDescription.documentation}>
+                      <Icon icon="it-files" className="mr-2" />
+                      <span className="font-weight-bold">{t('software.goToDocumentation')} &rarr;</span>
+                    </a>
+                  </p>
+                </div>
+              )}
+
+              <div>
+                <p>
+                  <a href={software.publiccode.url}>
+                    <Icon icon="it-code-circle" className="mr-2" />
+                    <span className="font-weight-bold">{t('software.goToCode')} &rarr;</span>
+                  </a>
+                </p>
               </div>
+
+              {software.publiccode.roadmap && (
+                <div>
+                  <p>
+                    <a href={software.publiccode.roadmap}>
+                      <Icon icon="it-chart-line" className="mr-2" />
+                      <span className="font-weight-bold">{t('software.goToRoadmap')} &rarr;</span>
+                    </a>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-          {/* {% endif %} */}
+        </div>
+      </div>
 
-          <div class="heading-legal-dependencies">
-            <div class="row">
-              <div class="col-6 col-md">
-                <p>
-                  <span class="label">{/* {{ t.software.license }} */}</span>
-                  {/* {{ page.publiccode.legal.license | escape }} */}
-                </p>
-              </div>
-              {/* {% if page.publiccode.platforms.size > 0 %} */}
-              <div class="col-6 col-md">
-                <p>
-                  <span class="label">{/* {{ t.software.platforms }} */}</span>
-                  {/* {% for platform in page.publiccode.platforms %} */}
-                      {/* {{ platform | escape }} */}<br />
-                  {/* {% endfor %} */}
-                </p>
-              </div>
-              {/* {% endif %} */}
+      {localizedDescription.screenshots && (
+        <div className={`my-5 col-5 offset-3 ${classes.imageGallery}`}>
+          <ImageGallery
+            items={localizedDescription.screenshots.map((s) => ({ original: s, thumbnail: s }))}
+            showPlayButton={false}
+            showBullets={true}
+            showFullscreenButton={false}
+          />
+        </div>
+      )}
 
-              <div class="col-6 col-md">
-                <p>
-                  <span class="label">{/* {{ t.software.enabling_platforms }} */}</span>
-                  {/* {% assign p = page.publiccode.it.piattaforme %} */}
-                  {/* {% assign all_false = true %} */}
-                  {/* {% for key in p %} */}
-                  {/* {% if key.last == true %} */}
-                  {/* {% assign all_false = false %} */}
-                  {/* {% break %} */}
-                  {/* {% endif %} */}
-                  {/* {% endfor %} */}
-                  {/* {% if all_false %} */}
-                  {/* {{ t.software.dependencies_none }} */}
-                  {/* {% else %} */}
-                      {/* {% if p.pagopa == true %} */}
-                      <a href="/{/* {{ active_lang }} */}/pagopa" class="enabling_platforms">
-                        pagoPA
-                      </a>
-                      {/* {% endif %} */}
-                      {/* {% if p.spid == true %} */}
-                      <a href="/{/* {{ active_lang }} */}/spid" class="enabling_platforms">
-                        SPID
-                      </a>
-                      {/* {% endif %} */}
-                      {/* {% if p.cie == true %} */}
-                      <a href="/{/* {{ active_lang }} */}/cie" class="enabling_platforms">
-                        CIE
-                      </a>
-                      {/* {% endif %} */}
-                      {/* {% if p.io == true %} */}
-                      <a href="/it/io" class="enabling_platforms">
-                        App IO
-                      </a>
-                      {/* {% endif %} */}
-                      {/* {% if p.anpr == true %} */}
-                      <a href="/{/* {{ active_lang }} */}/anpr" class="enabling_platforms">
-                        ANPR
-                      </a>
-                      {/* {% endif %} */}
-                   {/* {% endif %} */}
-                </p>
-              </div>
-              <div class="col-6 col-md">
-                <p>
-                  <span class="label">{/* {{ t.software.compliance }} */}</span>
-                  {/* {% assign p = page.publiccode.it.conforme %} */}
-                  {/* {% assign all_false = true %} */}
-                  {/* {% for key in p %} */}
-                  {/* {% if key.last == true %} */}
-                  {/* {% assign all_false = false %} */}
-                  {/* {% break %} */}
-                  {/* {% endif %} */}
-                  {/* {% endfor %} */}
-                  {/* {% if all_false %} */}
-                  {/* {{ t.software.dependencies_none }} */}
-                  {/* {% else %} */}
-                  {/* {% if p.gdpr == true %} */}
-                    GDPR
-                  {/* {% endif %} */}
-                  {/* {% if p.lineeGuidaDesign == true %} */}
-                  <a href="{/* {{ t.software.design_guidelines_url }} */}" class="enabling_platforms">
-                    {/* {{ t.software.design_guidelines }} */}
-                  </a>
-                  {/* {% endif %} */}
-                  {/* {% if p.misureMinimeSicurezza == true %} */}
-                  <a href="{/* {{ t.software.security_guidelines_url }} */}" class="enabling_platforms">
-                    {/* {{ t.software.security_guidelines }} */}
-                  </a>
-                  {/* {% endif %} */}
-                  {/* {% if p.modelloInteroperabilita == true %} */}
-                  <a href="{/* {{ t.software.interoperability_model_url }} */}" class="enabling_platforms">
-                    {/* {{ t.software.interoperability_model }} */}
-                  </a>
-                  {/* {% endif %} */}
-                  {/* {% endif %} */}
-                </p>
-              </div>
-            </div>
+      <hr className="my-3" />
 
-            <div class="row">
-              <div class="col-6 col-md">
-                <p>
-                  <span class="label">{/* {{ t.software.dependencies_list }} */}</span>
-                  {/* {% if page.publiccode.dependsOn == nil or page.publiccode.dependsOn.size == 0 %} */}
-                  {/* {{ t.software.dependencies_none }} */}
-                  {/* {% else %} */}
-                      {/* {% if page.publiccode.dependsOn.open.size > 0 %} */}
-                          <span class="badge badge-pill badge-primary">{/* {{ t.software.dependencies_oss }} */}</span><br />
-                          {/* {% for dep in page.publiccode.dependsOn.open %} */}
-                          {/* {% include dependency.html dependency=dep %} */}<br />
-                          {/* {% endfor %} */}
-                      {/* {% endif %} */}
-                      {/* {% if page.publiccode.dependsOn.proprietary.size > 0 %} */}
-                          <span class="badge badge-pill badge-danger">{/* {{ t.software.dependencies_proprietary }} */}</span><br />
-                          {/* {% for dep in page.publiccode.dependsOn.proprietary %} */}
-                          {/* {% include dependency.html dependency=dep %} */}<br />
-                          {/* {% endfor %} */}
-                      {/* {% endif %} */}
-                      {/* {% if page.publiccode.dependsOn.hardware.size > 0 %} */}
-                          <span class="badge badge-pill badge-secondary">Hardware</span><br />
-                          {/* {% for dep in page.publiccode.dependsOn.hardware %} */}
-                          {/* {% include dependency.html dependency=dep %} */}<br />
-                          {/* {% endfor %} */}
-                      {/* {% endif %} */}
-                   {/* {% endif %} */}
-                </p>
-              </div>
-            </div>
+      {software.publiccode.intendedAudience?.scope && (
+        <div className="container">
+          <div className="tags-relate text-center">
+            <strong>{t('software.intended_audience')}</strong>
+            <TagList tags={software.publiccode.intendedAudience.scope} visibleCount={10} />
           </div>
-          <div class="main row">
-            <a data-toggle="collapse" href="#mainOthersInfo" role="button" aria-expanded="false"
-              aria-controls="mainOthersInfo" class="d-block d-md-none controls">
-              {/* {{ t.software.others_info }} */}
-              <span class="or it-expand"></span>
-              <span class="and it-collapse"></span>
-            </a>
-            <div id="mainOthersInfo" class="collapse col-md-3 dont-collapse-md">
-              {/* {% if page.publiccode.intendedAudience.onlyFor.size > 0 %} */}
-              <div class="other-detail">
-                <p><span class="label">{/* {{ t.software.main_audience }} */}</span>
-                  {/* {% for audience in page.publiccode.intendedAudience.onlyFor %} */}
-                  {/* {% include set-audience.html label=audience %} */}
-                  {/* {% endfor %} */}
-                </p>
-              </div>
-              {/* {% endif %} */}
-              {/* {% if page.publiccode.localisation.localisationReady == true %} */}
+        </div>
+      )}
 
-              <div class="other-detail">
-                <p><span class="label">{/* {{ t.software.supported_languages }} */}</span>
-                  {/* {% if page.publiccode.localisation.availableLanguages.size > 10 %} */}
-                  {/* {% for language in page.publiccode.localisation.availableLanguages limit: 10 %} */}
-                  {/* {% include set-language-supported.html lang=language %} */}
-                  {/* {% endfor %} */}
-                </p>
-                <p>
-                  <a data-toggle="collapse" href="#otherLanguage"
-                    role="button" aria-expanded="false"
-                    class="count" aria-controls="otherLanguage">
-                    {/* {{ t.langs.show_all }} */}
-                    <span class="or it-expand"></span>
-                    <span class="and it-collapse"></span>
-                  </a>
-                </p>
-                <div class="collapse" id="otherLanguage">
-                  {/* {% for language in page.publiccode.localisation.availableLanguages offset: 10 %} */}
-                  {/* {% include set-language-supported.html lang=language %} */}
-                  {/* {% endfor %} */}
+      <div className="container">
+        <div>
+          <div className="row justify-content-center ">
+            <div className="col-10 col-sm-10">
+              <div className="row">
+                <a
+                  data-toggle="collapse"
+                  href="#mainOthersInfo"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="mainOthersInfo"
+                  className="d-block d-md-none controls"
+                >
+                  {t('software.others_info')}
+                  <span className="or it-expand"></span>
+                  <span className="and it-collapse"></span>
+                </a>
+                <div id="mainOthersInfo" className="collapse col-md-3 dont-collapse-md">
+                  {/* {% if page.publiccode.intendedAudience.onlyFor.size > 0 %} */}
+                  <div className="other-detail">
+                    <p>
+                      <span className="label">{t('software.main_audience')}</span>
+                      {/* {% for audience in page.publiccode.intendedAudience.onlyFor %} */}
+                      {/* {% include set-audience.html label=audience %} */}
+                      {/* {% endfor %} */}
+                    </p>
+                  </div>
+                  {/* {% endif %} */}
+                  {/* {% if page.publiccode.localisation.localisationReady == true %} */}
+
+                  <div className="other-detail">
+                    <p>
+                      <span className="label">{t('software.supported_languages')}</span>
+                      {/* {% if page.publiccode.localisation.availableLanguages.size > 10 %} */}
+                      {/* {% for language in page.publiccode.localisation.availableLanguages limit: 10 %} */}
+                      {/* {% include set-language-supported.html lang=language %} */}
+                      {/* {% endfor %} */}
+                    </p>
+                    <p>
+                      <a
+                        data-toggle="collapse"
+                        href="#otherLanguage"
+                        role="button"
+                        aria-expanded="false"
+                        className="count"
+                        aria-controls="otherLanguage"
+                      >
+                        {t('langs.show_all')}
+                        <span className="or it-expand"></span>
+                        <span className="and it-collapse"></span>
+                      </a>
+                    </p>
+                    <div className="collapse" id="otherLanguage">
+                      {/* {% for language in page.publiccode.localisation.availableLanguages offset: 10 %} */}
+                      {/* {% include set-language-supported.html lang=language %} */}
+                      {/* {% endfor %} */}
+                    </div>
+
+                    <p>
+                      {/* {% else %} */}
+                      {/* {% for language in page.publiccode.localisation.availableLanguages %} */}
+                      {/* {% include set-language-supported.html lang=language %} */}
+                      {/* {% endfor %} */}
+                      {/* {% endif %} */}
+                    </p>
+                  </div>
+                  {/* {% endif %} */}
+
+                  {localizedDescription.awards?.length > 0 && (
+                    <div className="other-detail">
+                      <p>
+                        <span className="label">{t('software.awards')}</span>
+
+                        {localizedDescription.awards.map((award, i) => (
+                          <p key={i}>{award}</p>
+                        ))}
+                      </p>
+                    </div>
+                  )}
+
+                  {localizedDescription.apiDocumentation && (
+                    <div>
+                      <p>
+                        <span className="label">{t('software.api_documentation')}</span>
+                        <a href={localizedDescription.apiDocumentation}> API</a>
+                      </p>
+                    </div>
+                  )}
                 </div>
 
-		<p>
-                {/* {% else %} */}
-                {/* {% for language in page.publiccode.localisation.availableLanguages %} */}
-                {/* {% include set-language-supported.html lang=language %} */}
-                {/* {% endfor %} */}
-                {/* {% endif %} */}
-                </p>
-              </div>
-              {/* {% endif %} */}
-              {/* {% if description.awards.size > 0 %} */}
-              <div class="other-detail">
-                <p><span class="label">{/* {{ t.software.awards }} */}</span>
-                  {/* {% for award in description.awards %} */}
-                  <a href="#">{/* {{ award }} */}</a>
-                  {/* {% endfor %} */}
-                </p>
-              </div>
-              {/* {% endif %} */}
-              {/* {% if description.apiDocumentation != nil and description.apiDocumentation != "" %} */}
-              <div class="other-detail">
-                <p><span class="label">{/* {{ t.software.api_documentation }} */}</span>
-                  <a href="{/* {{ description.apiDocumentation }}"> sw_name  API</a>
-                </p>
-              </div>
-              {/* {% endif %} */}
-            </div>
-            <div class="col-md-8 col-offset-md-1 page-detail">
-              <p class="title">{/* {{ t.software.extende_description }} */}</p>
-              {/*
-                Use data-proofer-ignore to make html-proofer ignore this section for now:
-                it comes from external publiccode.yml files so there might be broken links
-                out of our control making our CI pipeline fail.
+                {/*
+                  * Use data-proofer-ignore to make html-proofer ignore this section for now:
+                  * it comes from external publiccode.yml files so there might be broken links
+                  * out of our control making our CI pipeline fail.
 
-                TODO: find a better solution
-	      */}
-              <div class="font-serif page-detail__text" data-proofer-ignore>
-                {/* {{ description.longDescription | markdownify }} */}
+                  * TODO: find a better solution
+                */}
+                <div className="mt-5" data-proofer-ignore>
+                  <ReactMarkdown>{localizedDescription.longDescription}</ReactMarkdown>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="row first">
+              <div className="col-md-6">
+                <div className="mx-md-4 px-md-4 my-2 my-md-4">
+                  <h2>{t('software.functionality')}</h2>
+                  <div className="function-list">
+                    {localizedDescription.features && (
+                      <CollapsableList items={localizedDescription.features} visibleCount={10} />
+                    )}
+                  </div>
+                  {software.publiccode.usedBy?.size > 0 && (
+                    <CollapsableList items={software.publiccode.usedBy} visibleCount={5} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-{/* {% if page.relatedSoftwares.size >= 4 %} */}
-<div class="container">
-  <div class="interestRelatedSoftwares">
-    <h2> {/* {{ t.software.interest_related_softwares }} */} </h2>
-    <div class="row">
-        {/* {% for relsw in page.relatedSoftwares limit: 4 %} */}
-      <div class="col-md-3 col-12">
-        {/*% assign relsw_description = relsw.publiccode.description[active_lang]
-        | default: relsw.publiccode.description.en
-        | default: relsw.publiccode.description.it %*/}
-        {/* {% assign relsw_name = relsw_description.localisedName | default: relsw.publiccode.name %} */}
-        {/* {% assign relsw_url = '/' | append: active_lang | append: '/software/' | append: relsw.slug | downcase %} */}
-
-        {/* {% if relsw.publiccode.it.riuso.codiceIPA != nil %} */}
-        {/* {% assign category = "software_reuse" %} */}
-        {/* {% assign icon = "it-software" %} */}
-        {/* {% assign fallback = "/assets/images/cover_softwareriuso.png" %} */}
-        {/* {% else %} */}
-        {/* {% assign category = "software_open" %} */}
-        {/* {% assign fallback = "it-open-source" %} */}
-        {/* {% assign fallback = "/assets/images/cover_software_opensource.png" %} */}
-        {/* {% endif %} */}
-
-        {/* {% assign first_screenshot = relsw_description.screenshots | first %} */}
-
-        <catalogue-item
-          class="w-100"
-          id="{/* {{  relsw.id }} */}"
-          name="{/* {{ relsw_name }} */}"
-          description="{/* {{ relswdescription | escape }} */}"
-          url="{/* {{ relsw_url }} */}"
-          icon="{/* {{ icon }} */}"
-          category="{/* {{ category }} */}"
-          logo="{/* {{ relsw.publiccode.logo | default: first_screenshot }} */}"
-          fallback="{/* {{ fallback }} */}"
-          ></catalogue-item>
-      </div>
-        {/* {% endfor %} */}
-    </div>
-  </div>
-</div>
-{/* {% endif %} */}
-</>
-)
+    </>
+  );
 };
 
 export const query = graphql`
-  query($id: String!) {
-    softwareYaml(id: {eq: $id}) {
+  query ($id: String!) {
+    softwareYaml(id: { eq: $id }) {
       publiccode {
-	name
-	logo
-	softwareVersion
-	legal {
-	  repoOwner
-	}
-	description {
-	  it {
-	    shortDescription
-	  }
-	}
+        name
+        url
+        landingURL
+        logo
+        platforms
+        releaseDate
+        roadmap
+        softwareVersion
+        developmentStatus
+        categories
+        intendedAudience {
+          scope
+        }
+        legal {
+          repoOwner
+          license
+        }
+        # TODO: GraphQL doesn't have wildcards, we should find a better solution here
+        description {
+          en {
+            localisedName
+            shortDescription
+            longDescription
+            apiDocumentation
+            documentation
+            features
+            screenshots
+          }
+          it {
+            localisedName
+            shortDescription
+            longDescription
+            apiDocumentation
+            awards
+            documentation
+            features
+            screenshots
+          }
+        }
+        maintenance {
+          type
+          contacts {
+            name
+            email
+            phone
+          }
+        }
+        dependsOn {
+          open {
+            name
+            optional
+          }
+          proprietary {
+            name
+            optional
+          }
+          hardware {
+            name
+            optional
+          }
+        }
+        isBasedOn
       }
     }
   }
