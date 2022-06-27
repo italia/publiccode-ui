@@ -13,10 +13,6 @@ const useStyles = createUseStyles({
     fontWeight: "600",
     userSelect: "none",
   },
-  expandIcon: {
-    minWidth: "32px",
-    minHeight: "32px",
-  },
 });
 
 export const CatalogueFiltersTitle: React.FC<CatalogueFiltersTitleProps> =
@@ -56,7 +52,7 @@ export const CatalogueFiltersTitle: React.FC<CatalogueFiltersTitleProps> =
               <Icon
                 color="primary"
                 icon={expandIcon ? "it-expand" : "it-collapse"}
-                className={classes.expandIcon}
+                size="sm"
               />
             )}
           </div>

@@ -1,14 +1,27 @@
-import { useReducer } from 'react';
+import { useReducer } from "react";
 
 const initialState = {
   isModalOpen: false,
 };
 
-const reducer = (state, action) => {
+enum ActionType {
+  OPEN_MODAL,
+  CLOSE_MODAL,
+}
+interface ActionOpenModal {
+  type: ActionType.OPEN_MODAL;
+}
+interface ActionCloseModal {
+  type: ActionType.CLOSE_MODAL;
+}
+
+type Actions = ActionCloseModal | ActionOpenModal;
+
+const reducer = (state: typeof initialState, action: Actions) => {
   switch (action.type) {
-    case 'OPEN_MODAL':
+    case ActionType.OPEN_MODAL:
       return { ...state, isModalOpen: true };
-    case 'CLOSE_MODAL':
+    case ActionType.CLOSE_MODAL:
       return { ...state, isModalOpen: false };
     default:
       return state;
@@ -17,8 +30,8 @@ const reducer = (state, action) => {
 
 export const useModal = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const closeModal = () => dispatch({ type: 'CLOSE_MODAL' });
-  const openModal = () => dispatch({ type: 'OPEN_MODAL' });
+  const closeModal = () => dispatch({ type: ActionType.CLOSE_MODAL });
+  const openModal = () => dispatch({ type: ActionType.OPEN_MODAL });
 
   return [state.isModalOpen, closeModal, openModal];
 };

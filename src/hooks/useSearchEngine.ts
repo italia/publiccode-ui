@@ -7,15 +7,56 @@ const SET_ITEMS = 'SET_ITEMS';
 const SET_IS_LOADING = 'SET_IS_LOADING';
 const SET_ERROR = 'SET_ERROR';
 
-const initial = {
+enum ActionType {
+  ADD_ITEMS,
+  SET_ITEMS,
+  SET_IS_LOADING,
+  SET_ERROR,
+}
+interface ActionAddItems {
+  type: ActionType.ADD_ITEMS;
+  value: {
+    items: string[];
+  }
+}
+
+interface ActionSetItems {
+  type: ActionType.SET_ITEMS;
+  value: {
+    items: string[];
+    total: number;
+  }
+}
+
+interface ActionSetIsLoading {
+  type: ActionType.SET_IS_LOADING;
+}
+
+interface ActionSetError {
+  type: ActionType.SET_ERROR;
+  value: {
+    errorMessage: string;
+  }
+}
+
+type Actions = ActionAddItems | ActionSetItems | ActionSetIsLoading | ActionSetError;
+
+interface State {
+  isLoading: boolean;
+  errorMessage?: string | null;
+  items: string[];
+  total: number;
+}
+
+const initial: State = {
   isLoading: false,
   errorMessage: null,
-  items: null,
-  total: null,
+  items: [],
+  total: 0,
 };
 
-const reducer = (state, action) => {
-  if (action.type === ADD_ITEMS) {
+const reducer = (state: State, action: Actions) => {
+  if (action.type === ActionType.ADD_ITEMS) {
     return {
       ...state,
       isLoading: false,
@@ -23,7 +64,7 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === SET_ITEMS) {
+  if (action.type === ActionType.SET_ITEMS) {
     return {
       isLoading: false,
       items: action.value.items,
@@ -31,23 +72,24 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === SET_IS_LOADING) {
+  if (action.type === ActionType.SET_IS_LOADING) {
     return {
       ...state,
       isLoading: true,
     };
   }
 
-  if (action.type === SET_ERROR) {
+  if (action.type === ActionType.SET_ERROR) {
     return {
       ...state,
       isLoading: false,
       errorMessage: action.value.errorMessage,
     };
   }
+  return state;
 };
 
-const areMoreItemsAvailable = (from, size, total) => from + size < total;
+const areMoreItemsAvailable = (from: number, size: number, total: number) => from + size < total;
 
 export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
   const [{ items, total, isLoading, errorMessage }, dispatch] = useReducer(reducer, initial);

@@ -6,7 +6,12 @@ import { CatalogueFiltersContainer } from "./CatalogueFiltersContainer";
 import { CatalogueFiltersTitle } from "./CatalogueFiltersTitle";
 import { CatalogueHeader } from "./CatalogueHeader";
 
-const useStyle = createUseStyles({
+type RuleNames = "filters";
+interface StyleProps {
+  expandFilter: boolean;
+}
+
+const useStyle = createUseStyles<RuleNames, StyleProps>({
   filters: {
     composes: "row col-12 mb-5 d-lg-none",
     display: (expandFilter) => (expandFilter ? "block" : "none"),
@@ -16,7 +21,7 @@ const useStyle = createUseStyles({
 export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
   ({ itemsCount, totalAppliedFilters }) => {
     const [expandFilter, setExpandFilter] = useState(false);
-    const classes = useStyle(expandFilter);
+    const classes = useStyle({expandFilter});
     const { t } = useTranslation();
 
     const handleExpandFilter = () => setExpandFilter(!expandFilter);
@@ -34,7 +39,7 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
               <CatalogueFiltersTitle
                 title={t('software.filters')}
                 counter={totalAppliedFilters}
-                showCollapsableIcon={true}
+                showCollapsableIcon={false}
                 onToogleExpandCollapse={handleExpandFilter}
               />
             </div>

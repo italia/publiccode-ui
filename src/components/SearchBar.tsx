@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { createUseStyles } from "react-jss";
 import { Button } from "design-react-kit";
 import debounce from "lodash.debounce";
@@ -22,7 +22,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
       },
     });
 
-    const handleOnChangeSearchValue = debounce((e) => {
+    const handleOnChangeSearchValue = debounce((e: ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
     }, DEBOUNCE_SEARCH_MS);
 

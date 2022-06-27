@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 
-export const useScrollIntoView = ({ observableSelector, focusElementId }) => {
+type UseScrollIntoViewProps = {
+  observableSelector: string;
+  focusElementId: string;
+};
+export const useScrollIntoView = ({ observableSelector, focusElementId }: UseScrollIntoViewProps) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     document.getElementById(focusElementId)?.scrollIntoView({ block: 'center', inline: 'center' });
@@ -11,7 +15,7 @@ export const useScrollIntoView = ({ observableSelector, focusElementId }) => {
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            window.history.replaceState(null, null, `#${entry.target.id}`);
+            window.history.replaceState(null, "", `#${entry.target.id}`);
             // The first visible
             break;
           }

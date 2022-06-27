@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { ImageWithPlaceholderProps } from "../utils/proptypes";
 
-const useStyle = createUseStyles({
+type RuleNames = "placeholder" | "img";
+interface StyleProps {
+  loaded: boolean;
+}
+
+const useStyle = createUseStyles<RuleNames, StyleProps>({
   placeholder: {
     height: "100%",
     width: "100%",
@@ -18,7 +23,7 @@ const useStyle = createUseStyles({
 export const ImageWithPlaceholder: React.FC<ImageWithPlaceholderProps> =
   React.memo(({ img, placeholder, alt }) => {
     const [loaded, setLoaded] = useState(false);
-    const classes = useStyle(loaded);
+    const classes = useStyle({loaded});
 
     return (
       <>
