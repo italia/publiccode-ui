@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useScrollIntoView } from "../../hooks/useScrollIntoView";
 import { CatalogueItem } from "./CatalogueItem";
 import { CatalogueNoResults } from "./CatalogueNoResults";
@@ -6,9 +6,14 @@ import { SearchTypeItems } from "../../utils/proptypes";
 
 export const CatalogueItems: React.FC<SearchTypeItems> = React.memo(
   ({ items }) => {
+    const [locationHash, setLocationHash] = useState("");
+    useEffect(() => {
+      setLocationHash(window.location.hash);
+    }, []);
+
     useScrollIntoView({
       observableSelector: "[data-class='catalogue-item']",
-      focusElementId: window.location.hash?.substring(1),
+      focusElementId: locationHash?.substring(1),
     });
 
     if (items.length === 0) {
