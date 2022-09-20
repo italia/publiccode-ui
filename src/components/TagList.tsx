@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { createUseStyles } from "react-jss";
 
-import { Chip, ChipLabel, Button } from 'design-react-kit';
+import { Chip } from '../components/Chips/Chip';
+import { ChipLabel } from '../components/Chips/ChipLabel';
 
 export const TagList = (props: TagListProps) => {
   const [showAll, setShowAll] = useState(false);

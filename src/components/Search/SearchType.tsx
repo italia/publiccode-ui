@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from 'design-react-kit';
 import { createUseStyles } from 'react-jss';
+
+import { Button } from "../Button/Button";
+import { Icon } from "../Icon/Icon";
+
 import { ALL_SITE, SOFTWARE_REUSE, SOFTWARE_OPEN, PLATFORM, ADMINISTRATION, API } from '../../utils/constants';
 import { searchContextDispatch, searchContextState, setType } from '../../contexts/searchContext';
 

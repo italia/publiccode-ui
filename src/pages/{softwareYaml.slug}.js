@@ -9,7 +9,9 @@ import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { graphql } from 'gatsby';
 
-import { Badge, Collapse, Icon } from 'design-react-kit';
+import { Badge } from '../components/Badge/Badge';
+import { Collapse } from '../components/Collapse';
+import { Icon } from '../components/Icon/Icon';
 
 import '../i18n';
 import { CollapsableList } from '../components/CollapsableList';

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Icon, Badge } from "design-react-kit";
 import { createUseStyles } from "react-jss";
+
+import { Badge } from "../Badge/Badge";
+import { Icon } from "../Icon/Icon";
 
 const useStyles = createUseStyles({
   title: {

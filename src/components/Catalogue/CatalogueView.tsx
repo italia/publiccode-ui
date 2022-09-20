@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'design-react-kit';
 import { Error } from '../Error';
 import { useSearchEngine } from '../../hooks/useSearchEngine';
 import { searchContextState } from '../../contexts/searchContext';
+
+import { Button } from '../Button/Button';
 import { CatalogueItems } from './CatalogueItems';
 import { CatalogueSummary } from './CatalogueSummary';
 

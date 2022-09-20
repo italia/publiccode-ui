@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Button } from 'design-react-kit';
+import { Button } from "../components/Button/Button";
 
 export const CollapsableList = (props: CollapsableListProps) => {
   const [showAll, setShowAll] = useState(false);

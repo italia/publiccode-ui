@@ -1,9 +1,10 @@
 import React, { ChangeEvent } from "react";
 import { createUseStyles } from "react-jss";
-import { Button } from "design-react-kit";
 import debounce from "lodash.debounce";
 import { useForm } from "react-hook-form";
-import { Icon } from "design-react-kit";
+
+import { Button } from "../components/Button/Button";
+import { Icon } from "../components/Icon/Icon";
 import { DEBOUNCE_SEARCH_MS } from "../utils/constants";
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(

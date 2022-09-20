@@ -1,8 +1,9 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
-import { Icon } from "design-react-kit";
 import { ImageWithPlaceholder } from "../ImageWithPlaceholder";
 import { SearchType } from "../../utils/proptypes";
+
+import { Icon } from "../Icon/Icon";
 
 const useStyles = createUseStyles({
   link: {

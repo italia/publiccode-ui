@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from 'design-react-kit';
 import { createUseStyles } from 'react-jss';
 import { SearchTypeItem } from '../../utils/proptypes';
+
+import { Icon } from "../Icon/Icon";
 
 const useStyles = createUseStyles({
   category: {
