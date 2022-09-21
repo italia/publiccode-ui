@@ -25,6 +25,7 @@
     "gatsby-plugin-local-search": "^2.0.1",
     "gatsby-plugin-mdx": "^3.12.1",
     "gatsby-plugin-react-helmet": "^5.12.1",
+    "gatsby-plugin-sass": "^5.23.0",
     "gatsby-plugin-sharp": "^4.12.1",
     "gatsby-source-filesystem": "^4.12.1",
     "gatsby-source-remote-file": "^0.5.1",
@@ -41,6 +42,7 @@
     "react-markdown": "^8.0.3",
     "react-use-flexsearch": "^0.1.1",
     "reactstrap": "^9.1.4",
+    "sass": "^1.54.9",
     "typeface-lora": "^1.1.13",
     "typeface-roboto-mono": "^1.1.13",
     "typeface-titillium-web": "^1.1.13"
