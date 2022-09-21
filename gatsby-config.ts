@@ -41,7 +41,10 @@ const config: GatsbyConfig = {
       // for advanced users.
       //
       // Note: Only the flexsearch engine supports options.
-      engineOptions: 'speed',
+      engineOptions: {
+        page: true,
+        limit: 10
+      },
 
       // GraphQL query used to fetch all data for the search index. This is
       // required.
@@ -53,6 +56,35 @@ const config: GatsbyConfig = {
                 id
                 publiccode {
                   name
+                  description {
+                    it {
+                      genericName
+                      features
+                      longDescription
+                      localisedName
+                      shortDescription
+                    }
+                    en {
+                      genericName
+                      features
+                      longDescription
+                      localisedName
+                      shortDescription
+                    }
+                    fr {
+                      genericName
+                      features
+                      longDescription
+                      shortDescription
+                    }
+                    nl {
+                      genericName
+                      features
+                      longDescription
+                      localisedName
+                      shortDescription
+                    }
+                  }
                 }
               }
             }
@@ -67,12 +99,12 @@ const config: GatsbyConfig = {
       // List of keys to index. The values of the keys are taken from the
       // normalizer function below.
       // Default: all fields
-      index: ['name'],
+      index: ['localisedNames', 'features', 'longDescriptions', 'shortDescriptions', 'name'],
 
       // List of keys to store and make available in your UI. The values of
       // the keys are taken from the normalizer function below.
       // Default: all fields
-      store: ['name'],
+      store: ['id'],
 
       // Function used to map the result from the GraphQL query. This should
       // return an array of items to index in the form of flat objects
@@ -82,6 +114,10 @@ const config: GatsbyConfig = {
         data.allSoftwareYaml.edges.map((edge) => ({
           id: edge.node.id,
           name: edge.node.publiccode.name,
+          localisedNames: Object.keys(edge.node.publiccode.description).map(x => edge.node.publiccode.description[x]?.localisedName),
+          features: Object.keys(edge.node.publiccode.description).map(x => edge.node.publiccode.description[x]?.features),
+          longDescriptions: Object.keys(edge.node.publiccode.description).map(x => edge.node.publiccode.description[x]?.longDescription),
+          shortDescriptions: Object.keys(edge.node.publiccode.description).map(x => edge.node.publiccode.description[x]?.shortDescription),
         })),
       },
     },

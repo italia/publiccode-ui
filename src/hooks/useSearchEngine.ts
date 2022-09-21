@@ -16,14 +16,14 @@ enum ActionType {
 interface ActionAddItems {
   type: ActionType.ADD_ITEMS;
   value: {
-    items: string[];
+    items: Store[];
   };
 }
 
 interface ActionSetItems {
   type: ActionType.SET_ITEMS;
   value: {
-    items: string[];
+    items: Store[];
     total: number;
   };
 }
@@ -48,8 +48,12 @@ type Actions =
 interface State {
   isLoading: boolean;
   errorMessage?: string | null;
-  items: string[];
+  items: Store[];
   total: number;
+}
+interface Store {
+  name: string;
+  genericNames: string[];
 }
 
 const initial: State = {
@@ -136,8 +140,9 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
       dispatchGlobal(incrementPage());
     }
   };
-
-  const results: string[] = useFlexSearch(searchValue, index, store);
+  
+  const results: Store[] = useFlexSearch(searchValue, index, store);
+  // TODO pagination
 
   useEffect(() => {
     const set: ActionSetItems = {
