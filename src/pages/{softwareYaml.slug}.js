@@ -320,8 +320,8 @@ const Software = ({ data: { softwareYaml: software } }) => {
 
         <div className="container">
           <div>
-            <div className="row justify-content-center ">
-              <div className="col-10 col-sm-10">
+            <div className="row">
+              <div className="col-lg-6 col-xs-12">
                 <div className="row">
                   <a
                     data-toggle="collapse"
@@ -422,25 +422,21 @@ const Software = ({ data: { softwareYaml: software } }) => {
               </div>
             </div>
 
-            <div>
-              <div className="row first">
-                <div className="col-md-6">
-                  <div className="mx-md-4 px-md-4 my-2 my-md-4">
-                    <h2>{t('software.functionality')}</h2>
-                    <div className="function-list">
-                      {localizedDescription.features && (
-                        <ul className="">
-                          {localizedDescription.features.map((item, i) => <li key={i}>{item}</li>)}
-                        </ul>
-                      )}
-                    </div>
-                    {software.publiccode.usedBy?.size > 0 && (
-                      <ul className="">
-                        {localizedDescription.usedBy.map((item, i) => <li key={i}>{item}</li>)}
-                      </ul>
-                    )}
-                  </div>
+            <div className="row">
+              <div className="col-sm-6 col-xs-12">
+                <h2>{t('software.functionality')}</h2>
+                <div className="function-list">
+                  {localizedDescription.features && (
+                    <ul className="">
+                      {localizedDescription.features.map((item, i) => <li key={i}>{item}</li>)}
+                    </ul>
+                  )}
                 </div>
+                {software.publiccode.usedBy?.size > 0 && (
+                  <ul className="">
+                    {localizedDescription.usedBy.map((item, i) => <li key={i}>{item}</li>)}
+                  </ul>
+                )}
               </div>
             </div>
           </div>
