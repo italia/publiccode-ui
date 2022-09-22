@@ -297,7 +297,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                   <p>
                     <a href={software.publiccode.roadmap}>
                       <Icon icon="it-chart-line" className="mr-2" />
-                      <span className="font-weight-bold inline-block px-2">{t('software.goToRoadmap')} &rarr;</span>
+                      <span className="font-weight-bold inline-block px-2">{t('software.goToRoadmap')}</span>
                       <Icon icon="it-external-link" />
                     </a>
                   </p>
