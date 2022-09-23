@@ -140,8 +140,9 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
       dispatchGlobal(incrementPage());
     }
   };
-  
+
   const results: Store[] = useFlexSearch(searchValue, index, store);
+  console.log(results)
   // TODO pagination
 
   useEffect(() => {
