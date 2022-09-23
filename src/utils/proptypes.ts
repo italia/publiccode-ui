@@ -8,15 +8,27 @@ export type SearchTypeItem = {
   item: SearchType;
 };
 
-export interface SearchType {
-  category: string;
-  description: string;
-  icon: string;
-  id: string;
-  logo: string;
-  fallback: string;
+export interface PubliccodeLite {
+  description: {
+    [key: string]: {
+      genericName: string;
+      features: string[];
+      longDescription: string;
+      localisedName: string;
+      shortDescription: string;
+      screenshots: string[];
+    }
+  };
   name: string;
-  url: string;
+  slug: string;
+  categories: string[];
+  logo: string;
+  releaseDate: string;
+  license: string;
+}
+export interface SearchType {
+  id: string;
+  publiccode: PubliccodeLite;
 }
 
 export interface ImageWithPlaceholderProps {

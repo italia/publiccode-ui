@@ -2,9 +2,10 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 import { ImageWithPlaceholder } from "../ImageWithPlaceholder";
 import { SearchType } from "../../utils/proptypes";
+import { useTranslation } from "react-i18next";
 
-import { Icon } from "../Icon/Icon";
-
+import { TagList } from "../TagList";
+import { Link } from "gatsby";
 const useStyles = createUseStyles({
   link: {
     display: "block",
@@ -14,8 +15,7 @@ const useStyles = createUseStyles({
     },
   },
   logoContainer: {
-    composes: "my-3",
-    height: "150px",
+    height: "64px",
     width: "100%",
   },
   category: {
@@ -54,52 +54,64 @@ const useStyles = createUseStyles({
   },
 });
 
-// eslint-disable-next-line react/prop-types
 export const CatalogueItem: React.FC<SearchType> = ({
   id,
-  name,
-  description,
-  url,
-  icon,
-  category,
-  logo,
-  fallback,
+  publiccode: {
+    description,
+    name,
+    slug,
+    categories,
+    logo: plogo,
+    releaseDate,
+    license,
+  },
 }) => {
-  const classes = useStyles();
+  const classNamees = useStyles();
+  const { t, i18n } = useTranslation();
+
+  const localizedDescription =
+    description[i18n.language] ||
+    description.en ||
+    description[Object.keys(description).find((k) => description[k]) || 0];
+  const fallback = "/assets/images/cover_softwareriuso.png";
+  const logo = localizedDescription?.screenshots?.[0] ?? plogo ?? fallback;
 
   return (
-    <article
-      id={id}
-      className="d-flex flex-column align-items-start h-100 mb-4 mb-sm-0 px-10"
-      data-testid={id}
-      data-class="catalogue-item"
-    >
-      <div>
-        <Icon icon={icon} size="sm" className="mr-1" />
-        <span className={classes.category}>t category</span>
-      </div>
-      <div className="my-2 my-md-0 w-100">
-        <a
-          href={url}
-          title={name}
-          className={classes.link}
-          data-testid="item-anchor"
-        >
-          <div className={classes.logoContainer}>
+    <div className="row">
+      <hr className="border-1 border border-muted mb-4" />
+      <div className="col-sm-2 col-lg-2">
+        <Link to={slug} title={name} data-testid="item-anchor">
+          <div className={classNamees.logoContainer}>
             <ImageWithPlaceholder
               placeholder={fallback}
               alt="logo"
               img={logo}
             />
           </div>
-          <div className={classes.title}>{name}</div>
-          <div className={classes.description}>{description}</div>
-        </a>
+        </Link>
       </div>
-      <a href={url} title={name} className={classes.readMore}>
-        t(readmore) →
-      </a>
-    </article>
+      <div className="col-6 mb-4">
+        <Link
+          to={slug}
+          title={name}
+          data-testid="item-anchor"
+          className={classNamees.link}
+        >
+          <h3 className="card-title big-heading h5 fw-semibold">{name}</h3>
+        </Link>
+        <p className="card-text fs-6 fw-normal lh-2 mb-4">{localizedDescription.shortDescription}</p>
+
+        <TagList tags={categories} visibleCount={3} isShowMoreVisible={false} />
+      </div>
+      <div className="d-none d-lg-block col-lg-2">
+        <div className="row">{t("software.last_release")}</div>
+        <div className="row">{releaseDate}</div>
+      </div>
+      <div className="d-none d-lg-block col-lg-2">
+        <div className="row">{t("software.license")}</div>
+        <div className="row">{license}</div>
+      </div>
+    </div>
   );
 };
 

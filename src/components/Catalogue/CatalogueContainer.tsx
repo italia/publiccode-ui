@@ -40,12 +40,14 @@ export const CatalogueContainer = () => {
     >
       <article className={classes.container} data-testid="catalogue-container">
         <div className="row">
-          <section className="col-lg-3 d-none d-lg-flex flex-column">
+          {/* <section className="col-lg-3 d-none d-lg-flex flex-column">
             <CatalogueFiltersContainer prefixName="desktop_view" />
-          </section>
-          <section className="col-12 col-lg-9">
+          </section> */}
+          <section className="col-1" />
+          <section className="col-10">
             <CatalogueView />
           </section>
+          <section className="col-1" />
         </div>
       </article>
     </SearchProvider>

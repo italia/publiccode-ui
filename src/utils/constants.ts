@@ -11,3 +11,4 @@ export const SOFTWARE_REUSE = 'software_reuse';
 export const NEWS = 'news';
 export const API = 'api';
 export const DEBOUNCE_SEARCH_MS = 500;
+export const getSoftwareCategory = (IPACode: string) => (IPACode ? SOFTWARE_REUSE : SOFTWARE_OPEN);

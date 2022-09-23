@@ -162,6 +162,7 @@
     "filters": "Filters",
     "categories": "Categories",
     "intended_audience": "Intended Audience",
+    "results_text": "There are {{count}} softwares that match your search terms",
     "results": "results",
     "no_results": "No results found",
     "retry_search": "The search did not match any results. Try searching other terms.",

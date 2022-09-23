@@ -160,6 +160,7 @@
     "sort_by_alphabetic": "Alfabetico",
     "categories": "Categorie",
     "intended_audience": "Ambito di applicazione",
+    "results_text": "Ci sono {{count}} softwares che corrispondono alla tua ricerca",
     "results": "risultati",
     "no_results": "Nessun risultato trovato",
     "retry_search": "La ricerca non ha prodotto nessun risultato. Prova un'altra chiave di ricerca.",

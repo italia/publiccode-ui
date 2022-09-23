@@ -52,8 +52,7 @@ interface State {
   total: number;
 }
 interface Store {
-  name: string;
-  genericNames: string[];
+  id: string;
 }
 
 const initial: State = {

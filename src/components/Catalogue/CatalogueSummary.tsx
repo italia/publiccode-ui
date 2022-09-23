@@ -32,26 +32,26 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
         <div className="row">
           <div className="row col-12 py-3 px-2 align-items-center text-center">
             <div
-              className="col-3 font-weight-bold text-left"
+              className="col-6 font-weight-bold text-left"
               data-testid="counter-summary"
-            >{`${itemsCount} ${t('software.results')}`}</div>
-            <div className="col-3 col-md-2 d-lg-none">
+            >{t('software.results_text', {count: itemsCount})}</div>
+            {/* <div className="col-1 col-md-1 d-lg-none">
               <CatalogueFiltersTitle
                 title={t('software.filters')}
                 counter={totalAppliedFilters}
                 showCollapsableIcon={false}
                 onToogleExpandCollapse={handleExpandFilter}
               />
-            </div>
-            <div className="col-6 col-md-7 col-lg-9">
+            </div> */}
+            <div className="col-6 col-md-6 col-lg-6">
               <CatalogueSort />
             </div>
           </div>
-          <div className={classes.filters}>
+          {/* <div className={classes.filters}>
             <div className="col-10 m-auto">
               <CatalogueFiltersContainer prefixName="mobile_view" />
             </div>
-          </div>
+          </div> */}
         </div>
       </>
     );

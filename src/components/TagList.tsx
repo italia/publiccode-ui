@@ -5,7 +5,7 @@ import { createUseStyles } from "react-jss";
 import { Chip } from '../components/Chips/Chip';
 import { ChipLabel } from '../components/Chips/ChipLabel';
 
-export const TagList = (props: TagListProps) => {
+export const TagList = ({tags, visibleCount, isShowMoreVisible = true}: TagListProps) => {
   const [showAll, setShowAll] = useState(false);
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ export const TagList = (props: TagListProps) => {
     setShowAll(!showAll);
   }
 
-  const shownTags = () => showAll ? props.tags : props.tags.slice(0, props.visibleCount);
+  const shownTags = () => showAll ? tags : tags.slice(0, visibleCount);
 
   return (
     <>
@@ -37,7 +37,7 @@ export const TagList = (props: TagListProps) => {
         </Chip>
       ))}
 
-      {props.visibleCount < props.tags.length && (
+      {visibleCount < tags.length && isShowMoreVisible && (
         <small>
           <a className="link-primary" href="#" onClick={toggleShowAll}>
             {t(showAll ? 'show_less' :'show_more')} <span aria-hidden>{showAll ? '«' : '»'}</span>
@@ -51,6 +51,7 @@ export const TagList = (props: TagListProps) => {
 interface TagListProps {
   tags: Array<string>;
   visibleCount: number;
+  isShowMoreVisible?: boolean;
 }
 
 TagList.displayName = "TagList";
