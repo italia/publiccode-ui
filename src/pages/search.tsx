@@ -1,5 +1,11 @@
 import * as React from "react";
 
+import '../components/Page/Page.scss';
+
+import 'typeface-titillium-web';
+import 'typeface-roboto-mono';
+import 'typeface-lora';
+
 import { SearchBar } from '../components/SearchBar';
 import { SearchResult } from '../types/search-result';
 
