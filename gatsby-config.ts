@@ -50,7 +50,7 @@ const config: GatsbyConfig = {
       // required.
       query: `
         {
-          allSoftwareYaml {
+          allSoftwareYaml(filter: {it_riuso_codiceIPA_label: {ne: ""}}) {
             edges {
               node {
                 id
