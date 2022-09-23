@@ -32,10 +32,8 @@ export const TagList = (props: TagListProps) => {
   return (
     <>
       {shownTags().map((tag, i) => (
-        <Chip large className="chip-primary" key={i}>
-          <ChipLabel className="fs-7 fw-bold">
-            <a className={classes.link} href="#" onClick={(e) => e.preventDefault()}>{tag}</a>
-          </ChipLabel>
+        <Chip large className="chip-primary chip-disabled" key={i}>
+          <ChipLabel className="fs-7 fw-bold">{tag}</ChipLabel>
         </Chip>
       ))}
 
