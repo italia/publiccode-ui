@@ -9,11 +9,11 @@ import { createUseStyles } from "react-jss";
 const useStyles = createUseStyles({
   closeIconWrapper: {
     composes: "autocomplete-icon",
-    backgroundColor: "#004080",
+    backgroundColor: "#004080 !important",
   },
   searchIconWrapper: {
     composes: "input-group-text",
-    backgroundColor: "#004080",
+    backgroundColor: "#004080 !important",
     borderBottom: '1px solid #ffffff !important',
     height: '2.5rem !important',
   },
@@ -61,7 +61,6 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
               data-testid="search-bar"
               id="search-bar"
               autoFocus={true}
-              // placeholder={placeholder}
               type="text"
               onChange={handleOnChangeSearchValue}
             />
