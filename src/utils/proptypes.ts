@@ -34,7 +34,7 @@ export interface SearchType {
 export interface ImageWithPlaceholderProps {
   alt: string;
   img: string;
-  placeholder: string;
+  placeholder?: string;
 }
 
 export interface StateToQueryString {

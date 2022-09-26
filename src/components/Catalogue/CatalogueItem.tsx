@@ -73,8 +73,7 @@ export const CatalogueItem: React.FC<SearchType> = ({
     description[i18n.language] ||
     description.en ||
     description[Object.keys(description).find((k) => description[k]) || 0];
-  const fallback = "/assets/images/cover_softwareriuso.png";
-  const logo = localizedDescription?.screenshots?.[0] ?? plogo ?? fallback;
+  const logo = localizedDescription?.screenshots?.[0] ?? plogo ?? null;
 
   return (
     <div className="row">
@@ -83,7 +82,6 @@ export const CatalogueItem: React.FC<SearchType> = ({
         <Link to={id} title={name} data-testid="item-anchor">
           <div className={classNamees.logoContainer}>
             <ImageWithPlaceholder
-              placeholder={fallback}
               alt="logo"
               img={logo}
             />

@@ -27,7 +27,7 @@ export const ImageWithPlaceholder: React.FC<ImageWithPlaceholderProps> =
 
     return (
       <>
-        {!loaded && (
+        {!loaded && placeholder && (
           <img className={classes.placeholder} src={placeholder} alt={alt} />
         )}
         {img && (

@@ -83,7 +83,6 @@ export const CatalogueFilters: React.FC<
     const toogleShowAll = () => {
       setShowAll(!showAll);
     };
-    console.log(filters);
 
     return (
       <form>
@@ -102,7 +101,7 @@ export const CatalogueFilters: React.FC<
                 backgroundColor: "#F2F7FC",
               }}
             >
-              <option selected="" value="">
+              <option value="">
                 {emptySelect}
               </option>
               {filters.map(([key, value]) => (

@@ -22,7 +22,6 @@ export const CatalogueItems: React.FC<SearchTypeItems> = React.memo(
     }
     const isGridView = false;
 
-    console.log("items", items);
     const itemsList = items.map((r, i) => (
       <React.Fragment key={i}>
         {isGridView ? (
