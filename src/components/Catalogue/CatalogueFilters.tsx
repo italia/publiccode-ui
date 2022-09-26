@@ -87,12 +87,10 @@ export const CatalogueFilters: React.FC<
     return (
       <form>
         <div className={classes.groupContainer}>
-          <CatalogueFiltersTitle
-            title={title}
-            counter={selectedFiltersCount}
-            showCollapsableIcon={filters.length > 10}
-            onToogleExpandCollapse={toogleShowAll}
-          />
+          <div className="fs-6 fw-semibold text-uppercase text-muted">
+            {title}
+          </div>
+
           <div className="select-wrapper">
             <select
               defaultValue={undefined}
