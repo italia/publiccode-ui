@@ -19,15 +19,42 @@ export const CatalogueHeader = React.memo(() => {
   );
 
   return (
-    <HeaderSearch>
-      <div className="col-12">
-        <SearchBar
-          onChange={handleSearch}
-          defaultValue={searchValue}
-          placeholder={t("search_form_label")}
-        />
+    <>
+      <HeaderSearch>
+        <div className="col-12">
+          <SearchBar
+            onChange={handleSearch}
+            defaultValue={searchValue}
+            placeholder={t("search_form_label")}
+          />
+        </div>
+      </HeaderSearch>
+      <div className="container">
+        {/* breadcrumb */}
+        <div className="col-1"></div>
+        <div className="pt-4 mx-auto col-10">
+          <nav
+            className="breadcrumb-container"
+            aria-label="Percorso di navigazione"
+          >
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">
+                <a href="#">Lorem ipsum</a>
+                <span className="separator">/</span>
+              </li>
+              <li className="breadcrumb-item">
+                <a href="#">Lorem ipsum</a>
+                <span className="separator">/</span>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                {searchValue ? `${t('software.search')}: `: t('software.search')}{searchValue}
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div className="col-1"></div>
       </div>
-    </HeaderSearch>
+    </>
   );
 });
 

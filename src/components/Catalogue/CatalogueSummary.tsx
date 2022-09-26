@@ -34,6 +34,19 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
               className="col-sm-12 col-md-8 col-lg-8 font-weight-bold text-left"
               data-testid="counter-summary"
             >{t('software.results_text', {count: itemsCount})}</div>
+
+            <div className="col-xs-2 col-sm-2 col-md-1">
+              <label className="text-uppercase">{t('software.sort_by')}</label>
+            </div>
+
+            <div className="col-xs-10 col-sm-10 col-md-3 col-lg-3">
+              <CatalogueSort />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          {/* filters */}
+
             {/* <div className="col-1 col-md-1 d-lg-none">
               <CatalogueFiltersTitle
                 title={t('software.filters')}
@@ -42,13 +55,6 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
                 onToogleExpandCollapse={handleExpandFilter}
               />
             </div> */}
-            <div className="col-xs-2 col-sm-2 col-md-1">
-              <label className="text-uppercase">{t('software.sort_by')}</label>
-            </div>
-            <div className="col-xs-10 col-sm-10 col-md-3 col-lg-3">
-              <CatalogueSort />
-            </div>
-          </div>
           {/* <div className={classes.filters}>
             <div className="col-10 m-auto">
               <CatalogueFiltersContainer prefixName="mobile_view" />
