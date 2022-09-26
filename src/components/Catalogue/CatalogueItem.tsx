@@ -80,7 +80,7 @@ export const CatalogueItem: React.FC<SearchType> = ({
     <div className="row">
       <hr className="border-1 border border-muted mb-4" />
       <div className="col-sm-2 col-lg-2">
-        <Link to={slug} title={name} data-testid="item-anchor">
+        <Link to={id} title={name} data-testid="item-anchor">
           <div className={classNamees.logoContainer}>
             <ImageWithPlaceholder
               placeholder={fallback}
@@ -92,7 +92,7 @@ export const CatalogueItem: React.FC<SearchType> = ({
       </div>
       <div className="col-6 mb-4">
         <Link
-          to={slug}
+          to={id}
           title={name}
           data-testid="item-anchor"
           className={classNamees.link}
