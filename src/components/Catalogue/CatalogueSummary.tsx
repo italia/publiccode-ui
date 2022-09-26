@@ -28,7 +28,6 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
 
     return (
       <>
-        <CatalogueHeader />
         <div className="row">
           <div className="row col-12 py-3 px-2 align-items-center text-center">
             <div

@@ -13,6 +13,7 @@ import {
 import { ALL_CATALOGUE, RELEVANCE, RELEASE_DATE } from '../../utils/constants';
 import { CatalogueView } from './CatalogueView';
 import { CatalogueFiltersContainer } from './CatalogueFiltersContainer';
+import { CatalogueHeader } from './CatalogueHeader';
 
 const useStyle = createUseStyles({
   container: {
@@ -38,6 +39,7 @@ export const CatalogueContainer = () => {
       initialType={initialType ?? ALL_CATALOGUE}
       syncStateWithQueryString={true}
     >
+      <CatalogueHeader />
       <article className={classes.container} data-testid="catalogue-container">
         <div className="row">
           {/* <section className="col-lg-3 d-none d-lg-flex flex-column">

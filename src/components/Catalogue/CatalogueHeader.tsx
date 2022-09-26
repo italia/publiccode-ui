@@ -1,15 +1,20 @@
-import React, { useCallback, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { createUseStyles } from 'react-jss';
-import { SearchBar } from '../SearchBar';
-import { searchContextDispatch, searchContextState, setSearchValue } from '../../contexts/searchContext';
+import React, { useCallback, useContext } from "react";
+import { useTranslation } from "react-i18next";
+import { createUseStyles } from "react-jss";
+import { SearchBar } from "../SearchBar";
+import {
+  searchContextDispatch,
+  searchContextState,
+  setSearchValue,
+} from "../../contexts/searchContext";
+import { HeaderSearch } from "../HeaderSearch";
 
 const useStyles = createUseStyles({
   header: {
-    fontSize: '3rem',
+    fontSize: "3rem",
   },
   image: {
-    minHeight: '25vw',
+    minHeight: "25vw",
   },
 });
 
@@ -19,16 +24,22 @@ export const CatalogueHeader = React.memo(() => {
   const dispatch = useContext(searchContextDispatch);
   const { t } = useTranslation();
 
-  const handleSearch = useCallback((value) => dispatch(setSearchValue(value)), [dispatch]);
+  const handleSearch = useCallback(
+    (value) => dispatch(setSearchValue(value)),
+    [dispatch]
+  );
 
   return (
-    <div className="text-center">
-      <div className="row"></div>
-      <div className="col-10 mx-auto text-center mb-3">
-        <SearchBar onChange={handleSearch} defaultValue={searchValue} placeholder={t('search_form_label')} />
+    <HeaderSearch>
+      <div className="col-12">
+        <SearchBar
+          onChange={handleSearch}
+          defaultValue={searchValue}
+          placeholder={t("search_form_label")}
+        />
       </div>
-    </div>
+    </HeaderSearch>
   );
 });
 
-CatalogueHeader.displayName = 'CatalogueHeader';
+CatalogueHeader.displayName = "CatalogueHeader";
