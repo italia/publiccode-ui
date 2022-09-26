@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Icon } from "../components/Icon/Icon";
 import { DEBOUNCE_SEARCH_MS } from "../utils/constants";
 import { createUseStyles } from "react-jss";
+import { useTranslation } from "react-i18next";
 
 const useStyles = createUseStyles({
   closeIconWrapper: {
@@ -29,6 +30,7 @@ const useStyles = createUseStyles({
 export const SearchBar: React.FC<SearchBarProps> = React.memo(
   ({ defaultValue = "", placeholder = "", onChange }) => {
     const classes = useStyles();
+    const { t } = useTranslation();
     const { register } = useForm({
       defaultValues: {
         search: defaultValue,
@@ -44,7 +46,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
 
     return (
       <>
-        <label className="text-white fs-6 fw-semibold">SEARCH</label>
+        <label className="text-white fs-6 fw-semibold text-uppercase">{t('software.search')}</label>
         <div className="form-group">
           <div className="input-group">
             <div className="input-group-prepend">

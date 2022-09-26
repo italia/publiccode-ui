@@ -11,8 +11,7 @@ export const CatalogueSort = React.memo(() => {
 
   const showRelevance = sortBy === RELEVANCE || searchValue;
   return (
-    <div className="d-flex flex-wrap justify-content-end align-items-center">
-      <label className="mb-0 pr-2">{t('software.sort_by')}</label>
+    <div className="d-flex flex-wrap justify-content-end align-items-center select-wrapper">
       <select onChange={(e) => dispatch(setSortBy(e.target.value))} defaultValue={initialSortBy || undefined}>
         {showRelevance ? <option value="relevance">{t('software.sort_by_relevance')}</option> : null}
         <option value="release_date">{t('software.sort_by_release_date')}</option>
