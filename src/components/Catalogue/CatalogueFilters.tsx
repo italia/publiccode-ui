@@ -39,27 +39,29 @@ const useStyles = createUseStyles<RuleNames, StyleProps>({
 const getCount = (filterValues: FormData) =>
   Object.values(filterValues).flat().length;
 
-export const CatalogueFilters: React.FC<CatalogueFiltersArrayProps | CatalogueFiltersStringProps> = React.memo(
-  ({ title, filters, defaultValues = {}, onChange, radio = false, name }) => {
+export const CatalogueFilters: React.FC<
+  CatalogueFiltersArrayProps | CatalogueFiltersStringProps
+> = React.memo(
+  ({ title, emptySelect, filters, defaultValues = {}, onChange, radio = false, name }) => {
     const [selectedFiltersCount, setSelectedFiltersCount] = useState(
       getCount(defaultValues)
     );
     const [showAll, setShowAll] = useState(false);
-    
+
     const classes = useStyles({ showAll });
     const { register, watch } = useForm<FormData>({
       defaultValues,
     });
     const watchFields = watch(name);
-    
+
     React.useEffect(() => {
       updateCounter({ [name]: watchFields });
       onChange(watchFields);
     }, [watchFields]);
-    
+
     const updateCounter = (data: FormData) =>
-    setSelectedFiltersCount(getCount(data));
-    
+      setSelectedFiltersCount(getCount(data));
+
     // TODO avoiding react-hook-form that could be overkill
     // const [filter, setFilter] = useState<FormData>(defaultValues);
     // const handleOnChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +83,7 @@ export const CatalogueFilters: React.FC<CatalogueFiltersArrayProps | CatalogueFi
     const toogleShowAll = () => {
       setShowAll(!showAll);
     };
+    console.log(filters);
 
     return (
       <form>
@@ -91,7 +94,25 @@ export const CatalogueFilters: React.FC<CatalogueFiltersArrayProps | CatalogueFi
             showCollapsableIcon={filters.length > 10}
             onToogleExpandCollapse={toogleShowAll}
           />
-          {filters.map(([key, value]) => (
+          <div className="select-wrapper">
+            <select
+              defaultValue={undefined}
+              style={{
+                textTransform: "capitalize",
+                backgroundColor: "#F2F7FC",
+              }}
+            >
+              <option selected="" value="">
+                {emptySelect}
+              </option>
+              {filters.map(([key, value]) => (
+                <option key={key} value={value} className={classes.label}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* {filters.map(([key, value]) => (
             <label key={key} className={classes.label}>
               <input
                 alt={value}
@@ -104,7 +125,7 @@ export const CatalogueFilters: React.FC<CatalogueFiltersArrayProps | CatalogueFi
               />
               {value}
             </label>
-          ))}
+          ))} */}
         </div>
       </form>
     );
@@ -114,15 +135,16 @@ type CatalogueFiltersProps = {
   filters: Array<string[]>;
   name: string;
   title: string;
+  emptySelect: string;
 };
 type CatalogueFiltersArrayProps = CatalogueFiltersProps & {
   radio?: false;
-  defaultValues: {[a: string]: string[]};
+  defaultValues: { [a: string]: string[] };
   onChange: (a: string[]) => void;
 };
 type CatalogueFiltersStringProps = CatalogueFiltersProps & {
   radio: true;
-  defaultValues: {[a: string]: string};
+  defaultValues: { [a: string]: string };
   onChange: (a: string) => void;
 };
 
