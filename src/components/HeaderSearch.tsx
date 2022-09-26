@@ -1,6 +1,8 @@
 import React from "react";
-
-export const HeaderSearch = ({ children }) => {
+type Props = {
+  children?: JSX.Element;
+};
+export const HeaderSearch = ({ children }: Props) => {
   return (
     <>
       <div className="it-header-center-wrapper">
@@ -29,9 +31,7 @@ export const HeaderSearch = ({ children }) => {
                 </div>
               </div>
             </div>
-            <div className="col-9 mt-1">
-              {children}
-            </div>
+            <div className="col-9">{children}</div>
           </div>
         </div>
       </div>

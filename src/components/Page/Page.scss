@@ -3,5 +3,19 @@ $primary-s: 100;
 $primary-b: 50;
 
 $secondary: #f2f7fc;
+$header: #004080;
+
+.inputSearchBar {
+  background-color: #004080 !important;
+  color: #ffffff;
+}
+.inputSearchBar:active {
+  background-color: #004080 !important;
+  color: #ffffff;
+}
+.inputSearchBar:focus {
+  background-color: #004080 !important;
+  color: #ffffff;
+}
 
 @import "../../../node_modules/bootstrap-italia/src/scss/bootstrap-italia.scss";

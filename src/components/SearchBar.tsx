@@ -4,9 +4,31 @@ import { useForm } from "react-hook-form";
 
 import { Icon } from "../components/Icon/Icon";
 import { DEBOUNCE_SEARCH_MS } from "../utils/constants";
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  closeIconWrapper: {
+    composes: "autocomplete-icon",
+    backgroundColor: "#004080",
+  },
+  searchIconWrapper: {
+    composes: "input-group-text",
+    backgroundColor: "#004080",
+    borderBottom: '1px solid #ffffff !important',
+    height: '2.5rem !important',
+  },
+  icons: {
+    backgroundColor: "#004080",
+  },
+  input: {
+    composes: "form-control text-white inputSearchBar",
+    borderBottom: '1px solid #ffffff !important',
+  },
+});
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(
   ({ defaultValue = "", placeholder = "", onChange }) => {
+    const classes = useStyles();
     const { register } = useForm({
       defaultValues: {
         search: defaultValue,
@@ -21,27 +43,34 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
     );
 
     return (
-      <div className="form-group">
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <div className="input-group-text">
-              <Icon color="primary" icon="it-search" />
+      <>
+        <label className="text-white fs-6 fw-semibold">SEARCH</label>
+        <div className="form-group">
+          <div className="input-group">
+            <div className="input-group-prepend">
+              <div className={classes.searchIconWrapper}>
+                <Icon
+                  className={classes.icons}
+                  color="white"
+                  icon="it-search"
+                />
+              </div>
             </div>
+            <input
+              className={classes.input}
+              data-testid="search-bar"
+              id="search-bar"
+              autoFocus={true}
+              // placeholder={placeholder}
+              type="text"
+              onChange={handleOnChangeSearchValue}
+            />
           </div>
-          <input
-            className="form-control"
-            data-testid="search-bar"
-            id="search-bar"
-            autoFocus={true}
-            placeholder={placeholder}
-            type="text"
-            onChange={handleOnChangeSearchValue}
-          />
+          <span className={classes.closeIconWrapper}>
+            <Icon className={classes.icons} color="white" icon="it-close" />
+          </span>
         </div>
-        <span className="autocomplete-icon" aria-hidden="true">
-          <Icon color="primary" icon="it-close" />
-        </span>
-      </div>
+      </>
     );
   }
 );

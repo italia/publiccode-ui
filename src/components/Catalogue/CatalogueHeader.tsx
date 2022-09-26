@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { createUseStyles } from "react-jss";
 import { SearchBar } from "../SearchBar";
 import {
   searchContextDispatch,
@@ -9,17 +8,7 @@ import {
 } from "../../contexts/searchContext";
 import { HeaderSearch } from "../HeaderSearch";
 
-const useStyles = createUseStyles({
-  header: {
-    fontSize: "3rem",
-  },
-  image: {
-    minHeight: "25vw",
-  },
-});
-
 export const CatalogueHeader = React.memo(() => {
-  const classes = useStyles();
   const { searchValue } = useContext(searchContextState);
   const dispatch = useContext(searchContextDispatch);
   const { t } = useTranslation();
