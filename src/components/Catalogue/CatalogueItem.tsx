@@ -104,12 +104,12 @@ export const CatalogueItem: React.FC<SearchType> = ({
         <TagList tags={categories} visibleCount={3} isShowMoreVisible={false} />
       </div>
       <div className="d-none d-lg-block col-lg-2">
-        <div className="row">{t("software.last_release")}</div>
-        <div className="row">{releaseDate}</div>
+        <div className="row fs-6 fw-bolder">{t("software.last_release")}</div>
+        <div className="row fs-6 fw-bold">{releaseDate}</div>
       </div>
       <div className="d-none d-lg-block col-lg-2">
-        <div className="row">{t("software.license")}</div>
-        <div className="row">{license}</div>
+        <div className="row fs-6 fw-bolder">{t("software.license")}</div>
+        <div className="row fs-6 fw-bold">{license}</div>
       </div>
     </div>
   );
