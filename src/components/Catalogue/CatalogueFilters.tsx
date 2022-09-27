@@ -55,8 +55,10 @@ export const CatalogueFilters: React.FC<
     const watchFields = watch(name);
 
     React.useEffect(() => {
-      updateCounter({ [name]: watchFields });
-      onChange(watchFields);
+      updateCounter({ [name]: watchFields});
+      console.log(name, watchFields);
+      
+      onChange([watchFields]); // as an array because of not multiple select
     }, [watchFields]);
 
     const updateCounter = (data: FormData) =>
@@ -98,6 +100,7 @@ export const CatalogueFilters: React.FC<
                 textTransform: "capitalize",
                 backgroundColor: "#F2F7FC",
               }}
+              {...register(`${name}`)}
             >
               <option value="">
                 {emptySelect}
@@ -109,20 +112,6 @@ export const CatalogueFilters: React.FC<
               ))}
             </select>
           </div>
-          {/* {filters.map(([key, value]) => (
-            <label key={key} className={classes.label}>
-              <input
-                alt={value}
-                role="button"
-                className={classes.checkbox}
-                type={radio ? "radio" : "checkbox"}
-                value={key}
-                // name={name}
-                {...register(`${name}`)}
-              />
-              {value}
-            </label>
-          ))} */}
         </div>
       </form>
     );
