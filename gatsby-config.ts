@@ -71,6 +71,10 @@ const config: GatsbyConfig = {
                     license
                   }
                   releaseDate
+                  developmentStatus
+                  intendedAudience {
+                    scope
+                  }
                   description {
                     it {
                       genericName

@@ -106,7 +106,7 @@ export const CatalogueFilters: React.FC<
                 {emptySelect}
               </option>
               {filters.map(([key, value]) => (
-                <option key={key} value={value} className={classes.label}>
+                <option key={key} value={key} className={classes.label}>
                   {value}
                 </option>
               ))}

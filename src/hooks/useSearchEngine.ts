@@ -6,6 +6,7 @@ import {
   searchContextState,
   incrementPage,
 } from "../contexts/searchContext";
+import { PubliccodeLite } from "../utils/proptypes";
 
 enum ActionType {
   ADD_ITEMS,
@@ -53,6 +54,7 @@ interface State {
 }
 interface Store {
   id: string;
+  publiccode: PubliccodeLite;
 }
 
 const initial: State = {
@@ -139,9 +141,51 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
       dispatchGlobal(incrementPage());
     }
   };
-  
+
   const results: Store[] = useFlexSearch(searchValue, index, store);
   // TODO pagination
+
+  // TODO filtering
+  useEffect(() => {
+    let filtered: Store[] = results;
+    filterCategories[0] !== ""
+      ? (filtered =
+          filterCategories
+            .map((f) =>
+              filtered.filter((k) => k.publiccode.categories.includes(f))
+            )
+            ?.at(0) || [])
+      : filtered;
+    filterIntendedAudiences[0] !== ""
+      ? (filtered =
+          filterIntendedAudiences
+            .map((f) =>
+              filtered.filter((k) =>
+                k.publiccode.intendedAudience?.scope?.includes(f)
+              )
+            )
+            ?.at(0) || [])
+      : filtered;
+    filterDevelopmentStatuses[0] !== ""
+      ? (filtered =
+          filterDevelopmentStatuses
+            .map((f) =>
+              filtered.filter((k) => k.publiccode.developmentStatus === f)
+            )
+            ?.at(0) || [])
+      : filtered;
+
+    const set: ActionSetItems = {
+      type: ActionType.SET_ITEMS,
+      value: { items: filtered, total: filtered.length },
+    };
+    const add: ActionAddItems = {
+      type: ActionType.ADD_ITEMS,
+      value: { items: filtered },
+    };
+
+    dispatch(from === 0 ? set : add);
+  }, [filterCategories, filterDevelopmentStatuses, filterIntendedAudiences]);
 
   useEffect(() => {
     const set: ActionSetItems = {

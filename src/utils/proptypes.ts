@@ -17,7 +17,7 @@ export interface PubliccodeLite {
       localisedName: string;
       shortDescription: string;
       screenshots: string[];
-    }
+    };
   };
   name: string;
   slug: string;
@@ -25,6 +25,10 @@ export interface PubliccodeLite {
   logo: string;
   releaseDate: string;
   license: string;
+  developmentStatus: string;
+  intendedAudience: {
+    scope: string[];
+  };
 }
 export interface SearchType {
   id: string;
@@ -68,8 +72,15 @@ type SearchProviderContextFilters = {
 };
 
 // not used since this parameter is retrieved from url and so it is unpredictable
-enum initialSortBy {"relevance", "release_date", null}
-enum initialType {"all_site", null}
+enum initialSortBy {
+  "relevance",
+  "release_date",
+  null,
+}
+enum initialType {
+  "all_site",
+  null,
+}
 export interface SearchProviderContext extends SearchProviderContextFilters {
   initialPage?: number;
   initialSearchValue?: string | null;
