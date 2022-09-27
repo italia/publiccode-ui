@@ -32,36 +32,46 @@ export const CatalogueHeader = React.memo(() => {
       </HeaderSearch>
       <div className="container">
         {/* breadcrumb */}
-        <div className="col-1"></div>
-        <div className="pt-4 mx-auto col-10">
-          <nav
-            className="breadcrumb-container"
-            aria-label="Percorso di navigazione"
-          >
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <a href="#">Lorem ipsum</a>
-                <span className="separator">/</span>
-              </li>
-              <li className="breadcrumb-item">
-                <a href="#">Lorem ipsum</a>
-                <span className="separator">/</span>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-                {searchValue
-                  ? `${t("software.searching")}: `
-                  : t("software.search")}
-                {searchValue}
-              </li>
-            </ol>
-          </nav>
+        <div className="row mt-3">
+          <div className="col-1"></div>
+          <div className="mx-auto col-10">
+            <nav
+              className="breadcrumb-container"
+              aria-label="Percorso di navigazione"
+            >
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">
+                  <a href="#">Lorem ipsum</a>
+                  <span className="separator">/</span>
+                </li>
+                <li className="breadcrumb-item">
+                  <a href="#">Lorem ipsum</a>
+                  <span className="separator">/</span>
+                </li>
+                <li className="breadcrumb-item active" aria-current="page">
+                  {searchValue
+                    ? `${t("software.searching")}: `
+                    : t("software.search")}
+                  {searchValue}
+                </li>
+              </ol>
+            </nav>
+          </div>
+          <div className="col-1"></div>
         </div>
-        <div className="col-1"></div>
+        <div className="row mt-3 mb-5">
+          {/* search terms */}
+          <div className="col-1" />
+          <div className="col-10">
+            <span className="fw-bold fs-3">{searchValue}</span>
+          </div>
+          <div className="col-1" />
+        </div>
       </div>
       <div className="row filters-container py-5">
         <div className="col-lg-1"></div>
         {/* <div className="col-lg-10"> */}
-          <CatalogueFiltersContainer prefixName="desktop_view" />
+        <CatalogueFiltersContainer prefixName="desktop_view" />
         {/* </div> */}
         <div className="col-lg-1"></div>
       </div>
