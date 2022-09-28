@@ -8,6 +8,7 @@ import {
 } from "../../contexts/searchContext";
 import { HeaderSearch } from "../HeaderSearch";
 import { CatalogueFiltersContainer } from "./CatalogueFiltersContainer";
+import { Link } from "gatsby";
 
 export const CatalogueHeader = React.memo(() => {
   const { searchValue } = useContext(searchContextState);
@@ -41,18 +42,11 @@ export const CatalogueHeader = React.memo(() => {
             >
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="#">Lorem ipsum</a>
-                  <span className="separator">/</span>
-                </li>
-                <li className="breadcrumb-item">
-                  <a href="#">Lorem ipsum</a>
+                  <Link to="/">Home</Link>
                   <span className="separator">/</span>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
-                  {searchValue
-                    ? `${t("software.searching")}: `
-                    : t("software.search")}
-                  {searchValue}
+                  {t('software.search')}
                 </li>
               </ol>
             </nav>
@@ -62,9 +56,12 @@ export const CatalogueHeader = React.memo(() => {
         <div className="row mt-3 mb-5">
           {/* search terms */}
           <div className="col-1" />
-          <div className="col-10">
-            <span className="fw-bold fs-3">{searchValue}</span>
-          </div>
+          {searchValue && (
+            <div className="col-10">
+              <span className="fs-3">{t('software.search')}: </span>
+              <span className="fw-bold fs-3">{searchValue}</span>
+            </div>
+          )}
           <div className="col-1" />
         </div>
       </div>

@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import { useTranslation } from 'react-i18next';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 
 import { Badge } from '../components/Badge/Badge';
 import { Collapse } from '../components/Collapse';
@@ -53,11 +53,11 @@ const Software = ({ data: { softwareYaml: software } }) => {
             <nav className="breadcrumb-container" aria-label="Percorso di navigazione">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="#">Lorem ipsum</a>
+                  <Link to="/">Home</Link>
                   <span className="separator">/</span>
                 </li>
                 <li className="breadcrumb-item">
-                  <a href="#">Lorem ipsum</a>
+                  <Link to="/software">Software</Link>
                   <span className="separator">/</span>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
@@ -307,11 +307,10 @@ const Software = ({ data: { softwareYaml: software } }) => {
           </div>
 
           {localizedDescription.screenshots && (
-            <div className={`my-5 col-5 offset-3 ${classes.imageGallery}`}>
+            <div className={`my-5 col-12 ${classes.imageGallery}`}>
               <ImageGallery
                 items={localizedDescription.screenshots.map((s) => ({ original: s, thumbnail: s }))}
                 showPlayButton={false}
-                showBullets={true}
                 showFullscreenButton={false}
               />
             </div>
