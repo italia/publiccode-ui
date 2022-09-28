@@ -58,7 +58,7 @@ export const CatalogueFilters: React.FC<
       updateCounter({ [name]: watchFields});
       console.log(name, watchFields);
       
-      onChange([watchFields]); // as an array because of not multiple select
+      onChange(Array.isArray(watchFields) ? watchFields : [watchFields]); // as an array because of not multiple select
     }, [watchFields]);
 
     const updateCounter = (data: FormData) =>

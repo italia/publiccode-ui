@@ -16,7 +16,7 @@ export const CatalogueNoResults = React.memo(() => {
     <div className="text-center mt-4" data-testid="catalogue-no-results">
       <img className={classes.image} src="/assets/images/serp_no_results.svg" />
       <h1>{t('software.no_results')}</h1>
-      <p className="font-serif content-text">{t('software.retry_search')}</p>
+      <p className="content-text">{t('software.retry_search')}</p>
     </div>
   );
 });
