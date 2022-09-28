@@ -57,8 +57,12 @@ export const CatalogueFilters: React.FC<
     React.useEffect(() => {
       updateCounter({ [name]: watchFields});
       console.log(name, watchFields);
-      
-      onChange(Array.isArray(watchFields) ? watchFields : [watchFields]); // as an array because of not multiple select
+      const field = watchFields === '' ? [] : watchFields;
+      const result = Array.isArray(field) 
+        ? 
+        field : 
+        [field]; // as an array because of not multiple select
+      onChange(result);
     }, [watchFields]);
 
     const updateCounter = (data: FormData) =>
@@ -102,7 +106,7 @@ export const CatalogueFilters: React.FC<
               }}
               {...register(`${name}`)}
             >
-              <option value="">
+              <option value={[]}>
                 {emptySelect}
               </option>
               {filters.map(([key, value]) => (

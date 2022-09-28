@@ -116,7 +116,6 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
     searchValue,
     sortBy,
   } = useContext(searchContextState);
-  console.log('mah',filterCategories, filterDevelopmentStatuses ,filterIntendedAudiences);
   
   // This feature is mainly used by the infiniteScroll to reload the previous items just after an user click on the browser back button
   const reloadItemsUntilPage = useRef(page > 0 ? page : null);
@@ -149,10 +148,8 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
 
   // TODO filtering
   useEffect(() => {
-    console.log(filterCategories, filterDevelopmentStatuses, filterIntendedAudiences);
-    
     let filtered: Store[] = results;
-    filterCategories[0] !== ""
+    filterCategories[0]
       ? (filtered =
           filterCategories
             .map((f) =>
@@ -160,7 +157,7 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
             )
             ?.at(0) || [])
       : filtered;
-    filterIntendedAudiences[0] !== ""
+    filterIntendedAudiences[0]
       ? (filtered =
           filterIntendedAudiences
             .map((f) =>
@@ -170,7 +167,7 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
             )
             ?.at(0) || [])
       : filtered;
-    filterDevelopmentStatuses[0] !== ""
+    filterDevelopmentStatuses[0]
       ? (filtered =
           filterDevelopmentStatuses
             .map((f) =>
