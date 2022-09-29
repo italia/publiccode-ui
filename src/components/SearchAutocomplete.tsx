@@ -35,6 +35,11 @@ export const SearchAutocomplete = React.memo(() => {
   }, [dispatch]
   );
 
+  const handleClose = useCallback((_) => {
+    return dispatch(setSearchValue(''));
+  }, [dispatch]
+  );
+
   const useStyle = createUseStyles({
     searchBar: {
       width: '80% !important',
@@ -66,13 +71,18 @@ export const SearchAutocomplete = React.memo(() => {
           autoFocus={true}
           placeholder="Open source software"
           defaultValue={searchValue}
+          value={searchValue}
           type="text"
           onChange={handleSearch}
         />
-        <div className="input-group-append" onClick={(e) => dispatch(setSearchValue(''))}>
+        <div className="input-group-append">
+        {searchValue && (
           <div className="input-group-text">
-            <Icon icon="it-close" />
+            <a href="#" onClick={handleClose}>
+              <Icon icon="it-close" />
+            </a>
           </div>
+        )}
         </div>
      </div>
 
@@ -99,7 +109,7 @@ export const SearchAutocomplete = React.memo(() => {
         <hr />
         <li className="text-uppercase fw-bold">
           <Link to={`/software?search_value=${searchValue}`}>
-            <div className="pe-2">Show more results</div>
+            <div className="pe-2">Show more results for “{searchValue}”</div>
             <Icon size="sm" icon="it-search" />
           </Link>
         </li>
