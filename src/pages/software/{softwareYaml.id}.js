@@ -9,14 +9,13 @@ import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { graphql, Link } from 'gatsby';
 
-import { Badge } from '../components/Badge/Badge';
-import { Collapse } from '../components/Collapse';
-import { Icon } from '../components/Icon/Icon';
-import { Page } from '../components/Page/Page';
+import { Badge } from '../../components/Badge/Badge';
+import { Collapse } from '../../components/Collapse';
+import { Icon } from '../../components/Icon/Icon';
+import { Page } from '../../components/Page/Page';
 
-import '../i18n';
-import { CollapsableList } from '../components/CollapsableList';
-import { TagList } from '../components/TagList';
+import '../../i18n';
+import { TagList } from '../../components/TagList';
 
 // TODO: remove eslint-disable
 // eslint-disable-next-line max-lines-per-function,arrow-body-style

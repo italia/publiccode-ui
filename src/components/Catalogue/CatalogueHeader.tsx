@@ -46,7 +46,7 @@ export const CatalogueHeader = React.memo(() => {
                   <span className="separator">/</span>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
-                  {t('software.search')}
+                  Software
                 </li>
               </ol>
             </nav>

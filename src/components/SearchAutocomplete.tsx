@@ -80,7 +80,7 @@ export const SearchAutocomplete = React.memo(() => {
       <ul className={resultClasses}>
         {items && items.slice(0, 5).map((result, idx) => (
           <li key={idx}>
-            <Link to={`/${result.id}`}>
+            <Link to={`/software/${result.id}`}>
                 <div className={classes.logoContainer}>
                   <ImageWithPlaceholder alt="" img={result.publiccode.logo} />
                 </div>
