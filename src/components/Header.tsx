@@ -1,3 +1,4 @@
+import { Link } from "gatsby";
 import React from "react";
 type Props = {
   children?: JSX.Element;
@@ -11,7 +12,7 @@ export const Header = ({ children }: Props) => {
             <div className="col-3">
               <div className="it-header-center-content-wrapper">
                 <div className="it-brand-wrapper">
-                  <a href="#">
+                  <Link to="/">
                     <svg height="96" width="96">
                       <circle
                         cx="50"
@@ -27,7 +28,7 @@ export const Header = ({ children }: Props) => {
                         EU Public Code
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
