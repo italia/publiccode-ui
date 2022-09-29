@@ -1,4 +1,5 @@
 import React from "react";
+import Helmet from "react-helmet";
 import { createUseStyles } from 'react-jss';
 
 import '../components/Page/Page.scss';
@@ -24,28 +25,33 @@ const IndexPage = () => {
   const labelClasses = classNames('fs-4', 'fw-bold', classes.label);
 
   return (
-    <Layout>
-      <div className="container mb-5">
-        <div className="d-flex align-items-center min-vh-100">
-          <div className="w-100 pb-5">
-            <div className="row my-auto">
-              <div className="col-1">
-                <svg height="96" width="96">
-                  <circle cx="50" cy="50" r="40" fill="#004080" />
-                </svg>
-              </div>
-              <div className="col-2 my-auto">
-                <div className={labelClasses}>EU Public Code</div>
-              </div>
+    <>
+      <Helmet>
+        <title>EU Public Code - Search</title>
+      </Helmet>
+      <Layout>
+        <div className="container mb-5">
+          <div className="d-flex align-items-center min-vh-100">
+            <div className="w-100 pb-5">
+              <div className="row my-auto">
+                <div className="col-1">
+                  <svg height="96" width="96">
+                    <circle cx="50" cy="50" r="40" fill="#004080" />
+                  </svg>
+                </div>
+                <div className="col-2 my-auto">
+                  <div className={labelClasses}>EU Public Code</div>
+                </div>
 
-              <div className="col-8 my-auto">
-                <SearchAutocomplete />
+                <div className="col-8 my-auto">
+                  <SearchAutocomplete />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

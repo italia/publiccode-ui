@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState } from 'react';
+import Helmet from 'react-helmet';
 import { createUseStyles } from 'react-jss';
 import ReactMarkdown from 'react-markdown';
 import { useTranslation } from 'react-i18next';
@@ -46,6 +47,10 @@ const Software = ({ data: { softwareYaml: software } }) => {
 
   return (
     <>
+      <Helmet>
+        <title>EU Public Code - {software.publiccode.name}</title>
+      </Helmet>
+
       <Page>
         <div className="container d-flex flex-column">
           <div className="row pt-4">

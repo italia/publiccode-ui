@@ -1,4 +1,5 @@
 import React from "react";
+import '../Page/Page.scss';
 import { createUseStyles } from "react-jss";
 import { ImageWithPlaceholder } from "../ImageWithPlaceholder";
 import { SearchType } from "../../utils/proptypes";

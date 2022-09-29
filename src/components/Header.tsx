@@ -1,3 +1,5 @@
+import "../components/Page/Page.scss"
+
 import { Link } from "gatsby";
 import React from "react";
 type Props = {

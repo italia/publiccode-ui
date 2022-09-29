@@ -8,12 +8,17 @@ import 'typeface-lora';
 import '../i18n';
 
 import { CatalogueContainer } from "../components/Catalogue/CatalogueContainer";
+import {Helmet} from "react-helmet";
 
 const SoftwareListPage = () => {
   const { t } = useTranslation();
 
   return (
     <>
+      <Helmet>
+        <title>EU Public Code - Software</title>
+      </Helmet>
+
       <CatalogueContainer />
     </>
   );
