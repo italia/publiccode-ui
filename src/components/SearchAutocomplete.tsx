@@ -19,7 +19,7 @@ import { Icon } from "../components/Icon/Icon";
 import { Chip } from '../components/Chips/Chip';
 import { ChipLabel } from '../components/Chips/ChipLabel';
 
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
 import { useSearchEngine} from "../hooks/useSearchEngine";
 import {ImageWithPlaceholder} from "./ImageWithPlaceholder";
 
@@ -34,6 +34,12 @@ export const SearchAutocomplete = React.memo(() => {
     return dispatch(setSearchValue(e.target.value));
   }, [dispatch]
   );
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      navigate(`/software?search_value=${searchValue}`)
+    }
+  }
 
   const handleClose = useCallback((_) => {
     return dispatch(setSearchValue(''));
@@ -74,6 +80,7 @@ export const SearchAutocomplete = React.memo(() => {
           value={searchValue}
           type="text"
           onChange={handleSearch}
+          onKeyDown={handleKeyDown}
         />
         <div className="input-group-append">
         {searchValue && (
