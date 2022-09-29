@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from "react";
 import debounce from "lodash.debounce";
-import { useForm } from "react-hook-form";
 
 import { Icon } from "../components/Icon/Icon";
 import { DEBOUNCE_SEARCH_MS } from "../utils/constants";
@@ -15,15 +14,15 @@ const useStyles = createUseStyles({
   searchIconWrapper: {
     composes: "input-group-text",
     backgroundColor: "#004080 !important",
-    borderBottom: '1px solid #ffffff !important',
-    height: '2.5rem !important',
+    borderBottom: "1px solid #ffffff !important",
+    height: "2.5rem !important",
   },
   icons: {
     backgroundColor: "#004080",
   },
   input: {
     composes: "form-control text-white inputSearchBar",
-    borderBottom: '1px solid #ffffff !important',
+    borderBottom: "1px solid #ffffff !important",
   },
 });
 
@@ -31,11 +30,6 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
   ({ defaultValue = "", placeholder = "", onChange }) => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { register } = useForm({
-      defaultValues: {
-        search: defaultValue,
-      },
-    });
 
     const handleOnChangeSearchValue = debounce(
       (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +40,9 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
 
     return (
       <>
-        <label className="text-white fs-6 fw-semibold text-uppercase">{t('software.search')}</label>
+        <label className="text-white fs-6 fw-semibold text-uppercase">
+          {t("software.search")}
+        </label>
         <div className="form-group">
           <div className="input-group">
             <div className="input-group-prepend">
@@ -64,6 +60,8 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
               id="search-bar"
               autoFocus={true}
               type="text"
+              defaultValue={defaultValue}
+              placeholder={placeholder}
               onChange={handleOnChangeSearchValue}
             />
           </div>
