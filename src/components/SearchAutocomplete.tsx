@@ -98,7 +98,7 @@ export const SearchAutocomplete = React.memo(() => {
         ))}
         <hr />
         <li className="text-uppercase fw-bold">
-          <Link to={`/?search_value=${searchValue}`}>
+          <Link to={`/software?search_value=${searchValue}`}>
             <div className="pe-2">Show more results</div>
             <Icon size="sm" icon="it-search" />
           </Link>

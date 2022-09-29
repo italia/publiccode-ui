@@ -9,7 +9,7 @@ import '../i18n';
 
 import { CatalogueContainer } from "../components/Catalogue/CatalogueContainer";
 
-const IndexPage = () => {
+const SoftwareListPage = () => {
   const { t } = useTranslation();
 
   return (
@@ -22,4 +22,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default SoftwareListPage;
