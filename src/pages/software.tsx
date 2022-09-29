@@ -14,10 +14,7 @@ const SoftwareListPage = () => {
 
   return (
     <>
-      <div>
-        <CatalogueContainer />
-        {/* <CatalogueItem fallback="fallback" /> */}
-      </div>
+      <CatalogueContainer />
     </>
   );
 };

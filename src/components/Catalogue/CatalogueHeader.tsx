@@ -6,7 +6,7 @@ import {
   searchContextState,
   setSearchValue,
 } from "../../contexts/searchContext";
-import { HeaderSearch } from "../HeaderSearch";
+import { Header } from "../Header";
 import { CatalogueFiltersContainer } from "./CatalogueFiltersContainer";
 import { Link } from "gatsby";
 
@@ -22,7 +22,7 @@ export const CatalogueHeader = React.memo(() => {
 
   return (
     <>
-      <HeaderSearch>
+      <Header>
         <div className="col-12">
           <SearchBar
             onChange={handleSearch}
@@ -30,7 +30,7 @@ export const CatalogueHeader = React.memo(() => {
             placeholder={t("search_form_label")}
           />
         </div>
-      </HeaderSearch>
+      </Header>
       <div className="container">
         {/* breadcrumb */}
         <div className="row mt-3">
