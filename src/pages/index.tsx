@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const SearchPage = () => {
+const IndexPage = () => {
   const classes = useStyles();
   const labelClasses = classNames('fs-4', 'fw-bold', classes.label);
 
@@ -49,4 +49,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default IndexPage;
