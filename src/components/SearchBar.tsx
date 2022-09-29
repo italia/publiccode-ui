@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 
 import { Icon } from "../components/Icon/Icon";
@@ -7,10 +7,6 @@ import { createUseStyles } from "react-jss";
 import { useTranslation } from "react-i18next";
 
 const useStyles = createUseStyles({
-  closeIconWrapper: {
-    composes: "autocomplete-icon",
-    backgroundColor: "#004080 !important",
-  },
   searchIconWrapper: {
     composes: "input-group-text",
     backgroundColor: "#004080 !important",
@@ -29,14 +25,26 @@ const useStyles = createUseStyles({
 export const SearchBar: React.FC<SearchBarProps> = React.memo(
   ({ defaultValue = "", placeholder = "", onChange }) => {
     const classes = useStyles();
-    const { t } = useTranslation();
+    const { t } = useTranslation()
+    const [value, setValue] = useState(defaultValue);
 
-    const handleOnChangeSearchValue = debounce(
+    const handleOnChangeSearchValue = useCallback(debounce(
       (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
       },
       DEBOUNCE_SEARCH_MS
-    );
+    ), [value]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+      handleOnChangeSearchValue(e)
+    }
+
+    const handleClose = (e: SyntheticEvent) => {
+      e.preventDefault();
+      onChange("");
+      setValue("")
+    }
 
     return (
       <>
@@ -61,13 +69,20 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
               autoFocus={true}
               type="text"
               defaultValue={defaultValue}
+              value={value}
               placeholder={placeholder}
-              onChange={handleOnChangeSearchValue}
+              onChange={handleChange}
             />
+            <div className="input-group-append">
+              {value && (
+                <div className={classes.searchIconWrapper}>
+                  <a href="#" onClick={handleClose}>
+                    <Icon className={classes.icons} color="white" icon="it-close" />
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
-          <span className={classes.closeIconWrapper}>
-            <Icon className={classes.icons} color="white" icon="it-close" />
-          </span>
         </div>
       </>
     );
