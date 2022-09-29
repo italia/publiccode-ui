@@ -7,18 +7,8 @@ import { createUseStyles } from "react-jss";
 import { useTranslation } from "react-i18next";
 
 const useStyles = createUseStyles({
-  searchIconWrapper: {
-    composes: "input-group-text",
-    backgroundColor: "#004080 !important",
-    borderBottom: "1px solid #ffffff !important",
-    height: "2.5rem !important",
-  },
   icons: {
     backgroundColor: "#004080",
-  },
-  input: {
-    composes: "form-control text-white inputSearchBar",
-    borderBottom: "1px solid #ffffff !important",
   },
 });
 
@@ -54,7 +44,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
         <div className="form-group">
           <div className="input-group">
             <div className="input-group-prepend">
-              <div className={classes.searchIconWrapper}>
+              <div className="input-group-text searchIconWrapper">
                 <Icon
                   className={classes.icons}
                   color="white"
@@ -63,7 +53,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
               </div>
             </div>
             <input
-              className={classes.input}
+              className="form-control text-white inputSearchBar"
               data-testid="search-bar"
               id="search-bar"
               autoFocus={true}
@@ -75,7 +65,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
             />
             <div className="input-group-append">
               {value && (
-                <div className={classes.searchIconWrapper}>
+                <div className="input-group-text searchIconWrapper">
                   <a href="#" onClick={handleClose}>
                     <Icon className={classes.icons} color="white" icon="it-close" />
                   </a>
