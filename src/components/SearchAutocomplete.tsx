@@ -22,6 +22,7 @@ import { ChipLabel } from '../components/Chips/ChipLabel';
 import { Link, navigate } from "gatsby";
 import { useSearchEngine} from "../hooks/useSearchEngine";
 import {ImageWithPlaceholder} from "./ImageWithPlaceholder";
+import {absoluteUrl} from "../utils/publiccodeAbsoluteUrl";
 
 export const SearchAutocomplete = React.memo(() => {
   const { searchValue } = useContext(searchContextState);
@@ -37,7 +38,7 @@ export const SearchAutocomplete = React.memo(() => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      navigate(`/software?search_value=${searchValue}`)
+      window.location = `/software?search_value=${searchValue}`
     }
   }
 
@@ -98,9 +99,11 @@ export const SearchAutocomplete = React.memo(() => {
         {items && items.slice(0, 5).map((result, idx) => (
           <li key={idx}>
             <Link to={`/software/${result.id}`}>
-                <div className={classes.logoContainer}>
-                  <ImageWithPlaceholder alt="" img={result.publiccode.logo} />
-                </div>
+                  <div className={classes.logoContainer}>
+                    {result.publiccode.logo && (
+                      <ImageWithPlaceholder alt="" img={absoluteUrl(result.publiccode.logo, result.publiccode.url)} />
+                    )}
+                  </div>
                 <span className="autocomplete-list-text fs-5 fw-bold my-auto me-4">{result.publiccode.name}</span>
 
                 <div className="my-auto d-flex flex-grow-3 justify-content-end">

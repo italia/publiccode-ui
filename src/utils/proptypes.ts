@@ -9,6 +9,7 @@ export type SearchTypeItem = {
 };
 
 export interface PubliccodeLite {
+  url: string;
   description: {
     [key: string]: {
       genericName: string;
@@ -20,7 +21,6 @@ export interface PubliccodeLite {
     };
   };
   name: string;
-  slug: string;
   categories: string[];
   logo: string;
   releaseDate: string;

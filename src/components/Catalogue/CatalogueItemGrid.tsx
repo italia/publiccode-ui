@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "../Icon/Icon";
 import { TagList } from "../TagList";
 import { getSoftwareCategory, SOFTWARE_REUSE } from "../../utils/constants";
+import {absoluteUrl} from "../../utils/publiccodeAbsoluteUrl";
 const useStyles = createUseStyles({
   link: {
     display: "block",
@@ -58,7 +59,7 @@ const useStyles = createUseStyles({
 
 export const CatalogueItemGrid: React.FC<SearchType> = ({
   id,
-  publiccode: { description, name, slug, categories, logo: plogo },
+  publiccode: { url: repoUrl, description, name, slug, categories, logo },
 }) => {
   const classNamees = useStyles();
   const { t, i18n } = useTranslation();
@@ -68,14 +69,8 @@ export const CatalogueItemGrid: React.FC<SearchType> = ({
     description[i18n.language] ||
     description.en ||
     description[Object.keys(description).find((k) => description[k])];
-  // const icon = category === SOFTWARE_REUSE ? 'it-software' : 'it-open-source';
   const icon = "it-software";
-  const fallback = "/assets/images/cover_softwareriuso.png";
-  // const fallback =
-  //   category === SOFTWARE_REUSE
-  //     ? '/assets/images/cover_softwareriuso.png'
-  //     : '/assets/images/cover_software_opensource.png';
-  let logo = description?.screenshots?.[0] ?? plogo ?? fallback;
+  logo ||= description?.screenshots?.[0];
   const url = `/software/${slug.toLowerCase()}`;
 
   console.log(description);
@@ -98,13 +93,14 @@ export const CatalogueItemGrid: React.FC<SearchType> = ({
           className={classNamees.link}
           data-testid="item-anchor"
         >
-          <div className={classNamees.logoContainer}>
-            <ImageWithPlaceholder
-              placeholder={fallback}
-              alt="logo"
-              img={logo}
-            />
-          </div>
+          {logo && (
+            <div className={classNamees.logoContainer}>
+              <ImageWithPlaceholder
+                alt="logo"
+                img={absoluteUrl(logo, repoUrl)}
+              />
+            </div>
+          )}
           <div className={classNamees.title}>{name}</div>
           <div className={classNamees.description}>
             {localizedDescription.shortDescription}

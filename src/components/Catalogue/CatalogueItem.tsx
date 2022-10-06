@@ -3,6 +3,7 @@ import '../Page/Page.scss';
 import { createUseStyles } from "react-jss";
 import { ImageWithPlaceholder } from "../ImageWithPlaceholder";
 import { SearchType } from "../../utils/proptypes";
+import { absoluteUrl } from "../../utils/publiccodeAbsoluteUrl";
 import { useTranslation } from "react-i18next";
 
 import { TagList } from "../TagList";
@@ -60,11 +61,11 @@ export const CatalogueItem: React.FC<SearchType> = ({
   publiccode: {
     description,
     name,
-    slug,
     categories,
-    logo: plogo,
+    logo,
     releaseDate,
     license,
+    url,
   },
 }) => {
   const classNamees = useStyles();
@@ -74,20 +75,23 @@ export const CatalogueItem: React.FC<SearchType> = ({
     description[i18n.language] ||
     description.en ||
     description[Object.keys(description).find((k) => description[k]) || 0];
-  const logo = localizedDescription?.screenshots?.[0] ?? plogo ?? null;
+
+  logo ||= localizedDescription?.screenshots?.[0]
 
   return (
     <div className="row">
       <hr className="border-1 border border-muted mb-4" />
       <div className="col-sm-2 col-lg-2">
-        <Link to={id} title={name} data-testid="item-anchor">
-          <div className={classNamees.logoContainer}>
-            <ImageWithPlaceholder
-              alt="logo"
-              img={logo}
-            />
-          </div>
-        </Link>
+        { logo && (
+          <Link to={id} title={name} data-testid="item-anchor">
+            <div className={classNamees.logoContainer}>
+              <ImageWithPlaceholder
+                alt="logo"
+                img={absoluteUrl(logo, url)}
+              />
+            </div>
+          </Link>
+        )}
       </div>
       <div className="col-6 mb-4">
         <Link
