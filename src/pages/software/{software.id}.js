@@ -20,7 +20,7 @@ import { TagList } from '../../components/TagList';
 
 // TODO: remove eslint-disable
 // eslint-disable-next-line max-lines-per-function,arrow-body-style
-const Software = ({ data: { softwareYaml: software } }) => {
+const Software = ({ data: { software } }) => {
   const { t, i18n } = useTranslation();
 
   const useStyles = createUseStyles({
@@ -39,16 +39,16 @@ const Software = ({ data: { softwareYaml: software } }) => {
   };
 
   const localizedDescription =
-    software.publiccode.description[i18n.language] ||
-    software.publiccode.description.en ||
-    software.publiccode.description[
-      Object.keys(software.publiccode.description).find((k) => software.publiccode.description[k])
+    software.publiccodeYml.description[i18n.language] ||
+    software.publiccodeYml.description.en ||
+    software.publiccodeYml.description[
+      Object.keys(software.publiccodeYml.description).find((k) => software.publiccodeYml.description[k])
     ];
 
   return (
     <>
       <Helmet>
-        <title>EU Public Code - {software.publiccode.name}</title>
+        <title>EU Public Code - {software.publiccodeYml.name}</title>
       </Helmet>
 
       <Page>
@@ -65,7 +65,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                   <span className="separator">/</span>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
-                  {software.publiccode.name}
+                  {software.publiccodeYml.name}
                 </li>
               </ol>
             </nav>
@@ -73,15 +73,15 @@ const Software = ({ data: { softwareYaml: software } }) => {
           <div className="row">
             <div className="col-md-7">
               <div>
-                <h1 className="d-inline-block">{software.publiccode.name}</h1>
+                <h1 className="d-inline-block">{software.publiccodeYml.name}</h1>
                 <div>
                   <h2>
-                    {software.publiccode.isBasedOn && (
+                    {software.publiccodeYml.isBasedOn && (
                       <>
                         <br />
                         <span>
                           {t('software.variant_by')}
-                          {software.publiccode.legal.repoOwner}
+                          {software.publiccodeYml.legal.repoOwner}
                         </span>
                       </>
                     )}
@@ -89,7 +89,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                   <p className="fs-5 fw-bolder my-2 my-md-4">{localizedDescription.shortDescription}</p>
                   <div className="my-3 mb-5 d-flex">
                     <ul className="list-inline">
-                      <TagList tags={software.publiccode.categories} visibleCount={3} />
+                      <TagList tags={software.publiccodeYml.categories} visibleCount={3} />
                     </ul>
                   </div>
 
@@ -98,7 +98,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
             </div>
 
             <div className="offset-md-1 col-md-4 ">
-              <img alt="" width={100} src={software.publiccode.logo} className="d-inline-block" />
+              <img alt="" width={100} src={software.publiccodeYml.logo} className="d-inline-block" />
               <div>
                 {/* TODO vitality
                 <div>
@@ -112,7 +112,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                     <div className="info-block__msg font-serif">{t.software.tooltip}</div>
                   </div>
                   <div className="status-developement">
-                    <p>{`${t('software.development_status')}: ${software.publiccode.developmentStatus}`}</p>
+                    <p>{`${t('software.development_status')}: ${software.publiccodeYml.developmentStatus}`}</p>
                   </div>
                 </div>
                 */}
@@ -125,26 +125,26 @@ const Software = ({ data: { softwareYaml: software } }) => {
         <div className='container-fluid bg-secondary'>
           <div className='container py-5'>
             <div className="d-flex flex-wrap">
-              {software.publiccode.legal.repoOwner && (
+              {software.publiccodeYml.legal.repoOwner && (
                 <div className="d-flex flex-column w-25">
                   <div className="fs-6 fw-bolder">{t('software.published_by')}</div>
-                  <div className="fs-6 fw-bold">{software.publiccode.legal.repoOwner}</div>
+                  <div className="fs-6 fw-bold">{software.publiccodeYml.legal.repoOwner}</div>
                 </div>
               )}
 
               <div className="d-flex flex-column w-25">
                 <div className="fs-6 fw-bolder">{t('software.last_release')}</div>
                 <div className="fs-6 fw-bold">
-                  {software.publiccode.releaseDate}
-                  {software.publiccode.softwareVersion && ` (${software.publiccode.softwareVersion})`}
+                  {software.publiccodeYml.releaseDate}
+                  {software.publiccodeYml.softwareVersion && ` (${software.publiccodeYml.softwareVersion})`}
                 </div>
               </div>
 
-              {software.publiccode.maintenance.type === 'contract' &&
-                software.publiccode.maintenance.contractors?.length > 0 && (
+              {software.publiccodeYml.maintenance.type === 'contract' &&
+                software.publiccodeYml.maintenance.contractors?.length > 0 && (
                   <div className="d-flex flex-column w-25">
                     <div className="fs-6 fw-bolder">{t('software.software_maintained_by')}</div>
-                    {software.publiccode.maintenance.contractors.map((c) => {
+                    {software.publiccodeYml.maintenance.contractors.map((c) => {
                       c.website ? (
                         <div clasName="fs-6 fw-bold">
                           <a href={c.website}>{c.name}</a>
@@ -156,12 +156,12 @@ const Software = ({ data: { softwareYaml: software } }) => {
                   </div>
                 )}
 
-              {software.publiccode.maintenance.contacts && (
+              {software.publiccodeYml.maintenance.contacts && (
                 <div className="d-flex flex-column w-25">
                   <div className="fs-6 fw-bolder">
-                    {t('software.technical_contact', { count: software.publiccode.maintenance.contacts.length })}
+                    {t('software.technical_contact', { count: software.publiccodeYml.maintenance.contacts.length })}
                   </div>{' '}
-                  {software.publiccode.maintenance.contacts.map((contact) => {
+                  {software.publiccodeYml.maintenance.contacts.map((contact) => {
                     if (contact.email) {
                       return (
                         <div className="fs-6 fw-bold">
@@ -180,20 +180,20 @@ const Software = ({ data: { softwareYaml: software } }) => {
 
               <div className="d-flex flex-column w-25">
                 <div className="fs-6 fw-bolder">{t('software.maintainance_type')}</div>
-                <div className="fs-6 fw-bold">{software.publiccode.maintenance.type}</div>
+                <div className="fs-6 fw-bold">{software.publiccodeYml.maintenance.type}</div>
               </div>
 
               <div className="d-flex flex-column w-25">
                 <div className="fs-6 fw-bolder">{t('software.license')}</div>
-                <div className="fs-6 fw-bold">{software.publiccode.legal.license}</div>
+                <div className="fs-6 fw-bold">{software.publiccodeYml.legal.license}</div>
               </div>
 
-              {software.publiccode.maintenance.type === 'contract' &&
-                software.publiccode.maintenance.contractors && (
+              {software.publiccodeYml.maintenance.type === 'contract' &&
+                software.publiccodeYml.maintenance.contractors && (
                   <div className="d-flex flex-column w-25">
                     <div className="fs-6 fw-bolder">{t('software.contract_with')}</div>
                     <div className="fs-6 fw-bold">
-                      {software.publiccode.maintenance.contractors.map((contractor) => (
+                      {software.publiccodeYml.maintenance.contractors.map((contractor) => (
                         // <title id="software-support-ended">{t('software.contract_warning')}</title>
                         <>
                           {Date.now() > contractor.until && (
@@ -209,10 +209,10 @@ const Software = ({ data: { softwareYaml: software } }) => {
                   </div>
                 )}
 
-              {software.publiccode.platforms?.length > 0 && (
+              {software.publiccodeYml.platforms?.length > 0 && (
                 <div className="d-flex flex-column w-25">
                   <div className="fs-6 fw-bolder">{t('software.platforms')}</div>
-                  {software.publiccode.platforms.map((platform, i) => (
+                  {software.publiccodeYml.platforms.map((platform, i) => (
                     <div className="fs-6 fw-bold" key={i}>
                       {platform}
                     </div>
@@ -223,8 +223,8 @@ const Software = ({ data: { softwareYaml: software } }) => {
               <div className="d-flex flex-column w-25">
                 <div className="fs-6 fw-bolder">{t('software.dependencies_list')}</div>
                 <div className="fs-6 fw-bold">
-                  {!software.publiccode.dependsOn && t('software.dependencies_none')}
-                  {software.publiccode.dependsOn?.open?.map((software, i) => (
+                  {!software.publiccodeYml.dependsOn && t('software.dependencies_none')}
+                  {software.publiccodeYml.dependsOn?.open?.map((software, i) => (
                     <div className="p-1" key={i}>
                       <Badge color="success">{t('software.dependencies_oss')}</Badge>{' '}
                       <span className="pl-1">
@@ -232,7 +232,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                       </span>
                     </div>
                   ))}
-                  {software.publiccode.dependsOn?.hardware?.map((software, i) => (
+                  {software.publiccodeYml.dependsOn?.hardware?.map((software, i) => (
                     <div className="p-1" key={i}>
                       <Badge color="secondary">Hardware</Badge>{' '}
                       <span className="pl-1">
@@ -240,7 +240,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                       </span>
                     </div>
                   ))}
-                  {software.publiccode.dependsOn?.proprietary?.map((software, i) => (
+                  {software.publiccodeYml.dependsOn?.proprietary?.map((software, i) => (
                     <div className="p-1" key={i}>
                       <Badge color="danger">{t('software.dependencies_proprietary')}</Badge>{' '}
                       <span className="pl-1">
@@ -257,11 +257,11 @@ const Software = ({ data: { softwareYaml: software } }) => {
         <div className='container'>
           <div className='row col-6'>
             <div className='d-flex flex-wrap container py-5'>
-              {software.publiccode.landingURL && (
+              {software.publiccodeYml.landingURL && (
                 <div className='w-50 text-uppercase fs-6 fw-bold pt-3'>
                   <p>
                     <a
-                      href={software.publiccode.landingURL}
+                      href={software.publiccodeYml.landingURL}
                       aria-label={t('software.goToLandingUrlAriaLabel')}
                       rel="noopener noreferrer"
                       target="_blank"
@@ -288,7 +288,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
 
               <div className='w-50 text-uppercase fs-6 fw-bold pt-3'>
                 <p>
-                  <a href={software.publiccode.url}>
+                  <a href={software.publiccodeYml.url}>
                     <Icon icon="it-code-circle" className="mr-2" />
                     <span className="font-weight-bold inline-block px-2">{t('software.goToCode')}</span>
                     <Icon icon="it-external-link" />
@@ -296,10 +296,10 @@ const Software = ({ data: { softwareYaml: software } }) => {
                 </p>
               </div>
 
-              {software.publiccode.roadmap && (
+              {software.publiccodeYml.roadmap && (
                 <div className='w-50 text-uppercase fs-6 fw-bold pt-3'>
                   <p>
-                    <a href={software.publiccode.roadmap}>
+                    <a href={software.publiccodeYml.roadmap}>
                       <Icon icon="it-chart-line" className="mr-2" />
                       <span className="font-weight-bold inline-block px-2">{t('software.goToRoadmap')}</span>
                       <Icon icon="it-external-link" />
@@ -435,7 +435,7 @@ const Software = ({ data: { softwareYaml: software } }) => {
                     </ul>
                   )}
                 </div>
-                {software.publiccode.usedBy?.size > 0 && (
+                {software.publiccodeYml.usedBy?.size > 0 && (
                   <ul className="">
                     {localizedDescription.usedBy.map((item, i) => <li key={i}>{item}</li>)}
                   </ul>
@@ -451,8 +451,8 @@ const Software = ({ data: { softwareYaml: software } }) => {
 
 export const query = graphql`
   query ($id: String!) {
-    softwareYaml(id: { eq: $id }) {
-      publiccode {
+    software(id: { eq: $id }) {
+      publiccodeYml {
         name
         url
         landingURL
@@ -509,15 +509,15 @@ export const query = graphql`
             name
             optional
           }
-          hardware {
-            name
-            optional
-          }
         }
         isBasedOn
       }
     }
   }
 `;
+          // hardware {
+          //   name
+          //   optional
+          // }
 
 export default Software;

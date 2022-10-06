@@ -20,7 +20,6 @@ export interface PubliccodeLite {
     };
   };
   name: string;
-  slug: string;
   categories: string[];
   logo: string;
   releaseDate: string;

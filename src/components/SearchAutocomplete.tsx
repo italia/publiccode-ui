@@ -37,7 +37,7 @@ export const SearchAutocomplete = React.memo(() => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      navigate(`/software?search_value=${searchValue}`)
+      window.location = `/software?search_value=${searchValue}`
     }
   }
 

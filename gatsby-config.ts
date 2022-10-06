@@ -30,11 +30,8 @@ const config: GatsbyConfig = {
       __key: "pages",
     },
     {
-      resolve: "gatsby-source-remote-file",
+      resolve: "gatsby-source-developers-italia-api",
       options: {
-        url: "https://crawler.developers.italia.it/softwares.yml",
-        name: "software",
-        ext: ".yml",
       },
     },
     {
@@ -58,12 +55,11 @@ const config: GatsbyConfig = {
         // required.
         query: `
         {
-          allSoftwareYaml(filter: {it_riuso_codiceIPA_label: {ne: ""}}) {
+          allSoftware {
             edges {
               node {
                 id
-                slug
-                publiccode {
+                publiccodeYml {
                   name
                   categories
                   logo
@@ -84,28 +80,6 @@ const config: GatsbyConfig = {
                       shortDescription
                       screenshots
                     }
-                    en {
-                      genericName
-                      features
-                      longDescription
-                      localisedName
-                      shortDescription
-                      screenshots
-                    }
-                    fr {
-                      genericName
-                      features
-                      longDescription
-                      shortDescription
-                      screenshots
-                    }
-                    nl {
-                      genericName
-                      features
-                      longDescription
-                      localisedName
-                      shortDescription
-                    }
                   }
                 }
               }
@@ -113,6 +87,28 @@ const config: GatsbyConfig = {
           }
         }
       `,
+                    // en {
+                    //   genericName
+                    //   features
+                    //   longDescription
+                    //   localisedName
+                    //   shortDescription
+                    //   screenshots
+                    // }
+                    // fr {
+                    //   genericName
+                    //   features
+                    //   longDescription
+                    //   shortDescription
+                    //   screenshots
+                    // }
+                    // nl {
+                    //   genericName
+                    //   features
+                    //   longDescription
+                    //   localisedName
+                    //   shortDescription
+                    // }
 
         // Field used as the reference value for each document.
         // Default: 'id'.
@@ -139,27 +135,26 @@ const config: GatsbyConfig = {
         // containing properties to index. The objects must contain the `ref`
         // field above (default: 'id'). This is required.
         normalizer: ({ data }) =>
-          data.allSoftwareYaml.edges.map((edge) => ({
+          data.allSoftware.edges.map((edge) => ({
             id: edge.node.id,
-            name: edge.node.publiccode.name,
+            name: edge.node.publiccodeYml.name,
             publiccode: {
-              ...edge.node.publiccode,
-              slug: edge.node.slug,
-              license: edge.node.publiccode.legal.license,
-              releaseDate: edge.node.publiccode.releaseDate,
+              ...edge.node.publiccodeYml,
+              license: edge.node.publiccodeYml.legal.license,
+              releaseDate: edge.node.publiccodeYml.releaseDate,
             },
-            localisedNames: Object.keys(edge.node.publiccode.description).map(
-              (x) => edge.node.publiccode.description[x]?.localisedName
+            localisedNames: Object.keys(edge.node.publiccodeYml.description).map(
+              (x) => edge.node.publiccodeYml.description[x]?.localisedName
             ),
-            features: Object.keys(edge.node.publiccode.description).map(
-              (x) => edge.node.publiccode.description[x]?.features
+            features: Object.keys(edge.node.publiccodeYml.description).map(
+              (x) => edge.node.publiccodeYml.description[x]?.features
             ),
-            longDescriptions: Object.keys(edge.node.publiccode.description).map(
-              (x) => edge.node.publiccode.description[x]?.longDescription
+            longDescriptions: Object.keys(edge.node.publiccodeYml.description).map(
+              (x) => edge.node.publiccodeYml.description[x]?.longDescription
             ),
             shortDescriptions: Object.keys(
-              edge.node.publiccode.description
-            ).map((x) => edge.node.publiccode.description[x]?.shortDescription),
+              edge.node.publiccodeYml.description
+            ).map((x) => edge.node.publiccodeYml.description[x]?.shortDescription),
           })),
       },
     },
