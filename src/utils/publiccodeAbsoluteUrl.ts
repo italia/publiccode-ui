@@ -7,19 +7,13 @@ export const absoluteUrl = (url: string, repo: string) : string => {
 
   const repoUrl = new URL(repo.replace(/\.git$/, ''));
 
-  let absolute = '';
-
   switch (repoUrl.host.toLowerCase()) {
     case 'github.com':
-      absolute = path.join('https://raw.githubusercontent.com', repoUrl.pathname, 'HEAD', url)
-      break;
+      return 'https://raw.githubusercontent.com' + path.join(repoUrl.pathname, 'HEAD', url)
     case 'bitbucket.org':
-      absolute = path.join('https://bitbucket.org', repoUrl.pathname, 'raw/HEAD', url)
-      break;
+      return 'https://bitbucket.org' + path.join(repoUrl.pathname, 'raw/HEAD', url)
     default:
       // GitLab
-      absolute = path.join(repoUrl.hostname, repoUrl.pathname, '-/raw/HEAD', url)
+      return `${repoUrl.protocol}//${repoUrl.hostname}` + path.join(repoUrl.pathname, '-/raw/HEAD', url)
   }
-
-  return absolute.toString();
 };
