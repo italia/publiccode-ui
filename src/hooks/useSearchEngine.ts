@@ -128,11 +128,46 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
 
   const {
     localSearchPages: { index, store },
+    allSoftware: { edges },
   } = useStaticQuery(graphql`
     query {
       localSearchPages {
         index
         store
+      }
+      allSoftware {
+        edges {
+          node {
+            id
+            publiccodeYml {
+              logo
+              name
+              url
+              description {
+                en {
+                  shortDescription
+                  screenshots
+                }
+                it {
+                  shortDescription
+                  screenshots
+                }
+                fr {
+                  shortDescription
+                  screenshots
+                }
+                nl {
+                  shortDescription
+                }
+              }
+              legal {
+                license
+              }
+              releaseDate
+              categories
+            }
+          }
+        }
       }
     }
   `);
@@ -143,12 +178,16 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
     }
   };
 
-  const results: Store[] = useFlexSearch(searchValue, index, store);
+  const results: Store[] = useFlexSearch(searchValue, index, store)
   // TODO pagination
 
   // TODO filtering
   useEffect(() => {
     let filtered: Store[] = results;
+    if (!searchValue) {
+      filtered = edges.map(s => ({id: s.node.id, publiccode: {...s.node.publiccodeYml, license: s.node.publiccodeYml.legal.license}}))
+    }
+
     filterCategories[0]
       ? (filtered =
           filterCategories
@@ -186,20 +225,7 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
     };
 
     dispatch(from === 0 ? set : add);
-  }, [filterCategories, filterDevelopmentStatuses, filterIntendedAudiences]);
-
-  useEffect(() => {
-    const set: ActionSetItems = {
-      type: ActionType.SET_ITEMS,
-      value: { items: results, total: results.length },
-    };
-    const add: ActionAddItems = {
-      type: ActionType.ADD_ITEMS,
-      value: { items: results },
-    };
-
-    dispatch(from === 0 ? set : add);
-  }, [from, results]);
+  }, [filterCategories, filterDevelopmentStatuses, filterIntendedAudiences, results, searchValue]);
 
   return [errorMessage, items, total, fetchMore];
 };

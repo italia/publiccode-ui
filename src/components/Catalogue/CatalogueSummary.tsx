@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useTranslation } from 'react-i18next';
 import { createUseStyles } from "react-jss";
 import { CatalogueSort } from "./CatalogueSort";
+import { searchContextState } from "../../contexts/searchContext";
 import { CatalogueFiltersContainer } from "./CatalogueFiltersContainer";
 import { CatalogueFiltersTitle } from "./CatalogueFiltersTitle";
 import { CatalogueHeader } from "./CatalogueHeader";
@@ -23,6 +24,7 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
     const [expandFilter, setExpandFilter] = useState(false);
     const classes = useStyle({expandFilter});
     const { t } = useTranslation();
+    const { searchValue } = useContext(searchContextState);
 
     const handleExpandFilter = () => setExpandFilter(!expandFilter);
 
@@ -33,7 +35,12 @@ export const CatalogueSummary: React.FC<CatalogueSummaryProps> = React.memo(
             <div
               className="col-sm-12 col-md-8 col-lg-8 font-weight-bold text-left"
               data-testid="counter-summary"
-            >{t('software.results_text', {count: itemsCount})}</div>
+            >
+              {searchValue
+                 ? t('software.results_text', {count: itemsCount})
+                 : t('software.items_text', {count: itemsCount})
+              }
+            </div>
 
             <div className="col-xs-2 col-sm-2 col-md-1">
               <label className="text-uppercase">{t('software.sort_by')}</label>
