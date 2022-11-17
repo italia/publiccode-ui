@@ -1,6 +1,8 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { createUseStyles } from 'react-jss';
+import { useTranslation } from "react-i18next";
+import { Link } from "gatsby";
 
 import '../components/Page/Page.scss';
 
@@ -22,6 +24,7 @@ const useStyles = createUseStyles({
 
 const IndexPage = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const labelClasses = classNames('fs-4', 'fw-bold', classes.label);
 
   return (
@@ -45,6 +48,10 @@ const IndexPage = () => {
 
                 <div className="col-8 my-auto">
                   <SearchAutocomplete />
+                </div>
+
+                <div className="pt-4 text-uppercase fw-bold offset-3 col-8 text-end">
+                  <Link to="/software">{t('search_show_all')}</Link>
                 </div>
               </div>
             </div>

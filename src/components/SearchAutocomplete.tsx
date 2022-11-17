@@ -94,7 +94,7 @@ export const SearchAutocomplete = React.memo(() => {
         </div>
      </div>
 
-    {items.length > 0 && (
+    {searchValue && items.length > 0 && (
       <ul className={resultClasses}>
         {items && items.slice(0, 5).map((result, idx) => (
           <li key={idx}>
