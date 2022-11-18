@@ -1,20 +1,30 @@
+<!-- markdownlint-disable no-inline-html -->
+
 <p align="center">
   <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
 </p>
 <h1 align="center">
   publiccode-unnamed-ui
 </h1>
+ Roadmap ...
 <p align="center">
-  A web frontend to search and view software having a <code>publiccode.yml</code> in their repo.
+  A web frontend to search and view software having a <code>publiccode.yml</code>
+  in their repo.
 </p>
 <p align="center">
-  As of now it gets data from <a href="https://github.com/italia/developers-italia-backend">Developers Italia's publiccode crawler</a>.
+  As of now it gets data from
+  <a href="https://github.com/italia/developers-italia-backend">
+    Developers Italia's publiccode crawler
+  </a>.
 </p>
+
+## Introduction
+...
 
 
 ## 🚀 Quick start
 
-1.  **Clone the repo.**
+1. **Clone the repo.**
 
     Clone the repo locally with git.
 
@@ -22,7 +32,7 @@
     git clone https://github.com/italia/publiccode-unnamed-ui
     ```
 
-2.  **Start developing.**
+2. **Start developing.**
 
     Navigate into the directory and start it up.
 
@@ -31,10 +41,13 @@
     npm run develop
     ```
 
-3.  **Open the code and start customizing!**
+3. **Open the code and start customizing!**
 
-    The site is now running at http://localhost:8000!
-    
+    The site is now running at <http://localhost:8000>!
+
+## Customizing
+...
+
 ## Contributing
 
 Here's the people who contributed
@@ -49,6 +62,6 @@ Every contribution is welcome!
 
 ## License
 
-Copyright (c) 2022 - Presidenza del Consiglio dei Ministri
+Copyright© 2022-present - Presidenza del Consiglio dei Ministri
 
 The source code is released under the BSD license (SPDX code: `BSD-3-Clause`)
