@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, SyntheticEvent, useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 
 import { Icon } from "../components/Icon/Icon";
@@ -36,6 +36,12 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
       setValue("")
     }
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key == 'Escape') {
+        return handleClose(e)
+      }
+    }
+
     return (
       <>
         <label className="text-white fs-6 fw-semibold text-uppercase">
@@ -62,6 +68,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(
               value={value}
               placeholder={placeholder}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
             />
             <div className="input-group-append">
               {value && (

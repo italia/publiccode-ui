@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useCallback, useContext, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 import classNames from "classnames";
 
@@ -36,9 +36,12 @@ export const SearchAutocomplete = React.memo(() => {
   }, [dispatch]
   );
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      window.location = `/software?search_value=${searchValue}`
+  const handleKeyDown = (e: KeyboardEvent) => {
+    switch (e.key) {
+      case 'Escape':
+        return dispatch(setSearchValue(""));
+      case 'Enter':
+        window.location = `/software?search_value=${searchValue}`
     }
   }
 
