@@ -7,6 +7,7 @@ import {
   incrementPage,
 } from "../contexts/searchContext";
 import { PubliccodeLite } from "../utils/proptypes";
+import {ALPHABETICAL, RELEASE_DATE, VITALITY} from "../utils/constants";
 
 enum ActionType {
   ADD_ITEMS,
@@ -215,6 +216,17 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
             ?.at(0) || [])
       : filtered;
 
+    switch (sortBy) {
+      case ALPHABETICAL:
+        filtered.sort((a, b) => a.publiccode.name.localeCompare(b.publiccode.name))
+        break;
+      case RELEASE_DATE:
+        filtered.sort((a, b) => b.publiccode.releaseDate.localeCompare(a.publiccode.releaseDate))
+        break;
+      case VITALITY:
+        break;
+    }
+
     const set: ActionSetItems = {
       type: ActionType.SET_ITEMS,
       value: { items: filtered, total: filtered.length },
@@ -225,7 +237,7 @@ export const useSearchEngine = ({ pageSize } = { pageSize: 12 }) => {
     };
 
     dispatch(from === 0 ? set : add);
-  }, [filterCategories, filterDevelopmentStatuses, filterIntendedAudiences, results, searchValue]);
+  }, [filterCategories, filterDevelopmentStatuses, filterIntendedAudiences, results, searchValue, sortBy]);
 
   return [errorMessage, items, total, fetchMore];
 };

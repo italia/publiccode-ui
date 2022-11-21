@@ -15,7 +15,6 @@ export const CatalogueSort = React.memo(() => {
       <select onChange={(e) => dispatch(setSortBy(e.target.value))} defaultValue={initialSortBy || undefined}>
         {showRelevance ? <option value="relevance">{t('software.sort_by_relevance')}</option> : null}
         <option value="release_date">{t('software.sort_by_release_date')}</option>
-        <option value="vitality">{t('software.sort_by_vitality')}</option>
         <option value="name">{t('software.sort_by_alphabetic')}</option>
       </select>
     </div>
