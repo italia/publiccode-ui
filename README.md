@@ -1,5 +1,6 @@
+<!-- markdownlint-disable no-inline-html -->
 <p align="center">
-  <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
+  <img width="200" src=".github/logo.png" />
 </p>
 <h1 align="center">
   publiccode-ui
