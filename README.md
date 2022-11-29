@@ -2,13 +2,13 @@
   <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
 </p>
 <h1 align="center">
-  publiccode-unnamed-ui
+  publiccode-ui
 </h1>
 <p align="center">
   A web frontend to search and view software having a <code>publiccode.yml</code> in their repo.
 </p>
 <p align="center">
-  As of now it gets data from <a href="https://github.com/italia/developers-italia-backend">Developers Italia's publiccode crawler</a>.
+  As of now it gets data from <a href="https://github.com/italia/developers-italia-api">Developers Italia's software Catalog</a>.
 </p>
 
 
@@ -19,7 +19,7 @@
     Clone the repo locally with git.
 
     ```shell
-    git clone https://github.com/italia/publiccode-unnamed-ui
+    git clone https://github.com/italia/publiccode-ui
     ```
 
 2.  **Start developing.**
@@ -49,6 +49,6 @@ Every contribution is welcome!
 
 ## License
 
-Copyright (c) 2022 - Presidenza del Consiglio dei Ministri
+Copyright (c) 2022-present Presidenza del Consiglio dei Ministri
 
 The source code is released under the BSD license (SPDX code: `BSD-3-Clause`)
