@@ -21,7 +21,7 @@ import { TagList } from '../../components/TagList';
 
 // TODO: remove eslint-disable
 // eslint-disable-next-line max-lines-per-function,arrow-body-style
-const Software = ({ data: { software } }) => {
+const Software = ({ data: { site, software } }) => {
   const { t, i18n } = useTranslation();
 
   const useStyles = createUseStyles({
@@ -49,7 +49,7 @@ const Software = ({ data: { software } }) => {
   return (
     <>
       <Helmet>
-        <title>EU Public Code - {software.publiccodeYml.name}</title>
+        <title>{site.siteMetadata.title} - {software.publiccodeYml.name}</title>
       </Helmet>
 
       <Page>
@@ -461,6 +461,11 @@ const Software = ({ data: { software } }) => {
 
 export const query = graphql`
   query ($id: String!) {
+    site {
+      siteMetadata {
+        title
+      }
+    }
     software(id: { eq: $id }) {
       publiccodeYml {
         name

@@ -35,7 +35,16 @@
 3.  **Open the code and start customizing!**
 
     The site is now running at http://localhost:8000!
-    
+
+## 🔧 Customization
+
+### App name & logo
+
+Configure the displayed name by editing `siteMetadata.title` in [`gatsby-config.ts`](gatsby-config.ts)
+
+You can also change the logo by replacing `logo-home.svg` and `logo-header.svg`
+in [`static/assets/inline/`](static/assets/inline/).
+
 ## Contributing
 
 Here's the people who contributed

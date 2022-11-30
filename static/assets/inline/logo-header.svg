@@ -1,0 +1,10 @@
+<svg height="96" width="96">
+  <circle
+    cx="50"
+    cy="50"
+    r="40"
+    stroke="black"
+    stroke-width="1"
+    fill="white"
+  />
+</svg>

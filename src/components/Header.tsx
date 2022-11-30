@@ -1,11 +1,21 @@
 import "../components/Page/Page.scss"
+import LogoHeader from '../../static/assets/inline/logo-header.svg';
 
-import { Link } from "gatsby";
+import { graphql, Link, useStaticQuery } from "gatsby";
 import React from "react";
 type Props = {
   children?: JSX.Element;
 };
 export const Header = ({ children }: Props) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `);
   return (
     <>
       <div className="it-header-center-wrapper">
@@ -15,19 +25,10 @@ export const Header = ({ children }: Props) => {
               <div className="it-header-center-content-wrapper">
                 <div className="it-brand-wrapper">
                   <Link to="/">
-                    <svg height="96" width="96">
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="40"
-                        stroke="black"
-                        stroke-width="1"
-                        fill="white"
-                      />
-                    </svg>
+                    <LogoHeader />
                     <div className="it-brand-text">
                       <div className="it-brand-title fs-5 fw-bold text-white">
-                        EU Public Code
+                        {data.site.siteMetadata.title}
                       </div>
                     </div>
                   </Link>
