@@ -52,7 +52,7 @@ const IndexPage = () => {
               <div className={labelClasses}>{data.site.siteMetadata.title}</div>
             </div>
 
-            <div className="flex-grow-1">
+            <div className="ps-4 flex-grow-1">
               <SearchAutocomplete />
             </div>
           </div>
