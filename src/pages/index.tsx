@@ -43,25 +43,23 @@ const IndexPage = () => {
         <title>{data.site.siteMetadata.title} - Search</title>
       </Helmet>
       <Layout>
-        <div className="container mb-5">
-          <div className="d-flex align-items-center min-vh-100">
-            <div className="w-100 pb-5">
-              <div className="row my-auto">
-                <div className="col-1">
-                  <LogoHome />
-                </div>
-                <div className="col-2 my-auto">
-                  <div className={labelClasses}>{data.site.siteMetadata.title}</div>
-                </div>
+        <div className="container mb-5" style={{marginTop: '20%'}}>
+          <div className="d-flex flex-row align-items-center">
+            <div>
+              <LogoHome />
+            </div>
+            <div>
+              <div className={labelClasses}>{data.site.siteMetadata.title}</div>
+            </div>
 
-                <div className="col-8 my-auto">
-                  <SearchAutocomplete />
-                </div>
+            <div className="flex-grow-1">
+              <SearchAutocomplete />
+            </div>
+          </div>
 
-                <div className="pt-4 text-uppercase fw-bold offset-3 col-8 text-end">
-                  <Link to="/software">{t('search_show_all')}</Link>
-                </div>
-              </div>
+          <div className="d-flex justify-content-end flex-row">
+            <div className="pt-4 text-uppercase fw-bold">
+              <Link to="/software">{t('search_show_all')}</Link>
             </div>
           </div>
         </div>
