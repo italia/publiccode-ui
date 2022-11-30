@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useTranslation } from 'react-i18next';
 import '../components/Page/Page.scss';
 import 'typeface-titillium-web';
 import 'typeface-roboto-mono';
@@ -8,15 +7,24 @@ import 'typeface-lora';
 import '../i18n';
 
 import { CatalogueContainer } from "../components/Catalogue/CatalogueContainer";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
+import { graphql, useStaticQuery } from "gatsby";
 
 const SoftwareListPage = () => {
-  const { t } = useTranslation();
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `);
 
   return (
     <>
       <Helmet>
-        <title>EU Public Code - Software</title>
+        <title>{data.site.siteMetadata.title} - Software</title>
       </Helmet>
 
       <CatalogueContainer />

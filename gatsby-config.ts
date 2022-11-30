@@ -2,11 +2,18 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `Publiccode UI`,
-    siteUrl: `https://www.yourdomain.tld`,
+    title: `EU Public Code`,
   },
   plugins: [
     "gatsby-plugin-image",
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /assets/
+        }
+      }
+    },
     "gatsby-plugin-sass",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-mdx",

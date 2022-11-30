@@ -25,6 +25,7 @@
     "gatsby-plugin-local-search": "^2.0.1",
     "gatsby-plugin-mdx": "^3.12.1",
     "gatsby-plugin-react-helmet": "^5.12.1",
+    "gatsby-plugin-react-svg": "^3.3.0",
     "gatsby-plugin-sass": "^5.23.0",
     "gatsby-plugin-sharp": "^4.12.1",
     "gatsby-source-filesystem": "^4.12.1",

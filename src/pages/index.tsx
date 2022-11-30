@@ -2,9 +2,10 @@ import React from "react";
 import Helmet from "react-helmet";
 import { createUseStyles } from 'react-jss';
 import { useTranslation } from "react-i18next";
-import { Link } from "gatsby";
+import { graphql, Link, useStaticQuery } from "gatsby";
 
 import '../components/Page/Page.scss';
+import LogoHome from '../../static/assets/inline/logo-home.svg';
 
 import 'typeface-titillium-web';
 import 'typeface-roboto-mono';
@@ -23,6 +24,15 @@ const useStyles = createUseStyles({
 });
 
 const IndexPage = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `);
   const classes = useStyles();
   const { t } = useTranslation();
   const labelClasses = classNames('fs-4', 'fw-bold', classes.label);
@@ -30,7 +40,7 @@ const IndexPage = () => {
   return (
     <>
       <Helmet>
-        <title>EU Public Code - Search</title>
+        <title>{data.site.siteMetadata.title} - Search</title>
       </Helmet>
       <Layout>
         <div className="container mb-5">
@@ -38,12 +48,10 @@ const IndexPage = () => {
             <div className="w-100 pb-5">
               <div className="row my-auto">
                 <div className="col-1">
-                  <svg height="96" width="96">
-                    <circle cx="50" cy="50" r="40" fill="#004080" />
-                  </svg>
+                  <LogoHome />
                 </div>
                 <div className="col-2 my-auto">
-                  <div className={labelClasses}>EU Public Code</div>
+                  <div className={labelClasses}>{data.site.siteMetadata.title}</div>
                 </div>
 
                 <div className="col-8 my-auto">
